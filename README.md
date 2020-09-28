@@ -96,7 +96,6 @@ To get a local copy up and running follow these simple steps.
 
 ### Prerequisites - Guide
 
-`Insert video here`
 [![Drawing robot initial setup guide](https://img.youtube.com/vi/vAey5VbB7RE/0.jpg)](https://www.youtube.com/watch?v=vAey5VbB7RE)
 
 This is an example of how to list things you need to use the software and how to install them.
