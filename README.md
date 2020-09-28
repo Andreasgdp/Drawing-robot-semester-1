@@ -112,7 +112,7 @@ This is an example of how to list things you need to use the software and how to
    7. Try to run this code in the file `Test.java` by pressing the play button in the top right corner.
 	```java
 	public class Test {
-				public static void main(String[] args) {
+		public static void main(String[] args) {
 			System.out.println("Hello World!");
 		}
 	}
