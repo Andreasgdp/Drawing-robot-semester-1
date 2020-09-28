@@ -202,15 +202,15 @@ Project Link: [https://github.com/andreasgdp/Drawing-robot-semester-1](https://g
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/andreasgdp/repo.svg?style=flat-square
-[contributors-url]: https://github.com/andreasgdp/repo/graphs/contributors
+[contributors-url]: https://github.com/andreasgdp/Drawing-robot-semester-1/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/andreasgdp/repo.svg?style=flat-square
-[forks-url]: https://github.com/andreasgdp/repo/network/members
+[forks-url]: https://github.com/andreasgdp/Drawing-robot-semester-1/network/members
 [stars-shield]: https://img.shields.io/github/stars/andreasgdp/repo.svg?style=flat-square
-[stars-url]: https://github.com/andreasgdp/repo/stargazers
+[stars-url]: https://github.com/andreasgdp/Drawing-robot-semester-1/stargazers
 [issues-shield]: https://img.shields.io/github/issues/andreasgdp/repo.svg?style=flat-square
-[issues-url]: https://github.com/andreasgdp/repo/issues
+[issues-url]: https://github.com/andreasgdp/Drawing-robot-semester-1/issues
 [license-shield]: https://img.shields.io/github/license/andreasgdp/repo.svg?style=flat-square
-[license-url]: https://github.com/andreasgdp/repo/blob/master/LICENSE.txt
+[license-url]: https://github.com/andreasgdp/Drawing-robot-semester-1/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/andreasgdp
 [product-screenshot]: images/robot_arm.jpg
