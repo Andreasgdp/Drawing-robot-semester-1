@@ -1,0 +1,20 @@
+syntax: glob
+Temp/**
+Binaries/**
+Diagnosis/**
+Logical/Visualization/HTML/bower_components/**
+Logical/Visualization/HTML/node_modules/**
+Logical/Visualization/HTML/.sass-cache/**
+Logical/Visualization/HTML/.tmp/**
+Logical/Visualization/HTML/struct/bower_components/**
+Logical/Visualization/HTML/struct/node_modules/**
+Logical/Visualization/HTML/struct/dist/**
+Logical/Visualization/HTML/struct/.sass-cache/**
+Logical/Visualization/HTML/struct/.tmp/**
+Logical/Visualization/build.typ
+*.orig
+*.set
+*.isopen
+Logical/Revision.var
+Logical/Visualization/visServ/build.typ
+Logical/Programs/FileHandling/MachineConfiguration/machineConfiguration/build.typ
