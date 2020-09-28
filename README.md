@@ -201,16 +201,16 @@ Project Link: [https://github.com/andreasgdp/Drawing-robot-semester-1](https://g
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/andreasgdp/repo.svg?style=flat-square
+[contributors-shield]: https://img.shields.io/github/contributors/andreasgdp/Drawing-robot-semester-1.svg?style=flat-square
 [contributors-url]: https://github.com/andreasgdp/Drawing-robot-semester-1/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/andreasgdp/repo.svg?style=flat-square
+[forks-shield]: https://img.shields.io/github/forks/andreasgdp/Drawing-robot-semester-1.svg?style=flat-square
 [forks-url]: https://github.com/andreasgdp/Drawing-robot-semester-1/network/members
-[stars-shield]: https://img.shields.io/github/stars/andreasgdp/repo.svg?style=flat-square
+[stars-shield]: https://img.shields.io/github/stars/andreasgdp/Drawing-robot-semester-1.svg?style=flat-square
 [stars-url]: https://github.com/andreasgdp/Drawing-robot-semester-1/stargazers
-[issues-shield]: https://img.shields.io/github/issues/andreasgdp/repo.svg?style=flat-square
+[issues-shield]: https://img.shields.io/github/issues/andreasgdp/Drawing-robot-semester-1.svg?style=flat-square
 [issues-url]: https://github.com/andreasgdp/Drawing-robot-semester-1/issues
-[license-shield]: https://img.shields.io/github/license/andreasgdp/repo.svg?style=flat-square
+[license-shield]: https://img.shields.io/github/license/andreasgdp/Drawing-robot-semester-1.svg?style=flat-square
 [license-url]: https://github.com/andreasgdp/Drawing-robot-semester-1/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/andreasgdp
+[linkedin-url]: https://www.linkedin.com/in/andreas-g-d-petersen-11707518b/
 [product-screenshot]: images/robot_arm.jpg
