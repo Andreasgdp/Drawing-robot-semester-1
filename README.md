@@ -156,7 +156,7 @@ This section will tell you how what the process of adding new features to the re
 3. You are to work on your feature on that specific branch and **NOT on the `master branch`**
 4. When done with your feature, you will have to create a Pull Request (PR). You can do that <a href="https://github.com/Andreasgdp/Drawing-robot-semester-1/compare" target="_blank">here</a>
    1. After creating a pull request you can assign another person to review your code and then accept it.
-5. When your code has been accepted you will be able to merge your feature into the `master branch`.
+5. When your code has been accepted you will be able to merge your feature into the `master branch`.****
 
 
 <!-- USAGE EXAMPLES -->
