@@ -30,7 +30,6 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 
-
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
@@ -61,12 +60,13 @@
 
 - [Table of Contents](#table-of-contents)
 - [About The Project](#about-the-project)
-	- [Built With](#built-with)
+  - [Built With](#built-with)
 - [Getting Started](#getting-started)
-	- [Prerequisites - Guide](#prerequisites---guide)
-	- [Installation](#installation)
+  - [Prerequisites - Guide](#prerequisites---guide)
+  - [Installation](#installation)
+- [Programming workflow](#programming-workflow)
 - [Usage](#usage)
-		- [`Information coming soon...`](#information-coming-soon)
+    - [`Information coming soon...`](#information-coming-soon)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [License](#license)
@@ -144,6 +144,18 @@ git clone https://github.com/andreasgdp/Drawing-robot-semester-1.git
 Information comming soon...
 ```
 
+
+<!-- USAGE EXAMPLES -->
+## Programming workflow
+This section will tell you how what the process of adding new features to the repo is like.
+
+1. You will have to create an issue with the feature/bug that you want to work on. <a href="https://github.com/Andreasgdp/Drawing-robot-semester-1/issues" target="_blank">Create issue here</a>
+2. You will assign yourself to that issue and move the issue into the `In Progress` column in <a href="https://github.com/Andreasgdp/Drawing-robot-semester-1/projects/2" target="_blank">Project Planning</a>
+   1. A branch will be created with the issue number and name of the issue.
+3. You are to work on your feature on that specific branch and **NOT on the `master branch`**
+4. When done with your feature, you will have to create a Pull Request (PR). You can do that <a href="https://github.com/Andreasgdp/Drawing-robot-semester-1/compare" target="_blank">here</a>
+   1. After creating a pull request you can assign another person to review your code and then accept it.
+5. When your code has been accepted you will be able to merge your feature into the `master branch`.****
 
 
 <!-- USAGE EXAMPLES -->
