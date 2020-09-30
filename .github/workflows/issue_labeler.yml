@@ -57,3 +57,13 @@ jobs:
           keywords: '["?", "question"]'
           labels: '["question"]'
           github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - uses: Naturalclar/issue-action@v1.0.0
+        with:
+          keywords: '["PLC", "plc"]'
+          labels: '["PLC"]'
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - uses: Naturalclar/issue-action@v1.0.0
+        with:
+          keywords: '["JAVA", "Java", "java"]'
+          labels: '["Java"]'
+          github-token: "${{ secrets.GITHUB_TOKEN }}"  
