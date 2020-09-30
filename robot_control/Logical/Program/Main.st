@@ -1,7 +1,9 @@
 
 PROGRAM _INIT
 	(* Insert code here *)
-	 
+	this.var1;
+	this.var2;
+	
 END_PROGRAM
 
 PROGRAM _CYCLIC
