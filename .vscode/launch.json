@@ -1,0 +1,28 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "java",
+			"name": "Debug (Launch) - Current File",
+			"request": "launch",
+			"mainClass": "${file}"
+		},
+		{
+			"type": "java",
+			"name": "Debug (Launch)-App<Drawing-robot-semester-1_1001a7df>",
+			"request": "launch",
+			"mainClass": "App",
+			"projectName": "Drawing-robot-semester-1_1001a7df"
+		},
+		{
+			"type": "java",
+			"name": "Debug (Launch)-EdgeDetector<Drawing-robot-semester-1_1001a7df>",
+			"request": "launch",
+			"mainClass": "edgedetect.EdgeDetector",
+			"projectName": "Drawing-robot-semester-1_1001a7df"
+		}
+	]
+}
