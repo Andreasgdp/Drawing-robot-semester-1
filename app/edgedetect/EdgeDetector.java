@@ -1,4 +1,4 @@
-package dk.sdu.mmmi.rd1.edgedetect;
+package edgedetect;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
