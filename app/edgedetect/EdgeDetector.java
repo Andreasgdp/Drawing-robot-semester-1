@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
  *
  * @author ancla
  */
-public class EdgeDetector 
+public class EdgeDetector {
     private final String imagePath;
 
     /**
