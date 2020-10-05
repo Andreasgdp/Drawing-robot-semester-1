@@ -1,4 +1,4 @@
-
 VAR_CONFIG
-
+	::Program:this.M1.direction AT %QX."X3".DigitalOutput04;
+	::Program:this.M1.freq AT %QX."X3".DigitalOutput09;
 END_VAR

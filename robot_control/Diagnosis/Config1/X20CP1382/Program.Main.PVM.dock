@@ -1,0 +1,27 @@
+WATCH Ver=2.00 PLCName=PLC1 CPUName=CPU TaskName=Program 
+Position X=0 Y=0 Width=0 Height=0 TabWidth Name=250 Type=0 Scope=0 Force=0 Index=20 ASCIIString=0
+                                    name                                     type force                                                            value level type len format place expand specs
+                                    this                                 this_typ    0 "                                                               *"    0   24    1    0    1    1         
+                                    var1                                    USINT    0 "                                                               0"    1    5    1   10    0    0         
+                                      M2                                    m_typ    0 "                                                               *"    1   24    1    0    0    1         
+                               endSwitch                                     BOOL    0 "                                                           FALSE"    2    1    1    2    0    0         
+                                    freq                                     BOOL    0 "                                                           FALSE"    2    1    1    2    0    0         
+                                backward                                     BOOL    0 "                                                           FALSE"    2    1    1    2    0    0         
+                                 forward                                     BOOL    0 "                                                           FALSE"    2    1    1    2    0    0         
+                               direction                                     BOOL    0 "                                                           FALSE"    2    1    1    2    0    0         
+                                 counter                                     DINT    0 "                                                               0"    2    4    1   10    0    0         
+                                      M3                                    m_typ    0 "                                                               *"    1   24    1    0    0    1         
+                               endSwitch                                     BOOL    0 "                                                           FALSE"    2    1    1    2    0    0         
+                                    freq                                     BOOL    0 "                                                           FALSE"    2    1    1    2    0    0         
+                                backward                                     BOOL    0 "                                                           FALSE"    2    1    1    2    0    0         
+                                 forward                                     BOOL    0 "                                                           FALSE"    2    1    1    2    0    0         
+                               direction                                     BOOL    0 "                                                           FALSE"    2    1    1    2    0    0         
+                                 counter                                     DINT    0 "                                                               0"    2    4    1   10    0    0         
+                                      M1                                    m_typ    0 "                                                               *"    1   24    1    0    0    1         
+                               endSwitch                                     BOOL    0 "                                                           FALSE"    2    1    1    2    0    0         
+                                    freq                                     BOOL    3 "                                                           FALSE"    2    1    1    2    0    0         
+                                backward                                     BOOL    0 "                                                           FALSE"    2    1    1    2    0    0         
+                                 forward                                     BOOL    0 "                                                           FALSE"    2    1    1    2    0    0         
+                               direction                                     BOOL    3 "                                                            TRUE"    2    1    1    2    0    0         
+                                 counter                                     DINT    0 "                                                               0"    2    4    1   10    0    0         
+                                    var2                                    USINT    0 "                                                               0"    1    5    1   10    0    0         

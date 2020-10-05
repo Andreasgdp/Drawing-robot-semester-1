@@ -22,6 +22,7 @@
       <Parameter ID="Mode" Value="Manual" />
       <Parameter ID="InternetAddress" Value="10.0.0.50" />
       <Parameter ID="SubnetMask" Value="255.255.255.0" />
+      <Parameter ID="ActivateSnmp" Value="2" />
     </Connector>
     <Parameter ID="ConfigurationID" Value="robot_control_Config1" />
   </Module>
