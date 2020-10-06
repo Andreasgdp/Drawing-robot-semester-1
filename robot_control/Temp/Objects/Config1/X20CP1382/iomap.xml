@@ -154,15 +154,19 @@
 </LN>
 <LN ID="%IX.X1.DigitalInput01" Type="BOOL">
 <Prod Device="X1" DPName="DigitalInput01" Kind="io"/>
+<Cons Device="TC#1-CPYDEV" DPName="::Program:this.btn3.pressed" Kind="pv"/>
 </LN>
 <LN ID="%IX.X1.DigitalInput02" Type="BOOL">
 <Prod Device="X1" DPName="DigitalInput02" Kind="io"/>
+<Cons Device="TC#1-CPYDEV" DPName="::Program:this.btn2.pressed" Kind="pv"/>
 </LN>
 <LN ID="%IX.X1.DigitalInput03" Type="BOOL">
 <Prod Device="X1" DPName="DigitalInput03" Kind="io"/>
+<Cons Device="TC#1-CPYDEV" DPName="::Program:this.btn1.pressed" Kind="pv"/>
 </LN>
 <LN ID="%IX.X1.DigitalInput04" Type="BOOL">
 <Prod Device="X1" DPName="DigitalInput04" Kind="io"/>
+<Cons Device="TC#1-CPYDEV" DPName="::Program:this.btn4.pressed" Kind="pv"/>
 </LN>
 <LN ID="%IW.X1.AnalogInput01" Type="INT">
 <Prod Device="X1" DPName="AnalogInput01" Kind="io"/>
@@ -229,9 +233,11 @@
 <Cons Device="X3" DPName="DigitalOutput04" Kind="io"/>
 </LN>
 <LN ID="%QX.X3.DigitalOutput05" Type="BOOL">
+<Prod Device="TC#1-CPYDEV" DPName="::Program:this.M2.direction" Kind="pv"/>
 <Cons Device="X3" DPName="DigitalOutput05" Kind="io"/>
 </LN>
 <LN ID="%QX.X3.DigitalOutput06" Type="BOOL">
+<Prod Device="TC#1-CPYDEV" DPName="::Program:this.M3.direction" Kind="pv"/>
 <Cons Device="X3" DPName="DigitalOutput06" Kind="io"/>
 </LN>
 <LN ID="%QX.X3.DigitalOutput07" Type="BOOL">
@@ -245,9 +251,11 @@
 <Cons Device="X3" DPName="DigitalOutput09" Kind="io"/>
 </LN>
 <LN ID="%QX.X3.DigitalOutput10" Type="BOOL">
+<Prod Device="TC#1-CPYDEV" DPName="::Program:this.M2.freq" Kind="pv"/>
 <Cons Device="X3" DPName="DigitalOutput10" Kind="io"/>
 </LN>
 <LN ID="%QX.X3.DigitalOutput11" Type="BOOL">
+<Prod Device="TC#1-CPYDEV" DPName="::Program:this.M3.freq" Kind="pv"/>
 <Cons Device="X3" DPName="DigitalOutput11" Kind="io"/>
 </LN>
 <LN ID="%QX.X3.DigitalOutput12" Type="BOOL">

@@ -1,4 +1,12 @@
 VAR_CONFIG
 	::Program:this.M1.direction AT %QX."X3".DigitalOutput04;
 	::Program:this.M1.freq AT %QX."X3".DigitalOutput09;
+	::Program:this.M2.direction AT %QX."X3".DigitalOutput05;
+	::Program:this.M3.direction AT %QX."X3".DigitalOutput06;
+	::Program:this.M2.freq AT %QX."X3".DigitalOutput10;
+	::Program:this.M3.freq AT %QX."X3".DigitalOutput11;
+	::Program:this.btn1.pressed AT %IX."X1".DigitalInput03;
+	::Program:this.btn2.pressed AT %IX."X1".DigitalInput02;
+	::Program:this.btn4.pressed AT %IX."X1".DigitalInput04;
+	::Program:this.btn3.pressed AT %IX."X1".DigitalInput01;
 END_VAR

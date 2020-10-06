@@ -124,13 +124,13 @@
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Program\Main.st"
     LogicalPath="Program.Main.st"
     Type="File"
-    LastWriteTime="132463634266590702"
+    LastWriteTime="132464512963380226"
     Private="false" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Program\Types.typ"
     LogicalPath="Program.Types.typ"
     Type="File"
-    LastWriteTime="132463634245203630"
+    LastWriteTime="132464509886657679"
     Private="true" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Program\Variables.var"
@@ -176,7 +176,7 @@
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Physical\Config1\X20CP1382\IoMap.iom"
     LogicalPath="Config1.X20CP1382.IoMap.iom"
     Type="File"
-    LastWriteTime="132463634379251637"
+    LastWriteTime="132464446123422297"
     Private="false" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Physical\Config1\X20CP1382\PvMap.vvm"

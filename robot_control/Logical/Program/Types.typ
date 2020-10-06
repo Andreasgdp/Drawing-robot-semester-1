@@ -9,10 +9,18 @@ TYPE
 		counter : DINT;
 	END_STRUCT;
 	this_typ : 	STRUCT 
-		var1 : USINT;
 		M2 : m_typ;
 		M3 : m_typ;
 		M1 : m_typ;
-		var2 : USINT;
+		btn2 : btn_typ;
+		isReady : BOOL;
+		btn4 : btn_typ;
+		btn3 : btn_typ;
+		btn1 : btn_typ;
+		startCase : USINT;
+		start : BOOL;
+	END_STRUCT;
+	btn_typ : 	STRUCT 
+		pressed : BOOL;
 	END_STRUCT;
 END_TYPE
