@@ -7,6 +7,9 @@ import java.util.*;
 
 public class App {
 	public static void main(String[] args) {
+		boolean imageLoaded = false;
+		boolean coordsLoaded = false;
+
 		// TODO: use default "img.jpg"
 		EdgeDetector eDetect = new EdgeDetector("DEFAULT_IMG_PATH");
 		// TODO: get correct hostname and port
@@ -29,12 +32,23 @@ public class App {
 				} else if (msg.startsWith("stop")) {// TODO: add function to recognize ESC-btn
 					client.write("stop");
 				} else if (msg.startsWith("image") || msg.startsWith("loadImage")) {
+					System.out.print("Write new img path: ");
 					String imgPath = scanner.next();
 					eDetect.loadNewImage(imgPath);
+					imageLoaded = true;
 				} else if (msg.startsWith("coordinates") || msg.startsWith("loadCoordinates")) {
-					eDetect.loadCoordinates();
+					if (imageLoaded) {
+						eDetect.loadCoordinates();
+						coordsLoaded = true;
+					} else {
+						System.out.println("Image is not loaded! Use command 'image' to load image");
+					}
 				} else if (msg.startsWith("send")) {
-					client.write(eDetect.getCoordinates());
+					if (coordsLoaded) {
+						client.write(eDetect.getCoordinates());
+					} else {
+						System.out.println("Coordinates is not loaded! Use command 'coordinates' to load coordinates");
+					}
 				} else if (msg.startsWith("run")) {
 					String imgPath = scanner.next();
 					eDetect.loadNewImage(imgPath);
