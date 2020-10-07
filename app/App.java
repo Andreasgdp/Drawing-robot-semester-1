@@ -8,18 +8,17 @@ import java.awt.Color;
 public class App {
 	public static void main(String[] args) {
 
-		BufferedImage bi = ImageIO.read(new File("app/images/small_sandwitch.jpg"));
-		int[] data = ( (DataBufferInt) bi.getRaster().getDataBuffer() ).getData();
-		for ( int i = 0 ; i < data.length ; i++) {
-			Color c = new Color(data[i]);
+		EdgeDetector eDetector = new EdgeDetector("app/images/small_sandwitch.jpg");
 
-			c.getRed();
-			c.getGreen();
-			c.getBlue();
+		Color[][] testColor =  eDetector.getColorArray();
+		for (int x = 0; x < testColor.length; x++) {
+			for (int y = 0; y < testColor[x].length; y++){
 
+				System.out.println(testColor[x][y]);
+			}
 		}
 
-
+		
 		// EdgeDetector eDetector = new EdgeDetector("app/images/small_sandwitch.jpg");
 		// BufferedImage test = eDetector.getBufferedImage();
 		// System.out.println(test);

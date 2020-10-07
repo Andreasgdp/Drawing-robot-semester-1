@@ -190,4 +190,20 @@ public class EdgeDetector {
 
         return arrayRepresentation;
     }
+
+    public Color[][] getColorArray() {
+        Picture picture0 = new Picture(imagePath);
+        //Find width, removing outer border due to filter
+        int width = picture0.width();
+        int height = picture0.height();
+        Color[][] arrayRepresentation = new Color[width][height];
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                arrayRepresentation[x][y] = picture0.get(x, y);
+            }
+        }
+
+        return arrayRepresentation;
+    }
 }
