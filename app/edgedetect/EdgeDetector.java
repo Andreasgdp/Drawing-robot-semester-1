@@ -189,15 +189,12 @@ public class EdgeDetector {
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                for (int j = 0; j < 3; j++) {
-                    int value = 100;
-                    if (picture0.get(x, y).getRed() >= value && picture0.get(x, y).getGreen() >= value
-                            && picture0.get(x, y).getBlue() >= value)
-                        pixelColor[x][y] = new Color(0);
-                    else
-                        pixelColor[x][y] = new Color(255, 255, 255);
-
-                }
+                int value = 230;
+                if (picture0.get(x, y).getRed() <= value && picture0.get(x, y).getGreen() <= value
+                        && picture0.get(x, y).getBlue() <= value)
+                    pixelColor[x][y] = new Color(0);
+                else
+                    pixelColor[x][y] = new Color(255, 255, 255);
             }
         }
         return pixelColor;
