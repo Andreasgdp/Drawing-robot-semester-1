@@ -180,6 +180,29 @@ public class EdgeDetector {
         return arrayRepresentation;
     }
 
+    public Color[][] getColorArray() {
+        Picture picture0 = new Picture(imagePath);
+        // Find width, removing outer border due to filter
+        int width = picture0.width();
+        int height = picture0.height();
+        Color[][] pixelColor = new Color[width][height];
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                for (int j = 0; j < 3; j++) {
+                    int value = 100;
+                    if (picture0.get(x, y).getRed() >= value && picture0.get(x, y).getGreen() >= value
+                            && picture0.get(x, y).getBlue() >= value)
+                        pixelColor[x][y] = new Color(0);
+                    else
+                        pixelColor[x][y] = new Color(255, 255, 255);
+
+                }
+            }
+        }
+        return pixelColor;
+    }
+
     public void loadCoordinates() {
     }
 

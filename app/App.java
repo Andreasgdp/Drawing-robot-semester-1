@@ -10,8 +10,7 @@ public class App {
 		boolean imageLoaded = false;
 		boolean coordsLoaded = false;
 
-		// TODO: use default "img.jpg"
-		EdgeDetector eDetect = new EdgeDetector("DEFAULT_IMG_PATH");
+		EdgeDetector eDetect = new EdgeDetector("app/images/small_sandwitch.jpg");
 		// TODO: get correct hostname and port
 		RobotClient client = new RobotClient("hostname", 5000);
 		try {
@@ -27,6 +26,23 @@ public class App {
 				String msg = scanner.next();
 				if (msg.startsWith("q") || msg.startsWith("quit")) {
 					break;
+				} else if (msg.startsWith("test")) {
+					Color[][] test = eDetect.getColorArray();
+					int black = 0;
+					int white = 0;
+					for (int i = 0; i < test.length; i++) {
+						for (int j = 0; j < test[i].length; j++) {
+							System.out.println("Pixel (" + j + ";" + i + "): " + "RED: " + test[i][j].getRed()
+									+ " GREEN: " + test[i][j].getGreen() + " BLUE: " + test[i][j].getBlue());
+							if (test[i][j].getBlue() == 0 && test[i][j].getBlue() == 0 && test[i][j].getBlue() == 0) {
+								black++;
+							} else {
+								white++;
+							}
+						}
+					}
+					System.out.println("White: " + white);
+					System.out.println("Black: " + black);
 				} else if (msg.startsWith("reset")) {
 					client.write("reset");
 				} else if (msg.startsWith("stop")) {// TODO: add function to recognize ESC-btn
