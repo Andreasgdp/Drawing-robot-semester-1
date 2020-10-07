@@ -7,13 +7,12 @@ import java.awt.Color;
 import java.util.*;
 import javax.swing.*;
 
-
 public class App {
 	public static void main(String[] args) {
 		boolean imageLoaded = false;
 		boolean coordsLoaded = false;
 
-		EdgeDetector eDetect = new EdgeDetector("app/images/small_sandwitch.jpg");
+		EdgeDetector eDetect = new EdgeDetector("app/images/small_yoda.png");
 		// TODO: get correct hostname and port
 		RobotClient client = new RobotClient("hostname", 5000);
 		try {
@@ -30,14 +29,13 @@ public class App {
 				if (msg.startsWith("q") || msg.startsWith("quit")) {
 					break;
 				} else if (msg.startsWith("test")) {
-					Color[][] test = eDetect.getColorArray();
+					Color[][] testColor = eDetect.getColorArray();
 					int black = 0;
 					int white = 0;
-					for (int i = 0; i < test.length; i++) {
-						for (int j = 0; j < test[i].length; j++) {
-							System.out.println("Pixel (" + j + ";" + i + "): " + "RED: " + test[i][j].getRed()
-									+ " GREEN: " + test[i][j].getGreen() + " BLUE: " + test[i][j].getBlue());
-							if (test[i][j].getRed() == 0 && test[i][j].getGreen() == 0 && test[i][j].getBlue() == 0) {
+					for (int i = 0; i < testColor.length; i++) {
+						for (int j = 0; j < testColor[i].length; j++) {
+							if (testColor[i][j].getRed() == 0 && testColor[i][j].getGreen() == 0
+									&& testColor[i][j].getBlue() == 0) {
 								black++;
 							} else {
 								white++;
