@@ -1,5 +1,6 @@
 import robclient.RobotClient;
 import edgedetect.EdgeDetector;
+import edgedetect.Picture;
 
 import java.awt.image. BufferedImage;
 import java.awt.Color;
@@ -7,7 +8,18 @@ import java.awt.Color;
 public class App {
 	public static void main(String[] args) {
 
-		Color[][] 
+		BufferedImage bi = ImageIO.read(new File("app/images/small_sandwitch.jpg"));
+		int[] data = ( (DataBufferInt) bi.getRaster().getDataBuffer() ).getData();
+		for ( int i = 0 ; i < data.length ; i++) {
+			Color c = new Color(data[i]);
+
+			c.getRed();
+			c.getGreen();
+			c.getBlue();
+
+		}
+
+
 		// EdgeDetector eDetector = new EdgeDetector("app/images/small_sandwitch.jpg");
 		// BufferedImage test = eDetector.getBufferedImage();
 		// System.out.println(test);
