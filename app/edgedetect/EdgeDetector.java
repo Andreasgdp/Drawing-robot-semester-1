@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 public class EdgeDetector {
 
     private String imagePath;
+    private String coordinates;
 
     /**
      * 
@@ -17,6 +18,7 @@ public class EdgeDetector {
      */
     public EdgeDetector(String imagePath) {
         this.imagePath = imagePath;
+        this.coordinates = null;
     }
 
     private int truncate(int a) {
@@ -182,7 +184,7 @@ public class EdgeDetector {
     }
 
     public String getCoordinates() {
-        return null;
+        return this.coordinates;
     }
 
     public void loadNewImage(String imgPath) {
