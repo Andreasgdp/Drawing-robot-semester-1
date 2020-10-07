@@ -1,9 +1,12 @@
 import robclient.RobotClient;
 import edgedetect.EdgeDetector;
+import drawing_in_java.drawings;
 
 import java.awt.image.BufferedImage;
 import java.awt.Color;
 import java.util.*;
+import javax.swing.*;
+
 
 public class App {
 	public static void main(String[] args) {
@@ -34,7 +37,7 @@ public class App {
 						for (int j = 0; j < test[i].length; j++) {
 							System.out.println("Pixel (" + j + ";" + i + "): " + "RED: " + test[i][j].getRed()
 									+ " GREEN: " + test[i][j].getGreen() + " BLUE: " + test[i][j].getBlue());
-							if (test[i][j].getBlue() == 0 && test[i][j].getBlue() == 0 && test[i][j].getBlue() == 0) {
+							if (test[i][j].getRed() == 0 && test[i][j].getGreen() == 0 && test[i][j].getBlue() == 0) {
 								black++;
 							} else {
 								white++;
@@ -44,16 +47,15 @@ public class App {
 					System.out.println("White: " + white);
 					System.out.println("Black: " + black);
 				} else if (msg.startsWith("show")) {
-					Color[][] test = eDetect.getColorArray();
-					for (int i = 0; i < test.length; i++) {
-						for (int j = 0; j < test[i].length; j++) {
-							if (test[i][j].getBlue() == 0 && test[i][j].getBlue() == 0 && test[i][j].getBlue() == 0) {
-								// TODO: draw pixel
-							} else {
-								// TODO: don't draw pixel
-							}
-						}
-					}
+					int height = eDetect.getBufferedImage().getHeight();
+					int width = eDetect.getBufferedImage().getWidth();
+					JFrame f = new JFrame("Title");
+					f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					Color[][] colorArray = eDetect.getColorArray();
+					drawings d = new drawings(colorArray);
+					f.add(d);
+					f.setSize(width, height);
+					f.setVisible(true);
 				} else if (msg.startsWith("reset")) {
 					client.write("reset");
 				} else if (msg.startsWith("stop")) {// TODO: add function to recognize ESC-btn
