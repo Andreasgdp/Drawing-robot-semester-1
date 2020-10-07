@@ -191,4 +191,14 @@ public class EdgeDetector {
 
         return arrayRepresentation;
     }
+
+	public void loadCoordinates() {
+	}
+
+	public String getCoordinates() {
+		return null;
+	}
+
+	public void loadNewImage(String imgPath) {
+	}
 }
