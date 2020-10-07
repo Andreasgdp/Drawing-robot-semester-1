@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
  */
 public class EdgeDetector {
 
-    private final String imagePath;
+    private String imagePath;
 
     /**
      * 
@@ -38,26 +38,20 @@ public class EdgeDetector {
     }
 
     /**
-     * This method performs edge-detection of the image on the path provided to the constructor, and returns a BufferedImage representation of the result.
+     * This method performs edge-detection of the image on the path provided to the
+     * constructor, and returns a BufferedImage representation of the result.
+     * 
      * @return A BufferedImage-object representation of the image provided.
      */
     public BufferedImage getBufferedImage() {
 
-        int[][] filter1 = {
-            {-1, 0, 1},
-            {-2, 0, 2},
-            {-1, 0, 1}
-        };
+        int[][] filter1 = { { -1, 0, 1 }, { -2, 0, 2 }, { -1, 0, 1 } };
 
-        int[][] filter2 = {
-            {1, 2, 1},
-            {0, 0, 0},
-            {-1, -2, -1}
-        };
+        int[][] filter2 = { { 1, 2, 1 }, { 0, 0, 0 }, { -1, -2, -1 } };
 
         Picture picture0 = new Picture(imagePath);
-        int width = picture0.width()-2;
-        int height = picture0.height()-2;
+        int width = picture0.width() - 2;
+        int height = picture0.height() - 2;
         Picture picture1 = new Picture(width, height);
 
         for (int y = 0; y < height; y++) {
@@ -91,29 +85,25 @@ public class EdgeDetector {
     }
 
     /**
-     * This method performs edge-detection of the image on the path provided to the constructor, and returns a two-dimensional int-array representation of the result.
-     * @return A two dimensional array showing the magnitude (intensity) in each pixel of the picture provided.
+     * This method performs edge-detection of the image on the path provided to the
+     * constructor, and returns a two-dimensional int-array representation of the
+     * result.
+     * 
+     * @return A two dimensional array showing the magnitude (intensity) in each
+     *         pixel of the picture provided.
      */
     public int[][] getMagnitudeArray() {
-        int[][] filter1 = {
-            {-1, 0, 1},
-            {-2, 0, 2},
-            {-1, 0, 1}
-        };
+        int[][] filter1 = { { -1, 0, 1 }, { -2, 0, 2 }, { -1, 0, 1 } };
 
-        int[][] filter2 = {
-            {1, 2, 1},
-            {0, 0, 0},
-            {-1, -2, -1}
-        };
+        int[][] filter2 = { { 1, 2, 1 }, { 0, 0, 0 }, { -1, -2, -1 } };
 
         Picture picture0 = new Picture(imagePath);
-        int width = picture0.width()-2;
-        int height = picture0.height()-2;
+        int width = picture0.width() - 2;
+        int height = picture0.height() - 2;
         int[][] arrayRepresentation = new int[width][height];
 
-        for (int y = 0; y < height ; y++) {
-            for (int x = 0; x < width ; x++) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
 
                 // get 3-by-3 array of colors in neighborhood
                 int[][] gray = new int[3][3];
@@ -141,26 +131,22 @@ public class EdgeDetector {
     }
 
     /**
-     * This method performs edge-detection of the image on the path provided to the constructor, and returns a two-dimensional Color-array representation of the result.
-     * @return A two-dimensional array with Color objects, representing a greyscale interpretation of the image.
+     * This method performs edge-detection of the image on the path provided to the
+     * constructor, and returns a two-dimensional Color-array representation of the
+     * result.
+     * 
+     * @return A two-dimensional array with Color objects, representing a greyscale
+     *         interpretation of the image.
      */
     public Color[][] getGreyscaleArray() {
-        int[][] filter1 = {
-            {-1, 0, 1},
-            {-2, 0, 2},
-            {-1, 0, 1}
-        };
+        int[][] filter1 = { { -1, 0, 1 }, { -2, 0, 2 }, { -1, 0, 1 } };
 
-        int[][] filter2 = {
-            {1, 2, 1},
-            {0, 0, 0},
-            {-1, -2, -1}
-        };
+        int[][] filter2 = { { 1, 2, 1 }, { 0, 0, 0 }, { -1, -2, -1 } };
 
         Picture picture0 = new Picture(imagePath);
-        //Find width, removing outer border due to filter
-        int width = picture0.width()-2;
-        int height = picture0.height()-2;
+        // Find width, removing outer border due to filter
+        int width = picture0.width() - 2;
+        int height = picture0.height() - 2;
         Color[][] arrayRepresentation = new Color[width][height];
 
         for (int y = 0; y < height; y++) {
@@ -192,13 +178,14 @@ public class EdgeDetector {
         return arrayRepresentation;
     }
 
-	public void loadCoordinates() {
-	}
+    public void loadCoordinates() {
+    }
 
-	public String getCoordinates() {
-		return null;
-	}
+    public String getCoordinates() {
+        return null;
+    }
 
-	public void loadNewImage(String imgPath) {
-	}
+    public void loadNewImage(String imgPath) {
+        this.imagePath = imgPath;
+    }
 }
