@@ -2,6 +2,9 @@ package edgedetect;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
+import jdk.nashorn.api.tree.ForInLoopTree;
 
 /**
  *
@@ -211,5 +214,36 @@ public class EdgeDetector {
         }
 
         return arrayRepresentation;
+    }
+
+    public  ArrayList<ArrayList<ArrayList<Integer> > > colorPair(Color[][] array) {
+        ArrayList<ArrayList<ArrayList<Integer> > > colorPairs = new ArrayList<ArrayList<ArrayList<Integer> > >();
+        boolean colorSwitch = true;
+        ArrayList<ArrayList<Integer> > plist = new ArrayList<ArrayList<Integer> >();
+        ArrayList<Integer> coords = new ArrayList<Integer>();
+
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                if (colorSwitch){
+                    if (array[i][j].getRed() == 0 && array[i][j].getBlue() == 0 && array[i][j].getGreen() == 0) {
+                        coords.add(i);
+                        coords.add(j);
+                        plist.add(coords);
+                        colorSwitch = false;
+                    }
+                    
+                } else {
+                    if (array[i][j].getRed() == 255 && array[i][j].getBlue() == 255 && array[i][j].getGreen() == 255) {
+                        coords.add(i-1);
+                        coords.add(j-1);
+                        plist.add(coords);
+                        colorPairs.add(plist);
+                        plist = new ArrayList<ArrayList<Integer> >();
+                        colorSwitch = true;
+                    }
+                }
+            }
+        }
+        return colorPairs;
     }
 }
