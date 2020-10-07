@@ -12,7 +12,7 @@ public class App {
 		boolean imageLoaded = false;
 		boolean coordsLoaded = false;
 
-		EdgeDetector eDetect = new EdgeDetector("app/images/icon.png");
+		EdgeDetector eDetect = new EdgeDetector("app/images/download.png");
 		// TODO: get correct hostname and port
 		RobotClient client = new RobotClient("hostname", 5000);
 		try {
@@ -47,6 +47,7 @@ public class App {
 				} else if (msg.startsWith("show")) {
 					int height = eDetect.getBufferedImage().getHeight();
 					int width = eDetect.getBufferedImage().getWidth();
+					System.out.println(height + " : " + width);
 					JFrame f = new JFrame("Title");
 					f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					Color[][] colorArray = eDetect.getColorArray();
