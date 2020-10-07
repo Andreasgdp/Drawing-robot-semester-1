@@ -12,7 +12,7 @@ public class App {
 		boolean imageLoaded = false;
 		boolean coordsLoaded = false;
 
-		EdgeDetector eDetect = new EdgeDetector("app/images/small_yoda.png");
+		EdgeDetector eDetect = new EdgeDetector("app/images/icon.png");
 		// TODO: get correct hostname and port
 		RobotClient client = new RobotClient("hostname", 5000);
 		try {
