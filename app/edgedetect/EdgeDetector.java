@@ -200,7 +200,13 @@ public class EdgeDetector {
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                arrayRepresentation[x][y] = picture0.get(x, y);
+                Color color = picture0.get(x, y);
+                if (color.getRed() >= 200 && color.getGreen() >= 200 && color.getBlue() >= 200){
+                    arrayRepresentation[x][y] = new Color(255,255,255);
+                }
+                else{
+                    arrayRepresentation[x][y] = new Color(0);
+                }
             }
         }
 

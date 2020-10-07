@@ -9,14 +9,27 @@ public class App {
 	public static void main(String[] args) {
 
 		EdgeDetector eDetector = new EdgeDetector("app/images/small_sandwitch.jpg");
+		int black = 0;
+		int white = 0;
 
 		Color[][] testColor =  eDetector.getColorArray();
 		for (int x = 0; x < testColor.length; x++) {
 			for (int y = 0; y < testColor[x].length; y++){
+				if (testColor[x][y].getRed() == 0 && testColor[x][y].getGreen() == 0 && testColor[x][y].getBlue() == 0){
+					black++;
+				}
+				else
+				{
+					white++;
+				}
 
 				System.out.println(testColor[x][y]);
+				
+
 			}
 		}
+		System.out.println("Black " + black);
+		System.out.println("White " + white);
 
 		
 		// EdgeDetector eDetector = new EdgeDetector("app/images/small_sandwitch.jpg");
