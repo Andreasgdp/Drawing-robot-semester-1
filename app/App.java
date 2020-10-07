@@ -43,6 +43,17 @@ public class App {
 					}
 					System.out.println("White: " + white);
 					System.out.println("Black: " + black);
+				} else if (msg.startsWith("show")) {
+					Color[][] test = eDetect.getColorArray();
+					for (int i = 0; i < test.length; i++) {
+						for (int j = 0; j < test[i].length; j++) {
+							if (test[i][j].getBlue() == 0 && test[i][j].getBlue() == 0 && test[i][j].getBlue() == 0) {
+								// TODO: draw pixel
+							} else {
+								// TODO: don't draw pixel
+							}
+						}
+					}
 				} else if (msg.startsWith("reset")) {
 					client.write("reset");
 				} else if (msg.startsWith("stop")) {// TODO: add function to recognize ESC-btn
