@@ -10,6 +10,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.net.*;
+import java.io.*;
 
 /**
  *
@@ -55,6 +57,7 @@ public class RobotClient {
      */
     public boolean isConnected() {
         return connection.isConnected();
+        
     }
 
     /**
@@ -82,4 +85,17 @@ public class RobotClient {
             }
         }
     }
+
+	public String read() {
+        String str = "";
+        try {
+
+            InputStreamReader in = new InputStreamReader(connection.getInputStream());
+            BufferedReader bf = new BufferedReader(in);
+            str = bf.readLine();
+        } catch (Exception e) {
+            //TODO: handle exception
+        }
+		return str;
+	}
 }

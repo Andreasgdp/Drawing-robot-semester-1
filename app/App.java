@@ -9,12 +9,12 @@ import javax.swing.*;
 
 public class App {
 	public static void main(String[] args) {
+		App app = new App();
 		boolean imageLoaded = false;
 		boolean coordsLoaded = false;
 
 		EdgeDetector eDetect = new EdgeDetector("app/images/download.png");
-		// TODO: get correct hostname and port
-		RobotClient client = new RobotClient("hostname", 5000);
+		RobotClient client = new RobotClient("10.0.0.50", 12345);
 		try {
 			client.connect();
 		} catch (Exception e) {
@@ -22,6 +22,7 @@ public class App {
 		}
 
 		Scanner scanner = new Scanner(System.in);
+		Scanner CMDscanner = new Scanner(System.in);
 		while (true) {
 			try {
 				System.out.print("Write command: ");
@@ -61,7 +62,7 @@ public class App {
 					client.write("stop");
 				} else if (msg.startsWith("image") || msg.startsWith("loadImage")) {
 					System.out.print("Write new img path: ");
-					String imgPath = scanner.next();
+					String imgPath = CMDscanner.next();
 					eDetect.loadNewImage(imgPath);
 					imageLoaded = true;
 				} else if (msg.startsWith("coordinates") || msg.startsWith("loadCoordinates")) {
@@ -77,8 +78,34 @@ public class App {
 					} else {
 						System.out.println("Coordinates is not loaded! Use command 'coordinates' to load coordinates");
 					}
+				} else if (msg.startsWith("message")) {
+					System.out.print("Write the message for the plc: ");
+					String message = CMDscanner.nextLine();
+					client.write(message);
+					String inputClient = client.read();
+					String waitVariable = inputClient;
+					if (waitVariable == null) {
+						waitVariable = "null";
+					}
+					while (waitVariable.compareTo(message) != 0) {
+						waitVariable = client.read();
+						if (waitVariable == null) {
+							waitVariable = "null";
+						}
+					}
+					System.out.println(inputClient);
+					app.reconnect(client);
+					waitVariable = "test";
+					while (waitVariable.compareTo("done") != 0) {
+						waitVariable = client.read();
+						if (waitVariable == null) {
+							waitVariable = "test";
+						}
+					}
+					System.out.println(waitVariable);
+					app.reconnect(client);
 				} else if (msg.startsWith("run")) {
-					String imgPath = scanner.next();
+					String imgPath = CMDscanner.next();
 					eDetect.loadNewImage(imgPath);
 					eDetect.loadCoordinates();
 					client.write(eDetect.getCoordinates());
@@ -90,6 +117,16 @@ public class App {
 			}
 		}
 		scanner.close();
+		CMDscanner.close();
 		client.disconnect();
+	}
+
+	public void reconnect(RobotClient client) {
+		client.disconnect();
+		try {
+			client.connect();
+		} catch (Exception e) {
+			System.out.println("Cannot connect to PLC. ERR: " + e);
+		}
 	}
 }
