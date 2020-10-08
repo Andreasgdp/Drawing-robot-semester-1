@@ -6,7 +6,7 @@ import java.awt.Color;
 
 public class App {
 	public static void main(String[] args) {
-		RobotClient client = new RobotClient("hostname", 5000);
+		RobotClient client = new RobotClient("10.0.0.50", 12345);
 		client.connect();
 		if (client.isConnected())
 			client.write("this is a message");

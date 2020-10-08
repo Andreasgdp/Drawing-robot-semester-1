@@ -5,7 +5,7 @@
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Package.pkg"
     LogicalPath=""
     Type="Package.ParentUnknown"
-    LastWriteTime="132459341801502316" />
+    LastWriteTime="132466313774694791" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Global.typ"
     LogicalPath="Global.typ"
@@ -22,98 +22,190 @@
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\Package.pkg"
     LogicalPath="Libraries"
     Type="Package"
-    LastWriteTime="132459341801352715" />
+    LastWriteTime="132466313774200081" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\operator\binary.lby"
     LogicalPath="Libraries.operator"
     Type="Library"
-    LastWriteTime="132459341801422538" />
+    LastWriteTime="132169182720000000" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\operator\operator.fun"
     LogicalPath="Libraries.operator.operator.fun"
     Type="File"
-    LastWriteTime="132459341801432500"
+    LastWriteTime="132169182720000000"
     Private="false" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\operator\operator.typ"
     LogicalPath="Libraries.operator.operator.typ"
     Type="File"
-    LastWriteTime="132459341801432500"
+    LastWriteTime="132169182720000000"
     Private="false" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\operator\operator.var"
     LogicalPath="Libraries.operator.operator.var"
     Type="File"
-    LastWriteTime="132459341801442723"
+    LastWriteTime="132169182720000000"
     Private="false" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\runtime\binary.lby"
     LogicalPath="Libraries.runtime"
     Type="Library"
-    LastWriteTime="132459341801472531" />
+    LastWriteTime="132169182740000000" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\runtime\runtime.fun"
     LogicalPath="Libraries.runtime.runtime.fun"
     Type="File"
-    LastWriteTime="132459341801482377"
+    LastWriteTime="132169182740000000"
     Private="false" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\runtime\runtime.typ"
     LogicalPath="Libraries.runtime.runtime.typ"
     Type="File"
-    LastWriteTime="132459341801492718"
+    LastWriteTime="132169182740000000"
     Private="false" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\runtime\runtime.var"
     LogicalPath="Libraries.runtime.runtime.var"
     Type="File"
-    LastWriteTime="132459341801502316"
+    LastWriteTime="132169182740000000"
     Private="false" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\astime\binary.lby"
     LogicalPath="Libraries.astime"
     Type="Library"
-    LastWriteTime="132459341801402807" />
+    LastWriteTime="132169182740000000" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\astime\astime.fun"
     LogicalPath="Libraries.astime.astime.fun"
     Type="File"
-    LastWriteTime="132459341801382643"
+    LastWriteTime="132169182740000000"
     Private="false" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\astime\astime.typ"
     LogicalPath="Libraries.astime.astime.typ"
     Type="File"
-    LastWriteTime="132459341801392608"
+    LastWriteTime="132169182740000000"
     Private="false" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\astime\astime.var"
     LogicalPath="Libraries.astime.astime.var"
     Type="File"
-    LastWriteTime="132459341801392608"
+    LastWriteTime="132169182740000000"
     Private="false" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\AsIecCon\binary.lby"
     LogicalPath="Libraries.AsIecCon"
     Type="Library"
-    LastWriteTime="132459341801352715" />
+    LastWriteTime="132169182740000000" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\AsIecCon\AsIecCon.fun"
     LogicalPath="Libraries.AsIecCon.AsIecCon.fun"
     Type="File"
-    LastWriteTime="132459341801313110"
+    LastWriteTime="132169182740000000"
     Private="false" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\AsIecCon\AsIecCon.typ"
     LogicalPath="Libraries.AsIecCon.AsIecCon.typ"
     Type="File"
-    LastWriteTime="132459341801322804"
+    LastWriteTime="132169182740000000"
     Private="false" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\AsIecCon\AsIecCon.var"
     LogicalPath="Libraries.AsIecCon.AsIecCon.var"
     Type="File"
-    LastWriteTime="132459341801322804"
+    LastWriteTime="132169182740000000"
+    Private="false" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\AsOpcUac\binary.lby"
+    LogicalPath="Libraries.AsOpcUac"
+    Type="Library"
+    LastWriteTime="132169183500000000" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\AsOpcUac\AsOpcUac.fun"
+    LogicalPath="Libraries.AsOpcUac.AsOpcUac.fun"
+    Type="File"
+    LastWriteTime="132169183500000000"
+    Private="false" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\AsOpcUac\AsOpcUac.typ"
+    LogicalPath="Libraries.AsOpcUac.AsOpcUac.typ"
+    Type="File"
+    LastWriteTime="132169183500000000"
+    Private="false" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\AsOpcUac\AsOpcUac.var"
+    LogicalPath="Libraries.AsOpcUac.AsOpcUac.var"
+    Type="File"
+    LastWriteTime="132169183500000000"
+    Private="false" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\AsOpcUas\binary.lby"
+    LogicalPath="Libraries.AsOpcUas"
+    Type="Library"
+    LastWriteTime="132169183520000000" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\AsOpcUas\AsOpcUas.fun"
+    LogicalPath="Libraries.AsOpcUas.AsOpcUas.fun"
+    Type="File"
+    LastWriteTime="132169183520000000"
+    Private="false" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\AsOpcUas\AsOpcUas.typ"
+    LogicalPath="Libraries.AsOpcUas.AsOpcUas.typ"
+    Type="File"
+    LastWriteTime="132169183520000000"
+    Private="false" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\AsOpcUas\AsOpcUas.var"
+    LogicalPath="Libraries.AsOpcUas.AsOpcUas.var"
+    Type="File"
+    LastWriteTime="132169183520000000"
+    Private="false" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\AsTCP\binary.lby"
+    LogicalPath="Libraries.AsTCP"
+    Type="Library"
+    LastWriteTime="132169183520000000" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\AsTCP\AsTCP.fun"
+    LogicalPath="Libraries.AsTCP.AsTCP.fun"
+    Type="File"
+    LastWriteTime="132169183520000000"
+    Private="false" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\AsTCP\AsTCP.typ"
+    LogicalPath="Libraries.AsTCP.AsTCP.typ"
+    Type="File"
+    LastWriteTime="132169183520000000"
+    Private="false" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\AsTCP\AsTCP.var"
+    LogicalPath="Libraries.AsTCP.AsTCP.var"
+    Type="File"
+    LastWriteTime="132169183520000000"
+    Private="false" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\AsBrStr\binary.lby"
+    LogicalPath="Libraries.AsBrStr"
+    Type="Library"
+    LastWriteTime="132169851280000000" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\AsBrStr\AsBrStr.fun"
+    LogicalPath="Libraries.AsBrStr.AsBrStr.fun"
+    Type="File"
+    LastWriteTime="132169851280000000"
+    Private="false" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\AsBrStr\AsBrStr.typ"
+    LogicalPath="Libraries.AsBrStr.AsBrStr.typ"
+    Type="File"
+    LastWriteTime="132169851280000000"
+    Private="false" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Libraries\AsBrStr\AsBrStr.var"
+    LogicalPath="Libraries.AsBrStr.AsBrStr.var"
+    Type="File"
+    LastWriteTime="132169851280000000"
     Private="false" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Program\IEC.prg"
@@ -139,6 +231,58 @@
     LastWriteTime="132463546945160821"
     Private="true" />
   <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\OpcUA\IEC.prg"
+    LogicalPath="OpcUA"
+    Type="Program"
+    LastWriteTime="132169187300000000" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\OpcUA\Main.st"
+    LogicalPath="OpcUA.Main.st"
+    Type="File"
+    LastWriteTime="132169196000000000"
+    Private="false" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\OpcUA\Types.typ"
+    LogicalPath="OpcUA.Types.typ"
+    Type="File"
+    LastWriteTime="132169193460000000"
+    Private="true" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\OpcUA\Variables.var"
+    LogicalPath="OpcUA.Variables.var"
+    Type="File"
+    LastWriteTime="132169196660000000"
+    Private="true" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\OpcUA\Methods.uam"
+    LogicalPath="OpcUA.Methods.uam"
+    Type="File"
+    LastWriteTime="132169188340000000"
+    Private="false" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\TCPServer\IEC.prg"
+    LogicalPath="TCPServer"
+    Type="Program"
+    LastWriteTime="132169848960000000" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\TCPServer\Main.st"
+    LogicalPath="TCPServer.Main.st"
+    Type="File"
+    LastWriteTime="132169849880000000"
+    Private="false" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\TCPServer\Types.typ"
+    LogicalPath="TCPServer.Types.typ"
+    Type="File"
+    LastWriteTime="132169850640000000"
+    Private="true" />
+  <Object
+    Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\TCPServer\Variables.var"
+    LogicalPath="TCPServer.Variables.var"
+    Type="File"
+    LastWriteTime="132169849620000000"
+    Private="true" />
+  <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Physical\Config1\Config.pkg"
     LogicalPath="Config1"
     Type="Configuration.ParentUnknown"
@@ -147,7 +291,7 @@
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Physical\Config1\Hardware.hw"
     LogicalPath="Config1.Hardware.hw"
     Type="File"
-    LastWriteTime="132463561617863968"
+    LastWriteTime="132466313629973386"
     Private="false" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Physical\Config1\Hardware.hwl"
@@ -164,7 +308,7 @@
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Physical\Config1\X20CP1382\Cpu.sw"
     LogicalPath="Config1.X20CP1382.Cpu.sw"
     Type="File"
-    LastWriteTime="132463636037580111"
+    LastWriteTime="132466320713617272"
     Private="false" />
   <Object
     Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Physical\Config1\X20CP1382\Cpu.per"

@@ -1,7 +1,7 @@
 
 PROGRAM _INIT
 	(* Insert code here *)
-	this.start := TRUE;
+	this.start := FALSE;
 	this.isReady := FALSE;
 	this.M1.counter := 0;
 	this.M2.counter := 0;

@@ -15,6 +15,32 @@
       <File
         Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\Program\Variables.var" />
     </Task>
+    <Task
+      Name="TCPServer"
+      Disable="false"
+      Source="TCPServer"
+      Language="IEC">
+      <InternalFile
+        Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Temp\Objects\Config1\X20CP1382\TCPServer\Main.st.var" />
+      <File
+        Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\TCPServer\Types.typ" />
+      <File
+        Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\TCPServer\Variables.var" />
+    </Task>
+    <Task
+      Name="OpcUA"
+      Disable="false"
+      Source="OpcUA"
+      Language="IEC">
+      <InternalFile
+        Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Temp\Objects\Config1\X20CP1382\OpcUA\Main.st.var" />
+      <File
+        Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\OpcUA\Types.typ" />
+      <File
+        Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Logical\OpcUA\Variables.var" />
+      <InternalFile
+        Path="C:\Users\andre\Documents\GitHub\Drawing-robot-semester-1\robot_control\Temp\Objects\Config1\X20CP1382\OpcUA\Methods.uam.var" />
+    </Task>
   </TaskClass>
   <TaskClass
     Name="Cyclic#2" />

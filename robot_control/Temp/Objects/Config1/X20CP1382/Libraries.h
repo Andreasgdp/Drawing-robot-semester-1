@@ -1,8 +1,8 @@
 /* Automation Studio generated header file */
 /* Do not edit ! */
 
-#ifndef _LIBRARIES_20201008134116_
-#define _LIBRARIES_20201008134116_
+#ifndef _LIBRARIES_20201008140115_
+#define _LIBRARIES_20201008140115_
 
 __asm__(".section \".plc\"");
 
@@ -19,6 +19,18 @@ __asm__(".ascii \"iecfile \\\"Logical/Libraries/astime/astime.var\\\" scope \\\"
 __asm__(".ascii \"iecfile \\\"Logical/Libraries/AsIecCon/AsIecCon.fun\\\" scope \\\"global\\\"\\n\"");
 __asm__(".ascii \"iecfile \\\"Logical/Libraries/AsIecCon/AsIecCon.typ\\\" scope \\\"global\\\"\\n\"");
 __asm__(".ascii \"iecfile \\\"Logical/Libraries/AsIecCon/AsIecCon.var\\\" scope \\\"global\\\"\\n\"");
+__asm__(".ascii \"iecfile \\\"Logical/Libraries/AsOpcUac/AsOpcUac.fun\\\" scope \\\"global\\\"\\n\"");
+__asm__(".ascii \"iecfile \\\"Logical/Libraries/AsOpcUac/AsOpcUac.typ\\\" scope \\\"global\\\"\\n\"");
+__asm__(".ascii \"iecfile \\\"Logical/Libraries/AsOpcUac/AsOpcUac.var\\\" scope \\\"global\\\"\\n\"");
+__asm__(".ascii \"iecfile \\\"Logical/Libraries/AsOpcUas/AsOpcUas.fun\\\" scope \\\"global\\\"\\n\"");
+__asm__(".ascii \"iecfile \\\"Logical/Libraries/AsOpcUas/AsOpcUas.typ\\\" scope \\\"global\\\"\\n\"");
+__asm__(".ascii \"iecfile \\\"Logical/Libraries/AsOpcUas/AsOpcUas.var\\\" scope \\\"global\\\"\\n\"");
+__asm__(".ascii \"iecfile \\\"Logical/Libraries/AsTCP/AsTCP.fun\\\" scope \\\"global\\\"\\n\"");
+__asm__(".ascii \"iecfile \\\"Logical/Libraries/AsTCP/AsTCP.typ\\\" scope \\\"global\\\"\\n\"");
+__asm__(".ascii \"iecfile \\\"Logical/Libraries/AsTCP/AsTCP.var\\\" scope \\\"global\\\"\\n\"");
+__asm__(".ascii \"iecfile \\\"Logical/Libraries/AsBrStr/AsBrStr.fun\\\" scope \\\"global\\\"\\n\"");
+__asm__(".ascii \"iecfile \\\"Logical/Libraries/AsBrStr/AsBrStr.typ\\\" scope \\\"global\\\"\\n\"");
+__asm__(".ascii \"iecfile \\\"Logical/Libraries/AsBrStr/AsBrStr.var\\\" scope \\\"global\\\"\\n\"");
 
 /* Exported library functions and function blocks */
 #ifdef _OPERATOR_EXPORT
@@ -457,9 +469,74 @@ __asm__(".ascii \"iecfile \\\"Logical/Libraries/AsIecCon/AsIecCon.var\\\" scope 
 	__asm__(".ascii \"plcexport \\\"WSTRING_TO_LREAL\\\" FUN\\n\"");
 	__asm__(".ascii \"plcexport \\\"WSTRING_TO_STRING\\\" FUN\\n\"");
 #endif
+#ifdef _ASOPCUAC_EXPORT
+	__asm__(".ascii \"plcexport \\\"UA_Connect\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_Disconnect\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_GetNamespaceIndex\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_TranslatePath\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_NodeGetHandle\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_NodeGetHandleList\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_NodeReleaseHandle\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_NodeReleaseHandleList\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_NodeGetInfo\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_SubscriptionCreate\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_SubscriptionDelete\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_SubscriptionOperate\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_MonitoredItemAdd\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_MonitoredItemAddList\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_MonitoredItemRemove\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_MonitoredItemRemoveList\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_MonitoredItemOperate\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_MonitoredItemOperateList\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_EventItemAdd\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_EventItemRemove\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_EventItemOperate\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_Read\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_ReadList\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UaClt_ReadBulk\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_Write\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_WriteList\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UaClt_WriteBulk\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_MethodGetHandle\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_MethodReleaseHandle\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_MethodCall\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UA_ConnectionGetStatus\\\" FUB\\n\"");
+#endif
+#ifdef _ASOPCUAS_EXPORT
+	__asm__(".ascii \"plcexport \\\"UaSrv_MethodOperate\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UaSrv_MethodCreate\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UaSrv_MethodDelete\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UaSrv_GetNamespaceIndex\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"UaSrv_FireEvent\\\" FUB\\n\"");
+#endif
+#ifdef _ASTCP_EXPORT
+	__asm__(".ascii \"plcexport \\\"TcpOpen\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"TcpOpenSsl\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"TcpServer\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"TcpClient\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"TcpClose\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"TcpSend\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"TcpRecv\\\" FUB\\n\"");
+	__asm__(".ascii \"plcexport \\\"TcpIoctl\\\" FUB\\n\"");
+#endif
+#ifdef _ASBRSTR_EXPORT
+	__asm__(".ascii \"plcexport \\\"brsftoa\\\" FUN\\n\"");
+	__asm__(".ascii \"plcexport \\\"brsatof\\\" FUN\\n\"");
+	__asm__(".ascii \"plcexport \\\"brsatod\\\" FUN\\n\"");
+	__asm__(".ascii \"plcexport \\\"brsitoa\\\" FUN\\n\"");
+	__asm__(".ascii \"plcexport \\\"brsatoi\\\" FUN\\n\"");
+	__asm__(".ascii \"plcexport \\\"brsmemset\\\" FUN\\n\"");
+	__asm__(".ascii \"plcexport \\\"brsmemcpy\\\" FUN\\n\"");
+	__asm__(".ascii \"plcexport \\\"brsmemmove\\\" FUN\\n\"");
+	__asm__(".ascii \"plcexport \\\"brsmemcmp\\\" FUN\\n\"");
+	__asm__(".ascii \"plcexport \\\"brsstrcat\\\" FUN\\n\"");
+	__asm__(".ascii \"plcexport \\\"brsstrlen\\\" FUN\\n\"");
+	__asm__(".ascii \"plcexport \\\"brsstrcpy\\\" FUN\\n\"");
+	__asm__(".ascii \"plcexport \\\"brsstrcmp\\\" FUN\\n\"");
+#endif
 
 __asm__(".previous");
 
 
-#endif /* _LIBRARIES_20201008134116_ */
+#endif /* _LIBRARIES_20201008140115_ */
 
