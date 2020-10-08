@@ -25,6 +25,7 @@
       <Parameter ID="ActivateSnmp" Value="2" />
     </Connector>
     <Parameter ID="ConfigurationID" Value="robot_control_Config1" />
+    <Parameter ID="Cyclic1Stack" Value="1024" />
   </Module>
   <Module Name="X20TB1F" Type="X20TB1F" Version="1.0.0.0" />
   <Module Name="X20TB1F1" Type="X20TB1F" Version="1.0.0.0" />

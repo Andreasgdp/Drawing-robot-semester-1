@@ -1,7 +1,7 @@
 SHELL := cmd.exe
 CYGWIN=nontsec
 export PATH := C:\Program Files\AdoptOpenJDK\jdk-14.0.2.12-hotspot\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\Users\andre\AppData\Local\Programs\Python\Python38-32\Scripts\;C:\Users\andre\AppData\Local\Programs\Python\Python38-32\;C:\Users\andre\AppData\Local\Microsoft\WindowsApps;C:\Users\andre\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\andre\AppData\Local\GitHubDesktop\bin;C:\Program Files (x86)\Common Files\Hilscher GmbH\TLRDecode;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.1\bin;C:\Program Files (x86)\GitHub CLI\;C:\Users\andre\AppData\Local\Programs\Python\Python38-32\Scripts\;C:\Users\andre\AppData\Local\Programs\Python\Python38-32\;C:\Users\andre\AppData\Local\Microsoft\WindowsApps;C:\Users\andre\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\andre\AppData\Local\GitHubDesktop\bin;C:\Program Files (x86)\Common Files\Hilscher GmbH\TLRDecode;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.1\bin;C:\Program Files (x86)\GitHub CLI
-export AS_BUILD_MODE := Build
+export AS_BUILD_MODE := BuildAndTransfer
 export AS_VERSION := 4.8.2.72
 export AS_COMPANY_NAME :=  
 export AS_USER_NAME := andre
@@ -34,5 +34,5 @@ export WIN32_AS_INSTALL_PATH := "C:\BrAutomation\AS48"
 
 ProjectMakeFile:
 
-	@'$(AS_BIN_PATH)/BR.AS.AnalyseProject.exe' '$(AS_PROJECT_PATH)/robot_control.apj' -t '$(AS_TEMP_PATH)' -c '$(AS_CONFIGURATION)' -o '$(AS_BINARIES_PATH)'   -sfas -buildMode 'Build'   
+	@'$(AS_BIN_PATH)/BR.AS.AnalyseProject.exe' '$(AS_PROJECT_PATH)/robot_control.apj' -t '$(AS_TEMP_PATH)' -c '$(AS_CONFIGURATION)' -o '$(AS_BINARIES_PATH)'   -sfas -buildMode 'BuildAndTransfer'   
 

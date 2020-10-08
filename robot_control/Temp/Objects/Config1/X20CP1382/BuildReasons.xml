@@ -20,10 +20,6 @@
     <BuildReason>Prerequiste "$(AS_PROJECT_PATH)\temp\objects\config1\x20cp1382\program\program.ox" differs.
 </BuildReason>
   </Rule>
-  <Rule ID="$(AS_PROJECT_PATH)\temp\objects\config1\x20cp1382\iomap.br">
-    <BuildReason>Prerequiste "$(AS_PROJECT_PATH)\logical\program\types.typ" differs.
-</BuildReason>
-  </Rule>
   <Rule ID="#cpu_tp.mak">
     <BuildReason>Rule is forced.</BuildReason>
   </Rule>
