@@ -1,0 +1,13 @@
+VAR
+	test : USINT;
+	tcpst : TCPSTATE;
+	sendData : STRING[80];
+	receiveData : STRING[80];
+	TcpOpen1 : TcpOpen;
+	TcpServer1 : TcpServer;
+	TcpReceive1 : TcpRecv;
+	TcpSend1 : TcpSend;
+	TcpClose1 : TcpClose;
+	TcpClose2 : TcpClose;
+	goTo : STRING[80];
+END_VAR
