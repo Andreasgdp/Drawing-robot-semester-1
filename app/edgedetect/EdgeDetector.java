@@ -191,4 +191,8 @@ public class EdgeDetector {
 
         return arrayRepresentation;
     }
+
+	public String loadCordinates() {
+		return null;
+	}
 }
