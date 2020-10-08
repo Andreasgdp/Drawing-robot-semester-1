@@ -4,7 +4,7 @@ import java.io.*;
 public class Client {
 	public static void main(String[] args) {
 		try {
-			Socket s = new Socket("10.0.0.48", 4999);
+			Socket s = new Socket("10.0.0.99", 3000);
 			PrintWriter pr = new PrintWriter(s.getOutputStream());
 	
 			pr.println("it is working");

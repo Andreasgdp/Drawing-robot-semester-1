@@ -3,7 +3,7 @@ import java.io.*;
 
 public class Server {
     public static void main(String[] args) throws IOException {
-        ServerSocket ss = new ServerSocket(4999);
+        ServerSocket ss = new ServerSocket(3000);
         Socket s = ss.accept();
 
         System.out.println("client connected");
