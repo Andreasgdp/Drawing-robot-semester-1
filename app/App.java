@@ -184,9 +184,10 @@ public class App {
 							// [[x1,y1],[x2,y2]]
 							for (int j = 0; j < 2; j++) {
 								// j = 0: [x1,y1] ; j = 1: [x2,y2]
-								x = Integer.toString(coords.get(i).get(j).get(0));
-								y = Integer.toString(coords.get(i).get(j).get(1));
-								draw = Integer.toString(j);
+								x = String.format("%03d", coords.get(i).get(j).get(0));
+								y = String.format("%03d", coords.get(i).get(j).get(1));
+								draw = String.format("%03d", j);
+
 								System.out.println(x + "," + y + "," + draw);
 
 								// Send x
