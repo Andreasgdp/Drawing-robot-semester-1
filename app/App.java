@@ -15,7 +15,7 @@ public class App {
 
 		EdgeDetector eDetect = new EdgeDetector("app/images/download.png");
 		// RobotClient client = new RobotClient("localhost", 4999);
-		RobotClient client = new RobotClient("10.0.0.50", 12345);
+		RobotClient client = new RobotClient("127.0.0.1", 12345);
 		try {
 			client.connect();
 		} catch (Exception e) {
@@ -164,9 +164,10 @@ public class App {
 				}
 
 				else if (msg.startsWith("run")) {
-					System.out.print("Write new img path: ");
-					String imgPath = CMDscanner.next();
-					imageLoaded = eDetect.loadNewImage(imgPath);
+					// System.out.print("Write new img path: ");
+					// String imgPath = CMDscanner.next();
+					// imageLoaded = eDetect.loadNewImage(imgPath);
+					imageLoaded = eDetect.loadNewImage("app/images/black.jpg");
 					if (imageLoaded) {
 						Color[][] colorArray = eDetect.getColorArray();
 						coordsLoaded = eDetect.loadCoordinates(colorArray);
@@ -239,11 +240,13 @@ public class App {
 	}
 
 	public void reconnect(RobotClient client) {
-		client.disconnect();
-		try {
-			client.connect();
-		} catch (Exception e) {
-			System.out.println("Cannot connect to PLC. ERR: " + e);
+		if (client.isConnected()) {
+			client.disconnect();
+			try {
+				client.connect();
+			} catch (Exception e) {
+				System.out.println("Cannot connect to PLC. ERR: " + e);
+			}
 		}
 	}
 }

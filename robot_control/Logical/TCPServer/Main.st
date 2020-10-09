@@ -16,7 +16,8 @@ PROGRAM _CYCLIC
 			
 		TCPSTATE_SERVER_CREATE :
 			IF goTo = sendData AND goTo = receiveData THEN
-	  			sendData := receiveData := '';
+				sendData := receiveData := '';
+				goTo := '';
 			END_IF;
 			IF goTo = 'done' THEN
 				sendData := goTo;
