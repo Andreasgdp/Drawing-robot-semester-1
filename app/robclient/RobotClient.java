@@ -78,13 +78,15 @@ public class RobotClient {
                 waitVariable = "null";
             }
             long startTime = System.currentTimeMillis();
-            while (waitVariable.compareTo(message) != 0 || (System.currentTimeMillis() - startTime) < 10000) {
+            System.out.println("Message: " + message + " Wait: " + waitVariable + " Check: "
+                    + (waitVariable.equals(message)));
+            while (!waitVariable.equals(message)) {
                 waitVariable = this.read();
                 if (waitVariable == null) {
                     waitVariable = "null";
                 }
             }
-            return (message == waitVariable) ? true : false;
+            return (waitVariable.equals(message)) ? true : false;
         } else {
             return false;
         }
@@ -106,12 +108,11 @@ public class RobotClient {
     public String read() {
         String str = "";
         try {
-
             InputStreamReader in = new InputStreamReader(connection.getInputStream());
             BufferedReader bf = new BufferedReader(in);
             str = bf.readLine();
         } catch (Exception e) {
-            // TODO: handle exception
+            System.out.println(e);
         }
         return str;
     }

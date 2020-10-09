@@ -205,28 +205,28 @@ public class EdgeDetector {
         ArrayList<ArrayList<ArrayList<Integer>>> colorPairs = new ArrayList<ArrayList<ArrayList<Integer>>>();
         ArrayList<ArrayList<Integer>> plist = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> coords = new ArrayList<Integer>();
-        boolean colorSwitch = true;
+        boolean drawBlackColor = true;
 
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                if (colorSwitch) {
-                    if (array[i][j].getRed() == 0 && array[i][j].getBlue() == 0 && array[i][j].getGreen() == 0) {
-                        coords.add(i);
-                        coords.add(j);
+        for (int x = 0; x < array.length; x++) {
+            for (int y = 0; y < array[x].length; y++) {
+                if (drawBlackColor) {
+                    if (array[x][y].getRed() == 0 && array[x][y].getBlue() == 0 && array[x][y].getGreen() == 0) {
+                        coords.add(x);
+                        coords.add(y);
                         coords = new ArrayList<Integer>();
                         plist.add(coords);
-                        colorSwitch = false;
+                        drawBlackColor = false;
                     }
 
                 } else {
-                    if (array[i][j].getRed() == 255 && array[i][j].getBlue() == 255 && array[i][j].getGreen() == 255) {
-                        coords.add(i - 1);
-                        coords.add(j - 1);
+                    if (array[x][y].getRed() == 255 && array[x][y].getBlue() == 255 && array[x][y].getGreen() == 255) {
+                        coords.add(x - 1);
+                        coords.add(y);
                         coords = new ArrayList<Integer>();
                         plist.add(coords);
                         colorPairs.add(plist);
                         plist = new ArrayList<ArrayList<Integer>>();
-                        colorSwitch = true;
+                        drawBlackColor = true;
                     }
                 }
             }

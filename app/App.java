@@ -14,6 +14,7 @@ public class App {
 		boolean coordsLoaded = false;
 
 		EdgeDetector eDetect = new EdgeDetector("app/images/download.png");
+		// RobotClient client = new RobotClient("localhost", 4999);
 		RobotClient client = new RobotClient("10.0.0.50", 12345);
 		try {
 			client.connect();
@@ -173,7 +174,6 @@ public class App {
 						System.out.println("Image is not loaded! Use command 'image' to load image");
 					}
 					if (coordsLoaded) {
-						// client.write(eDetect.getCoordinates());
 						String draw = "0";
 						String x = "0";
 						String y = "0";
@@ -186,6 +186,7 @@ public class App {
 								x = Integer.toString(coords.get(i).get(j).get(0));
 								y = Integer.toString(coords.get(i).get(j).get(1));
 								draw = Integer.toString(j);
+								System.out.println(x + "," + y + "," + draw);
 
 								// Send x
 								writeSuccess = client.write(x);
@@ -205,8 +206,7 @@ public class App {
 								if (writeSuccess) {
 									String waitVariable = "test";
 									long startTime = System.currentTimeMillis();
-									while (waitVariable.compareTo("done") != 0
-											|| (System.currentTimeMillis() - startTime) < 10000) {
+									while (waitVariable.compareTo("done") != 0) {
 										waitVariable = client.read();
 										if (waitVariable == null) {
 											waitVariable = "test";
