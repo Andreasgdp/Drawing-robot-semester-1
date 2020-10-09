@@ -2,6 +2,7 @@ package edgedetect;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 /**
  *
@@ -10,7 +11,7 @@ import java.awt.image.BufferedImage;
 public class EdgeDetector {
 
     private String imagePath;
-    private String coordinates;
+    private ArrayList<ArrayList<ArrayList<Integer>>> coordinates;
 
     /**
      * 
@@ -200,14 +201,81 @@ public class EdgeDetector {
         return pixelColor;
     }
 
-    public void loadCoordinates() {
+    public boolean loadCoordinates(Color[][] array) {
+        ArrayList<ArrayList<ArrayList<Integer>>> colorPairs = new ArrayList<ArrayList<ArrayList<Integer>>>();
+        ArrayList<ArrayList<Integer>> plist = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> coords = new ArrayList<Integer>();
+        boolean colorSwitch = true;
+
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                if (colorSwitch) {
+                    if (array[i][j].getRed() == 0 && array[i][j].getBlue() == 0 && array[i][j].getGreen() == 0) {
+                        coords.add(i);
+                        coords.add(j);
+                        coords = new ArrayList<Integer>();
+                        plist.add(coords);
+                        colorSwitch = false;
+                    }
+
+                } else {
+                    if (array[i][j].getRed() == 255 && array[i][j].getBlue() == 255 && array[i][j].getGreen() == 255) {
+                        coords.add(i - 1);
+                        coords.add(j - 1);
+                        coords = new ArrayList<Integer>();
+                        plist.add(coords);
+                        colorPairs.add(plist);
+                        plist = new ArrayList<ArrayList<Integer>>();
+                        colorSwitch = true;
+                    }
+                }
+            }
+        }
+        this.coordinates = colorPairs;
+        // TODO: Add method to check if coords are loaded.
+        return true;
     }
 
-    public String getCoordinates() {
+    public ArrayList<ArrayList<ArrayList<Integer>>> getCoordinates() {
         return this.coordinates;
     }
 
-    public void loadNewImage(String imgPath) {
+    public boolean loadNewImage(String imgPath) {
         this.imagePath = imgPath;
+        // TODO: Add method to check if path exists.
+        return true;
+    }
+
+    public ArrayList<ArrayList<ArrayList<Integer>>> getPairCoords(Color[][] array) {
+        ArrayList<ArrayList<ArrayList<Integer>>> colorPairs = new ArrayList<ArrayList<ArrayList<Integer>>>();
+        ArrayList<ArrayList<Integer>> plist = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> coords = new ArrayList<Integer>();
+        boolean colorSwitch = true;
+
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                if (colorSwitch) {
+                    if (array[i][j].getRed() == 0 && array[i][j].getBlue() == 0 && array[i][j].getGreen() == 0) {
+                        coords.add(i);
+                        coords.add(j);
+                        coords = new ArrayList<Integer>();
+                        plist.add(coords);
+                        colorSwitch = false;
+                    }
+
+                } else {
+                    if (array[i][j].getRed() == 255 && array[i][j].getBlue() == 255 && array[i][j].getGreen() == 255) {
+                        coords.add(i - 1);
+                        coords.add(j - 1);
+                        coords = new ArrayList<Integer>();
+                        plist.add(coords);
+                        colorPairs.add(plist);
+                        plist = new ArrayList<ArrayList<Integer>>();
+                        colorSwitch = true;
+                    }
+                }
+            }
+        }
+        return colorPairs;
     }
 }

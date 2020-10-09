@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import java.net.*;
 import java.io.*;
 
@@ -27,7 +28,7 @@ public class RobotClient {
     /**
      *
      * @param hostname Hostname of the robot
-     * @param port Port of the robot
+     * @param port     Port of the robot
      */
     public RobotClient(String hostname, int port) {
         this.hostname = hostname;
@@ -35,7 +36,8 @@ public class RobotClient {
     }
 
     /**
-     * Method which connects to the robot, using the parameters provided to the constructor.
+     * Method which connects to the robot, using the parameters provided to the
+     * constructor.
      */
     public void connect() {
         try {
@@ -49,27 +51,42 @@ public class RobotClient {
     }
 
     /**
-     * This method is used to determine if a connection has been established to
-     * the robot.
+     * This method is used to determine if a connection has been established to the
+     * robot.
      *
-     * @return COnnection state to see if connection is established (true) or
-     * not (false).
+     * @return COnnection state to see if connection is established (true) or not
+     *         (false).
      */
     public boolean isConnected() {
         return connection.isConnected();
-        
+
     }
 
     /**
-     * This method writes a message to the robot iff a connection to the robot
-     * is established.
+     * This method writes a message to the robot iff a connection to the robot is
+     * established.
      *
      * @param message The message to write to the robot.
      */
-    public void write(String message) {
+    public boolean write(String message) {
         if (isConnected()) {
             out.print(message);
             out.flush();
+            String inputClient = this.read();
+            String waitVariable = inputClient;
+            if (waitVariable == null) {
+                waitVariable = "null";
+            }
+            long startTime = System.currentTimeMillis();
+            while (waitVariable.compareTo(message) != 0 || (System.currentTimeMillis() - startTime) < 10000) {
+                waitVariable = this.read();
+                if (waitVariable == null) {
+                    waitVariable = "null";
+                }
+            }
+            return (message == waitVariable) ? true : false;
+        } else {
+            return false;
         }
     }
 
@@ -86,7 +103,7 @@ public class RobotClient {
         }
     }
 
-	public String read() {
+    public String read() {
         String str = "";
         try {
 
@@ -94,8 +111,8 @@ public class RobotClient {
             BufferedReader bf = new BufferedReader(in);
             str = bf.readLine();
         } catch (Exception e) {
-            //TODO: handle exception
+            // TODO: handle exception
         }
-		return str;
-	}
+        return str;
+    }
 }
