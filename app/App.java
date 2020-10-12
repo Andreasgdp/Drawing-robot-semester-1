@@ -15,7 +15,8 @@ public class App {
 
 		EdgeDetector eDetect = new EdgeDetector("app/images/download.png");
 		// RobotClient client = new RobotClient("localhost", 4999);
-		RobotClient client = new RobotClient("127.0.0.1", 12345);
+		// RobotClient client = new RobotClient("127.0.0.1", 12345);
+		RobotClient client = new RobotClient("10.0.0.50", 12345);
 		try {
 			client.connect();
 		} catch (Exception e) {
@@ -56,7 +57,7 @@ public class App {
 
 				else if (msg.startsWith("reset")) {
 					app.reconnect(client);
-					client.write("reset");
+					client.write("rset");
 				}
 
 				else if (msg.startsWith("stop")) {// TODO: add function to recognize ESC-btn
@@ -184,9 +185,9 @@ public class App {
 							// [[x1,y1],[x2,y2]]
 							for (int j = 0; j < 2; j++) {
 								// j = 0: [x1,y1] ; j = 1: [x2,y2]
-								x = String.format("%03d", coords.get(i).get(j).get(0));
-								y = String.format("%03d", coords.get(i).get(j).get(1));
-								draw = String.format("%03d", j);
+								y = String.format("%04d", coords.get(i).get(j).get(0));
+								x = String.format("%04d", coords.get(i).get(j).get(1));
+								draw = String.format("%04d", j);
 
 								System.out.println(x + "," + y + "," + draw);
 

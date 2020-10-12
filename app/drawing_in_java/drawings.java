@@ -17,13 +17,13 @@ public class drawings extends JPanel {
         this.setBackground(Color.WHITE);
 
         for (int y = 0; y < colorArray.length; y++) {
-            for (int x = 0; x < colorArray.length; x++) {
+            for (int x = 0; x < colorArray[y].length; x++) {
                 if (colorArray[y][x].getRed() == 0 && colorArray[y][x].getGreen() == 0
                         && colorArray[y][x].getBlue() == 0) {
                     g.setColor(Color.BLACK);
-                    g.fillRect(y, x, 1, 1);
+                    g.fillRect(x, y, 1, 1);
                 } else {
-                    // Don't draw.
+                    continue;
                 }
             }
         }
