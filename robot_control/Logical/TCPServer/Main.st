@@ -1,6 +1,13 @@
 
 PROGRAM _INIT
 	tcpst := TCPSTATE_SOCKET_OPEN;
+	coord_counter := 1;
+	x_coord := 0;
+	y_coord := 0;
+	draw := 0;
+	sendData := '';
+	receiveData := '';
+	goTo := '';
 END_PROGRAM
 
 PROGRAM _CYCLIC
@@ -15,13 +22,26 @@ PROGRAM _CYCLIC
 			END_IF
 			
 		TCPSTATE_SERVER_CREATE :
-			IF goTo = sendData AND goTo = receiveData THEN
+			IF goTo = sendData AND goTo = receiveData AND goTo <> '' THEN
+				IF coord_counter = 1 THEN
+					x_coord := brsatoi(ADR(goTo));
+				ELSIF coord_counter = 2 THEN
+					y_coord := brsatoi(ADR(goTo));
+				ELSIF coord_counter = 3 THEN
+					draw := brsatoi(ADR(goTo));
+				END_IF;
 				sendData := receiveData := '';
-				goTo := '';
+				// goTo := '';
+				coord_counter := coord_counter + 1;
+				IF coord_counter >= 4 THEN
+					coord_counter := 1;
+					goTo := 'ready';
+				END_IF;
+				
 			END_IF;
 			IF goTo = 'done' THEN
 				sendData := goTo;
-				goTo := '';
+				// goTo := '';
 				tcpst := TCPSTATE_SEND;
 			END_IF;
 			TcpServer1.enable := TRUE;
@@ -57,7 +77,7 @@ PROGRAM _CYCLIC
 			END_IF
 
 		TCPSTATE_CLOSE :
-			goTo := sendData;
+		goTo := sendData;
 			IF sendData = 'done' THEN
 				sendData := '';
 			END_IF;

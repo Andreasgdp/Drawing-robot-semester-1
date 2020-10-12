@@ -13,7 +13,7 @@ public class App {
 		boolean imageLoaded = false;
 		boolean coordsLoaded = false;
 
-		EdgeDetector eDetect = new EdgeDetector("app/images/download.png");
+		EdgeDetector eDetect = new EdgeDetector("app/images/black.jpg");
 		// RobotClient client = new RobotClient("localhost", 4999);
 		// RobotClient client = new RobotClient("127.0.0.1", 12345);
 		RobotClient client = new RobotClient("10.0.0.50", 12345);

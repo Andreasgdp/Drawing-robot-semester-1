@@ -1,3 +1,6 @@
 VAR
+	sharp_counter2 : DINT;
+	sharp_counter : DINT;
+	case_draw : USINT;
 	this : this_typ;
 END_VAR
