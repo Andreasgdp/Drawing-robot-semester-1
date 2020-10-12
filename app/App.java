@@ -15,6 +15,7 @@ public class App {
             String image = "not loaded";
             String coordinats = "not loaded";
             boolean connection = true;
+            String path = "";
 
             RobotClient client = new RobotClient("hostname", 5000);
             try {
@@ -22,7 +23,7 @@ public class App {
             } catch (Exception e) {
                 System.out.println(e);
             }
-            EdgeDetector eDetect = new EdgeDetector("./imanges/black.jpg");         
+            EdgeDetector eDetect = new EdgeDetector(path);         
             while(true) {
                 try {
                     System.out.println("Enter message");
@@ -77,6 +78,9 @@ public class App {
                                             command = "open image"; 
                                             image = "loaded";
                                         }
+                                        else {
+                                            System.out.println("file dosn't exist");
+                                        }
                                     }
                                 }
                             }
@@ -127,6 +131,7 @@ public class App {
                                         System.out.println("file exists");
                                         command = "open image"; 
                                         image = "loaded";
+                                        path = apath;
                                     }
                                     else {
                                         System.out.println("image dosnt exist in folder: app/images");
@@ -140,6 +145,7 @@ public class App {
                                                 System.out.println("file exists");
                                                 command = "open image"; 
                                                 image = "loaded";
+                                                path = alpath;
                                             }
                                         }
                                     }
@@ -178,7 +184,7 @@ public class App {
                     }
                     else {
 						System.out.println("The command: \"" + message + "\" is invalid");
-						
+						System.out.println("if you need help, type help");
 						
                     }
                 } catch (Exception e){
