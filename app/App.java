@@ -104,7 +104,7 @@ public class App {
                             System.out.println("not connected to PLC");
                         }
                     }
-                    else if (message.startsWith("c") || message.startsWith("command")) {
+                    else if (message.startsWith("cm") || message.startsWith("command")) {
                         System.out.println(command);
                     }
                     else if (message.startsWith("l") || message.startsWith("load coordinats")) {
@@ -142,7 +142,7 @@ public class App {
                                             String alpath = scan.nextLine();
                                             File alfile = new File(alpath);
                                             if(alfile.exists()){
-                                                System.out.println("file exists");
+                                                System.out.println("image choosen");
                                                 command = "open image"; 
                                                 image = "loaded";
                                                 path = alpath;
@@ -173,6 +173,7 @@ public class App {
                     else if (message.startsWith("h") || message.startsWith("help")) {
                         System.out.println(" ___________________________________________________________________________");
                         System.out.println("| HELP:                                                                     |");
+                        System.out.println("| cc / change con      - Changes hostname and port                          |");
                         System.out.println("| i  / load image      - Loads image based on selected image name or path   |");
                         System.out.println("| L  / load coordinats - Loads coordinats of the chosen image               |");
                         System.out.println("| re / reset           - Resets the PLC coordinats                          |");
@@ -182,10 +183,19 @@ public class App {
                         System.out.println("| q  / quit            - Quits the program                                  |");
                         System.out.println("|___________________________________________________________________________|");
                     }
+                    // last if funktion possibly irellecant
+                    else if (message.startsWith("cc") || message.startsWith("change con")){
+                        System.out.println("enter Hostname:");
+                        String hostname = scan.nextLine();
+                        System.out.println("enter Port:");
+                        String porti = scan.nextLine();
+                        int port = Integer.parseInt(porti);
+                        String client1 = new String(hostname + ", " + port) ;
+                        System.out.println(client1);
+                    }
                     else {
 						System.out.println("The command: \"" + message + "\" is invalid");
-						System.out.println("if you need help, type help");
-						
+                        System.out.println("if you need help, type help");
                     }
                 } catch (Exception e){
                     System.out.println(e);
