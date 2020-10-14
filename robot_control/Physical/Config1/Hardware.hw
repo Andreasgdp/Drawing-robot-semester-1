@@ -30,6 +30,7 @@
     <Parameter ID="ConfigurationID" Value="robot_control_Config1" />
     <Parameter ID="SystemTick" Value="1000" />
     <Parameter ID="Cyclic1Duration" Value="1000" />
+    <Parameter ID="Cyclic1Tolerance" Value="1000" />
   </Module>
   <Module Name="X20TB1F" Type="X20TB1F" Version="1.0.0.0" />
   <Module Name="X20TB1F1" Type="X20TB1F" Version="1.0.0.0" />

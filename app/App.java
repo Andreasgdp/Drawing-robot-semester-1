@@ -168,7 +168,7 @@ public class App {
 					// System.out.print("Write new img path: ");
 					// String imgPath = CMDscanner.next();
 					// imageLoaded = eDetect.loadNewImage(imgPath);
-					imageLoaded = eDetect.loadNewImage("app/images/black.jpg");
+					imageLoaded = eDetect.loadNewImage("app/images/download.png");
 					if (imageLoaded) {
 						Color[][] colorArray = eDetect.getColorArray();
 						coordsLoaded = eDetect.loadCoordinates(colorArray);
@@ -181,13 +181,15 @@ public class App {
 						String y = "0";
 						boolean writeSuccess = false;
 						ArrayList<ArrayList<ArrayList<Integer>>> coords = eDetect.getCoordinates();
+						System.out.println("shit works here " + coords.size());
 						outer: for (int i = 0; i < coords.size(); i++) {
 							// [[x1,y1],[x2,y2]]
 							for (int j = 0; j < 2; j++) {
 								// j = 0: [x1,y1] ; j = 1: [x2,y2]
+								int drawValue = (j == 0 && i != 0)  ? 1 : 0;
 								y = String.format("%04d", coords.get(i).get(j).get(0));
 								x = String.format("%04d", coords.get(i).get(j).get(1));
-								draw = String.format("%04d", j);
+								draw = String.format("%04d", drawValue);
 
 								System.out.println(x + "," + y + "," + draw);
 
