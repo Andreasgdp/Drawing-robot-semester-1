@@ -8,12 +8,12 @@ import java.util.*;
 
 public class App {
     public static String command;
-    public String image;
-    public String coordinats;
+    public boolean imageL;
+    public boolean coordinatsL;
     public static void main(String[] args) {
             Scanner scan = new Scanner (System.in);
-            String image = "not loaded";
-            String coordinats = "not loaded";
+            boolean imageL = false;
+            boolean coordinatsL = false;
             boolean connection = true;
             String path = "";
 
@@ -63,7 +63,7 @@ public class App {
                                 if(afile.exists()){
                                     System.out.println("file exists");
                                     command = "open image"; 
-                                    image = "loaded";
+                                    imageL = true;
                                 }
                                 else {
                                     System.out.println("image dosnt exist in folder: app/images");
@@ -76,7 +76,7 @@ public class App {
                                         if(alfile.exists()){
                                             System.out.println("file exists");
                                             command = "open image"; 
-                                            image = "loaded";
+                                            imageL = true;
                                         }
                                         else {
                                             System.out.println("file dosn't exist");
@@ -88,15 +88,15 @@ public class App {
                     }
                     else if (message.startsWith("sd") || message.startsWith("send")) {
                         if (connection) {
-                            if (image == "loaded" && coordinats == "loaded") {
+                            if (imageL == true && coordinatsL == true) {
                             System.out.println("Sending coordinats to PLC");
                             String command = eDetect.loadCordinates();
                             client.write(command);
                             }
-                            else if (image != "loaded") {
+                            else if (imageL != true) {
                                 System.out.println("no immage loaded");
                             }
-                            else if (coordinats != "loaded") {
+                            else if (coordinatsL != true) {
                                 System.out.println("coordinats not loaded");
                             }
                         }
@@ -108,10 +108,10 @@ public class App {
                         System.out.println(command);
                     }
                     else if (message.startsWith("l") || message.startsWith("load coordinats")) {
-                        if (image == "loaded") {
+                        if (imageL == true) {
                             System.out.println("Loading coordinats");
                             command = "loadCoord";
-                            coordinats = "loaded";
+                            coordinatsL = true;
                         }
                         else {
                             System.out.println("no immage selected");
@@ -130,7 +130,7 @@ public class App {
                                     if(afile.exists()){
                                         System.out.println("file exists");
                                         command = "open image"; 
-                                        image = "loaded";
+                                        imageL = true;
                                         path = apath;
                                     }
                                     else {
@@ -144,21 +144,21 @@ public class App {
                                             if(alfile.exists()){
                                                 System.out.println("image choosen");
                                                 command = "open image"; 
-                                                image = "loaded";
+                                                imageL = true;
                                                 path = alpath;
                                             }
                                         }
                                     }
                             } 
-                            if (image == "loaded") {
+                            if (imageL == true) {
                                 System.out.println("loading coordinats");
-                                coordinats = "loaded";
+                                coordinatsL = true;
                                 command = "loadCoord";
                             }
                             else {
                                 System.out.println("somthing wendt wrong while loading image");
                             }
-                            if (coordinats == "loaded"){
+                            if (coordinatsL == true){
                                 System.out.println("sending coordinats to PLC");
                                 command = "send";
                             }
