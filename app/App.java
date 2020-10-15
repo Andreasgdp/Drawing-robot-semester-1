@@ -13,7 +13,7 @@ public class App {
 		boolean imageLoaded = false;
 		boolean coordsLoaded = false;
 
-		EdgeDetector eDetect = new EdgeDetector("app/images/black.jpg");
+		EdgeDetector eDetect = new EdgeDetector("app/images/download_inv.jpg");
 		// RobotClient client = new RobotClient("localhost", 4999);
 		// RobotClient client = new RobotClient("127.0.0.1", 12345);
 		RobotClient client = new RobotClient("10.0.0.50", 12345);
@@ -35,10 +35,13 @@ public class App {
 
 				else if (msg.startsWith("test")) {
 					Color[][] testColor = eDetect.getColorArray();
-					ArrayList<ArrayList<ArrayList<Integer>>> coordinates = eDetect.getPairCoords(testColor);
-					System.out.println(coordinates);
-					for (int i = 0; i < coordinates.size(); i++) {
-						System.out.println(coordinates.get(i));
+					boolean coordsLoadedTest = eDetect.loadCoordinates(testColor);
+					if (coordsLoadedTest) {
+						ArrayList<ArrayList<ArrayList<Integer>>> coordinates = eDetect.getCoordinates();
+						System.out.println(coordinates);
+						for (int i = 0; i < coordinates.size(); i++) {
+							System.out.println(coordinates.get(i));
+						}
 					}
 				}
 
@@ -48,11 +51,15 @@ public class App {
 					System.out.println(height + " : " + width);
 					JFrame f = new JFrame("Title");
 					f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					Color[][] colorArray = eDetect.getColorArray();
-					drawings d = new drawings(colorArray);
-					f.add(d);
-					f.setSize(width, height);
-					f.setVisible(true);
+					Color[][] colorArrayTest = eDetect.getColorArray();
+					boolean coordsLoadedTest = eDetect.loadCoordinates(colorArrayTest);
+					if (coordsLoadedTest) {
+						ArrayList<ArrayList<ArrayList<Integer>>> arrayList = eDetect.getCoordinates();
+						drawings d = new drawings(arrayList);
+						f.add(d);
+						f.setSize(width, height);
+						f.setVisible(true);
+					}
 				}
 
 				else if (msg.startsWith("reset")) {
@@ -168,7 +175,7 @@ public class App {
 					// System.out.print("Write new img path: ");
 					// String imgPath = CMDscanner.next();
 					// imageLoaded = eDetect.loadNewImage(imgPath);
-					imageLoaded = eDetect.loadNewImage("app/images/download.png");
+					imageLoaded = eDetect.loadNewImage("app/images/download_inv.jpg");
 					if (imageLoaded) {
 						Color[][] colorArray = eDetect.getColorArray();
 						coordsLoaded = eDetect.loadCoordinates(colorArray);
@@ -186,7 +193,7 @@ public class App {
 							// [[x1,y1],[x2,y2]]
 							for (int j = 0; j < 2; j++) {
 								// j = 0: [x1,y1] ; j = 1: [x2,y2]
-								int drawValue = (j == 0 && i != 0)  ? 1 : 0;
+								int drawValue = (j == 0 && i != 0)  ? 0 : 1;
 								y = String.format("%04d", coords.get(i).get(j).get(0));
 								x = String.format("%04d", coords.get(i).get(j).get(1));
 								draw = String.format("%04d", drawValue);

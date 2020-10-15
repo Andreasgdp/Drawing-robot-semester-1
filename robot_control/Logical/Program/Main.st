@@ -98,8 +98,8 @@ PROGRAM _CYCLIC
 					this.M3.forward := TRUE;
 				END_IF;
 			10:
-				this.M1.goToCounter := x_coord * 60;
-				this.M2.goToCounter := y_coord * 60;
+				this.M1.goToCounter := x_coord * 10;
+				this.M2.goToCounter := y_coord * 10;
 				this.M1.goTo := TRUE;
 				this.M2.goTo := TRUE;
 		END_CASE;
@@ -152,8 +152,8 @@ PROGRAM _CYCLIC
 	END_IF
 
 	IF (this.M1.goTo = FALSE) AND (this.M2.goTo = FALSE) AND (this.M2.goToCounter = this.M2.counter) AND (this.M1.goToCounter = this.M1.counter) AND (goTo = 'ready') THEN
-		IF this.M3.counter < 300 THEN
-			this.M3.goToCounter := 320;
+		IF this.M3.counter < 800 THEN
+			this.M3.goToCounter := 820;
 			this.M3.goTo := TRUE;
 		ELSE
 			goTo := 'done';
@@ -161,6 +161,8 @@ PROGRAM _CYCLIC
 			this.M2.goToCounter := 0;
 			case_draw := 0;
 		END_IF;
+//	ELSIF (this.M1.goTo = FALSE) AND (this.M2.goTo = FALSE) AND (this.M2.goToCounter = this.M2.counter) AND (this.M1.goToCounter = this.M1.counter) AND (goTo = '') THEN
+//		goTo := 'done';
 	END_IF;
 	
 	IF this.startPS THEN

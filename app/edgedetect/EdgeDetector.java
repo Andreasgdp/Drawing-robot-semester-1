@@ -190,8 +190,8 @@ public class EdgeDetector {
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                int value = 230;
-                // int value = 100;
+                // int value = 230;
+                int value = 100;
                 if (picture0.get(x, y).getRed() <= value && picture0.get(x, y).getGreen() <= value
                         && picture0.get(x, y).getBlue() <= value)
                     pixelColor[y][x] = new Color(0);
@@ -214,8 +214,8 @@ public class EdgeDetector {
                     if (array[y][x].getRed() == 0 && array[y][x].getBlue() == 0 && array[y][x].getGreen() == 0) {
                         coords.add(y);
                         coords.add(x);
-                        coords = new ArrayList<Integer>();
                         plist.add(coords);
+                        coords = new ArrayList<Integer>();
                         drawBlackColor = false;
                     }
 
@@ -223,8 +223,16 @@ public class EdgeDetector {
                     if (array[y][x].getRed() == 255 && array[y][x].getBlue() == 255 && array[y][x].getGreen() == 255) {
                         coords.add(y);
                         coords.add(x - 1);
-                        coords = new ArrayList<Integer>();
                         plist.add(coords);
+                        coords = new ArrayList<Integer>();
+                        colorPairs.add(plist);
+                        plist = new ArrayList<ArrayList<Integer>>();
+                        drawBlackColor = true;
+                    } else if (x + 1 >= array[y].length) {
+                        coords.add(y);
+                        coords.add(x - 1);
+                        plist.add(coords);
+                        coords = new ArrayList<Integer>();
                         colorPairs.add(plist);
                         plist = new ArrayList<ArrayList<Integer>>();
                         drawBlackColor = true;
@@ -245,38 +253,5 @@ public class EdgeDetector {
         this.imagePath = imgPath;
         // TODO: Add method to check if path exists.
         return true;
-    }
-
-    public ArrayList<ArrayList<ArrayList<Integer>>> getPairCoords(Color[][] array) {
-        ArrayList<ArrayList<ArrayList<Integer>>> colorPairs = new ArrayList<ArrayList<ArrayList<Integer>>>();
-        ArrayList<ArrayList<Integer>> plist = new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> coords = new ArrayList<Integer>();
-        boolean colorSwitch = true;
-
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                if (colorSwitch) {
-                    if (array[i][j].getRed() == 0 && array[i][j].getBlue() == 0 && array[i][j].getGreen() == 0) {
-                        coords.add(i);
-                        coords.add(j);
-                        coords = new ArrayList<Integer>();
-                        plist.add(coords);
-                        colorSwitch = false;
-                    }
-
-                } else {
-                    if (array[i][j].getRed() == 255 && array[i][j].getBlue() == 255 && array[i][j].getGreen() == 255) {
-                        coords.add(i - 1);
-                        coords.add(j - 1);
-                        coords = new ArrayList<Integer>();
-                        plist.add(coords);
-                        colorPairs.add(plist);
-                        plist = new ArrayList<ArrayList<Integer>>();
-                        colorSwitch = true;
-                    }
-                }
-            }
-        }
-        return colorPairs;
     }
 }
