@@ -1,6 +1,13 @@
 
 PROGRAM _INIT
 	tcpst := TCPSTATE_SOCKET_OPEN;
+	coord_counter := 1;
+	x_coord := 0;
+	y_coord := 0;
+	draw := 0;
+	sendData := '';
+	receiveData := '';
+	goTo := '';
 END_PROGRAM
 
 PROGRAM _CYCLIC
@@ -15,6 +22,28 @@ PROGRAM _CYCLIC
 			END_IF
 			
 		TCPSTATE_SERVER_CREATE :
+			IF goTo = sendData AND goTo = receiveData AND goTo <> '' THEN
+				IF coord_counter = 1 THEN
+					x_coord := brsatoi(ADR(goTo));
+				ELSIF coord_counter = 2 THEN
+					y_coord := brsatoi(ADR(goTo));
+				ELSIF coord_counter = 3 THEN
+					draw := brsatoi(ADR(goTo));
+				END_IF;
+				sendData := receiveData := '';
+				// goTo := '';
+				coord_counter := coord_counter + 1;
+				IF coord_counter >= 4 THEN
+					coord_counter := 1;
+					goTo := 'ready';
+				END_IF;
+				
+			END_IF;
+			IF goTo = 'done' THEN
+				sendData := goTo;
+				// goTo := '';
+				tcpst := TCPSTATE_SEND;
+			END_IF;
 			TcpServer1.enable := TRUE;
 			TcpServer1.ident := TcpOpen1.ident;
 			TcpServer1();
@@ -23,6 +52,9 @@ PROGRAM _CYCLIC
 			END_IF
 
 		TCPSTATE_RECEIVE :
+			IF goTo = 'done' THEN
+				tcpst := TCPSTATE_SERVER_CREATE;
+			END_IF;
 			TcpReceive1.enable := TRUE;
 			TcpReceive1.ident := TcpServer1.identclnt;
 			TcpReceive1.pData := ADR(receiveData);
@@ -31,6 +63,7 @@ PROGRAM _CYCLIC
 			IF (TcpReceive1.status = ERR_OK) THEN
 				tcpst := TCPSTATE_SEND;
 				sendData := receiveData;
+				test := test + 1;
 			END_IF
 
 		TCPSTATE_SEND :
@@ -44,6 +77,10 @@ PROGRAM _CYCLIC
 			END_IF
 
 		TCPSTATE_CLOSE :
+		goTo := sendData;
+			IF sendData = 'done' THEN
+				sendData := '';
+			END_IF;
 			TcpClose1.enable := TRUE;
 			TcpClose1.ident := TcpServer1.identclnt;
 			TcpClose1();

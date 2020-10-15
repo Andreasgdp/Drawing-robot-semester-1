@@ -1,8 +1,6 @@
-
 VAR
-
-END_VAR
-
-VAR CONSTANT
-
+	draw : DINT := 0;
+	y_coord : DINT := 0;
+	x_coord : DINT := 0;
+	goTo : STRING[80];
 END_VAR
