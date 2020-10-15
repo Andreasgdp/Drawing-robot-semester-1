@@ -1,9 +1,0 @@
-VAR
-	lookAt : USINT;
-	result : USINT;
-	ma : USINT;
-	mb : USINT;
-	UaSrv_MethodOperate_0 : UaSrv_MethodOperate;
-	stOpcMethod : OPC;
-	errorID : DWORD;
-END_VAR

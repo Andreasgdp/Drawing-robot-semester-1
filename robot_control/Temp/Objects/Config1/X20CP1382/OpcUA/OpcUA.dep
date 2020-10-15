@@ -1,4 +1,0 @@
-$(AS_PROJECT_PATH)/Logical/Libraries/AsOpcUas/AsOpcUas.fun
-$(AS_PROJECT_PATH)/Logical/Libraries/AsOpcUas/AsOpcUas.typ
-$(AS_PROJECT_PATH)/Logical/OpcUA/Variables.var
-$(AS_PROJECT_PATH)/Logical/OpcUA/Types.typ
