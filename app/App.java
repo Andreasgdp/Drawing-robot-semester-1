@@ -35,9 +35,9 @@ public class App {
 		System.out.println("White " + white);
 
 		ArrayList<ArrayList<ArrayList<Integer> > > coordinates = eDetector.colorPair(testColor);
-			for ( int i = 0; i < coordinates.size; i++) {
-				for (int j = 0; j < coordinates.size; j++) {
-					for (int j2 = 0; j2 < coordinates.size; j2++) {
+			for ( int i = 0; i < coordinates.size(); i++) {
+				for (int j = 0; j < coordinates.size(); j++) {
+					for (int j2 = 0; j2 < coordinates.size(); j2++) {
 						
 						System.out.println(coordinates.get(i).get(j).get(j2));
 					}
