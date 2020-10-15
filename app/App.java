@@ -1,8 +1,10 @@
 
+import robclient.RobotClient;
+import edgedetect.EdgeDetector;
 import java.awt.image.BufferedImage;
+
 import java.io.*;
 import java.awt.Color;
-import robclient.RobotClient;
 import edgedetect.*;
 import java.util.*;
 
@@ -16,6 +18,8 @@ public class App {
             boolean coordinatsL = false;
             boolean connection = true;
             String path = "";
+            String apath = "";
+            EdgeDetector eDetect = new EdgeDetector(apath);
 
             RobotClient client = new RobotClient("hostname", 5000);
             try {
@@ -23,10 +27,10 @@ public class App {
             } catch (Exception e) {
                 System.out.println(e);
             }
-            EdgeDetector eDetect = new EdgeDetector(path);         
+            // EdgeDetector eDetect = new EdgeDetector(path);         
             while(true) {
                 try {
-                    System.out.println("Enter message");
+                    System.out.println("Write command:");
                     String message = scan.nextLine(); 
                     
 
@@ -58,12 +62,15 @@ public class App {
                                 System.out.println("no image name detected");
                             }                  
                             else if (!iName.isEmpty()){
-                                String apath = "app/images/" + iName;
+                                apath = "app/images/" + iName;
                                 File afile = new File(apath);
                                 if(afile.exists()){
                                     System.out.println("file exists");
                                     command = "open image"; 
                                     imageL = true;
+                                    // EdgeDetector eDetect = new EdgeDetector(apath);
+                                    // eDetect.loadNewImage(apath);
+                                    // System.out.println(eDetect);
                                 }
                                 else {
                                     System.out.println("image dosnt exist in folder: app/images");
@@ -77,6 +84,8 @@ public class App {
                                             System.out.println("file exists");
                                             command = "open image"; 
                                             imageL = true;
+                                            // EdgeDetector eDetect = new EdgeDetector(alpath);
+                                            // System.out.println(eDetect);
                                         }
                                         else {
                                             System.out.println("file dosn't exist");
@@ -90,7 +99,7 @@ public class App {
                         if (connection) {
                             if (imageL == true && coordinatsL == true) {
                             System.out.println("Sending coordinats to PLC");
-                            String command = eDetect.loadCordinates();
+                            // String command = eDetect.loadCordinates();
                             client.write(command);
                             }
                             else if (imageL != true) {
@@ -112,6 +121,8 @@ public class App {
                             System.out.println("Loading coordinats");
                             command = "loadCoord";
                             coordinatsL = true;
+                            // Color[][] colorArray = eDetect.getColorArray();
+						    // eDetect.loadCoordinates(colorArray);
                         }
                         else {
                             System.out.println("no immage selected");
@@ -125,8 +136,8 @@ public class App {
                                 System.out.println("no image selectet");
                             }
                             else if (!iName.isEmpty()) {
-                                String apath = "app/images/" + iName;
-                                    File afile = new File(apath);
+                                apath = "app/images/" + iName;
+                                File afile = new File(apath);
                                     if(afile.exists()){
                                         System.out.println("file exists");
                                         command = "open image"; 
@@ -183,7 +194,7 @@ public class App {
                         System.out.println("| q  / quit            - Quits the program                                  |");
                         System.out.println("|___________________________________________________________________________|");
                     }
-                    // last if funktion possibly irellecant
+                    // last "if" funktion possibly irellecant
                     else if (message.startsWith("cc") || message.startsWith("change con")){
                         System.out.println("enter Hostname:");
                         String hostname = scan.nextLine();
