@@ -257,7 +257,7 @@ PROGRAM _CYCLIC
 	END_IF;
 	
 	IF this.btn4.pressed THEN
-		this.M3.counter	:= 0; // Andreas was here
+		this.M3.counter	:= 0; // Kristoffer was here
 		this.M3.forward := FALSE;
 	END_IF;
 	
