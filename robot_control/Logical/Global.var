@@ -1,4 +1,5 @@
 VAR
+	pSharp : BOOL;
 	draw : DINT := 0;
 	y_coord : DINT := 0;
 	x_coord : DINT := 0;

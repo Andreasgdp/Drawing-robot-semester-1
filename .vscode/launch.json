@@ -6,6 +6,13 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "CodeLens (Launch) - App",
+			"request": "launch",
+			"mainClass": "App",
+			"projectName": "Drawing-robot-semester-1_7aec37ad"
+		},
+		{
+			"type": "java",
 			"name": "CodeLens (Launch) - Server",
 			"request": "launch",
 			"mainClass": "Server",

@@ -1,4 +1,4 @@
-
+	
 PROGRAM _INIT
 	tcpst := TCPSTATE_SOCKET_OPEN;
 	coord_counter := 1;
@@ -8,8 +8,8 @@ PROGRAM _INIT
 	sendData := '';
 	receiveData := '';
 	goTo := '';
-END_PROGRAM
-
+	END_PROGRAM
+	
 PROGRAM _CYCLIC
 	CASE tcpst OF
 		TCPSTATE_SOCKET_OPEN :
@@ -40,10 +40,12 @@ PROGRAM _CYCLIC
 				END_IF
 				
 			END_IF;
-			IF goTo = 'done' THEN
-				sendData := goTo;
-				// goTo := '';
-				tcpst := TCPSTATE_SEND;
+			IF NOT pSharp THEN
+				IF goTo = 'done' THEN
+					sendData := goTo;
+					// goTo := '';
+					tcpst := TCPSTATE_SEND;
+				END_IF;
 			END_IF;
 			TcpServer1.enable := TRUE;
 			TcpServer1.ident := TcpOpen1.ident;
@@ -51,7 +53,7 @@ PROGRAM _CYCLIC
 			IF (TcpServer1.status = ERR_OK) OR (TcpServer1.status = 32600) THEN
 				tcpst := TCPSTATE_RECEIVE;
 			END_IF
-
+	
 		TCPSTATE_RECEIVE :
 			IF goTo = 'done' THEN
 				tcpst := TCPSTATE_SERVER_CREATE;
@@ -75,7 +77,7 @@ PROGRAM _CYCLIC
 				tcpst := TCPSTATE_SEND;
 				sendData := receiveData;
 			END_IF
-
+	
 		TCPSTATE_SEND :
 			TcpSend1.enable := TRUE;
 			TcpSend1.ident := TcpServer1.identclnt;
@@ -85,9 +87,9 @@ PROGRAM _CYCLIC
 			IF (TcpSend1.status = ERR_OK) OR (TcpSend1.status = 32600) THEN
 				tcpst := TCPSTATE_CLOSE;
 			END_IF
-
+	
 		TCPSTATE_CLOSE :
-		goTo := sendData;
+			goTo := sendData;
 			IF sendData = 'done' THEN
 				sendData := '';
 			END_IF;
@@ -109,15 +111,15 @@ PROGRAM _CYCLIC
 	
 	F_It_TON();
 	
-END_PROGRAM
-
+	END_PROGRAM
+	
 PROGRAM _EXIT
 	TcpClose1.enable := TRUE;
 	TcpClose1.ident := TcpServer1.identclnt;
 	TcpClose1();
-
+	
 	TcpClose2.enable := TRUE;
 	TcpClose2.ident := TcpOpen1.ident;
 	TcpClose2();
-END_PROGRAM
-
+	END_PROGRAM
+	

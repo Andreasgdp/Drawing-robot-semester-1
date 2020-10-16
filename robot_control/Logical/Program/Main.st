@@ -161,8 +161,19 @@ PROGRAM _CYCLIC
 			this.M2.goToCounter := 0;
 			case_draw := 0;
 		END_IF;
-//	ELSIF (this.M1.goTo = FALSE) AND (this.M2.goTo = FALSE) AND (this.M2.goToCounter = this.M2.counter) AND (this.M1.goToCounter = this.M1.counter) AND (goTo = '') THEN
-//		goTo := 'done';
+		//	ELSIF (this.M1.goTo = FALSE) AND (this.M2.goTo = FALSE) AND (this.M2.goToCounter = this.M2.counter) AND (this.M1.goToCounter = this.M1.counter) AND (goTo = '') THEN
+		//		goTo := 'done';
+	END_IF;
+	
+	IF draw = 1 THEN
+		dull_counter := dull_counter + 1;
+	END_IF;
+	
+	IF (dull_counter > 300000) AND (draw = 0) THEN
+		pSharp := TRUE;
+		dull_counter := 0;
+		this.startPS := TRUE;
+		
 	END_IF;
 	
 	IF this.startPS THEN
@@ -170,9 +181,9 @@ PROGRAM _CYCLIC
 			0:
 				this.M1.goToCounter := this.M1.counter;
 				this.M3.goToCounter := this.M3.counter;
-				this.M3.backward := TRUE;
 				this.startPSCase := 5;
 			5:
+				this.M3.backward := TRUE;
 				IF this.M3.counter = 7000 THEN
 					this.M3.backward := FALSE;
 					this.startPSCase := 10;
@@ -222,6 +233,7 @@ PROGRAM _CYCLIC
 			35:
 				this.startPS := FALSE;
 				this.startPSCase := 0;
+				pSharp := FALSE;
 				
 		END_CASE
 	END_IF
