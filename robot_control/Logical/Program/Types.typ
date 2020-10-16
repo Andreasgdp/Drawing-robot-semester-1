@@ -2,7 +2,6 @@
 TYPE
 	m_typ : 	STRUCT 
 		endSwitch : BOOL;
-		freq1 : BOOL;
 		freq : BOOL;
 		backward : BOOL;
 		forward : BOOL;
@@ -10,6 +9,7 @@ TYPE
 		counter : DINT;
 		goTo : BOOL;
 		goToCounter : DINT;
+		speedCaseTON : TON;
 		speedCase : USINT;
 	END_STRUCT;
 	this_typ : 	STRUCT 

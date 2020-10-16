@@ -36,26 +36,27 @@ PROGRAM _CYCLIC
 				END_IF;
 				IF this.btn2.pressed THEN
 					this.M2.backward := FALSE;
+					this.M2.counter := 0;
 				END_IF;
 				IF this.btn1.pressed AND this.btn2.pressed THEN
 					this.startCase := 15;
 				END_IF;
 			15:// going to origo (0,0)
-				IF this.M1.counter < 10000 THEN
+				IF this.M1.counter < 5000 THEN
 					this.M1.forward := TRUE;
 				ELSE
 					//this.M1.backward := FALSE;
 					this.M1.forward := FALSE;
 				END_IF;
 				
-				IF this.M2.counter < 300 THEN
+				IF this.M2.counter < 150 THEN
 					this.M2.forward := TRUE;
 				ELSE
 					//this.M1.backward := FALSE;
 					this.M2.forward := FALSE;
 				END_IF;
 				
-				IF this.M1.counter >= 10000 AND this.M2.counter >= 300 THEN
+				IF this.M1.counter >= 5000 AND this.M2.counter >= 150 THEN
 					this.startCase := 20;
 				END_IF;
 			20:
@@ -71,7 +72,7 @@ PROGRAM _CYCLIC
 				this.isReady := TRUE;
 				this.startCase := 30;
 			30:
-				IF this.M3.counter < 1000 THEN
+				IF this.M3.counter > -500 THEN
 					this.M3.backward := TRUE;
 				ELSE
 					this.M3.backward := FALSE;
@@ -139,9 +140,9 @@ PROGRAM _CYCLIC
 	
 	IF this.M3.goTo AND (this.M3.goToCounter <> this.M3.counter) THEN
 		IF this.M3.counter < this.M3.goToCounter THEN
-			this.M3.backward := TRUE;
-		ELSIF this.M3.counter > this.M2.goToCounter THEN
 			this.M3.forward := TRUE;
+		ELSIF this.M3.counter > this.M3.goToCounter THEN
+			this.M3.backward := TRUE;
 	
 		END_IF
 	ELSIF this.M3.goTo AND (this.M3.goToCounter = this.M3.counter) THEN
@@ -152,8 +153,8 @@ PROGRAM _CYCLIC
 	END_IF
 
 	IF (this.M1.goTo = FALSE) AND (this.M2.goTo = FALSE) AND (this.M2.goToCounter = this.M2.counter) AND (this.M1.goToCounter = this.M1.counter) AND (goTo = 'ready') THEN
-		IF this.M3.counter < 800 THEN
-			this.M3.goToCounter := 820;
+		IF this.M3.counter > -400 THEN
+			this.M3.goToCounter := -420;
 			this.M3.goTo := TRUE;
 		ELSE
 			goTo := 'done';
@@ -184,7 +185,7 @@ PROGRAM _CYCLIC
 				this.startPSCase := 5;
 			5:
 				this.M3.backward := TRUE;
-				IF this.M3.counter = 7000 THEN
+				IF this.M3.counter = -3200 THEN
 					this.M3.backward := FALSE;
 					this.startPSCase := 10;
 				END_IF
@@ -215,7 +216,7 @@ PROGRAM _CYCLIC
 					END_IF;
 				END_IF
 			20:
-				IF this.M3.counter = 7000 THEN
+				IF this.M3.counter = -3200 THEN
 					this.M3.backward := FALSE;
 					this.startPSCase := 25;
 					this.pencilSharp := FALSE;
@@ -243,150 +244,10 @@ PROGRAM _CYCLIC
 				
 	//slut ny kode			
 
-	
-	IF this.M1.forward THEN
-		this.M1.direction := TRUE;
-		
-		IF this.btn4.pressed OR this.start THEN
-			IF this.M1.freq THEN
-				this.M1.freq := 0;
-				this.M1.counter := this.M1.counter + 1;
-			ELSE
-				this.M1.freq := 1;
-				this.M1.counter := this.M1.counter + 1;
-			END_IF;
-		ELSE
-			
-			CASE this.M1.speedCase OF
-				0:
-					this.M1.freq := 1;
-					this.M1.counter := this.M1.counter + 1;
-					this.M1.speedCase := 5;
-				
-				5:
-					this.M1.speedCase := 15;
-				
-				10:
-					this.M1.speedCase := 15;
-				
-				15:
-					this.M1.freq := 0;
-					this.M1.counter := this.M1.counter + 1;
-					this.M1.speedCase := 20;
-				
-				20:
-					this.M1.speedCase := 0;
-			
-				25:
-					this.M1.speedCase := 0;
-			
-				
-			END_CASE
-		END_IF
-		
-		
-
-	END_IF;
-	
-	IF this.M1.backward THEN
-		this.M1.direction := FALSE;
-		
-		IF this.btn4.pressed OR this.start THEN
-			IF this.M1.freq THEN
-				this.M1.freq := 0;
-				this.M1.counter := this.M1.counter - 1;
-							
-			ELSE
-				this.M1.freq := 1;
-				this.M1.counter := this.M1.counter - 1;
-							
-			END_IF;
-		ELSE
-			CASE this.M1.speedCase OF
-				0:
-					this.M1.freq := 1;
-					this.M1.counter := this.M1.counter - 1;
-					this.M1.speedCase := 5;
-				
-				5:
-					this.M1.speedCase := 15;
-				
-				10:
-					this.M1.speedCase := 15;
-				
-				15:
-					this.M1.freq := 0;
-					this.M1.counter := this.M1.counter - 1;
-					this.M1.speedCase := 20;
-				
-				20:
-					this.M1.speedCase := 0;
-			
-				25:
-					this.M1.speedCase := 0;
-			
-				
-			END_CASE
-		
-		END_IF
-	END_IF;
-	
-	IF this.M2.forward THEN
-		this.M2.direction := TRUE;
-		IF this.M2.freq THEN
-			this.M2.freq := 0;
-			this.M2.counter := this.M2.counter + 1;
-		ELSE
-			this.M2.freq := 1;
-			this.M2.counter := this.M2.counter + 1;
-		END_IF;
-	END_IF;
-	
-	IF this.M2.backward THEN
-		this.M2.direction := FALSE;
-		IF this.M2.freq THEN
-			this.M2.freq := 0;
-			IF this.isReady THEN
-				this.M2.counter := this.M2.counter - 1;
-			END_IF;
-		ELSE
-			this.M2.freq := 1;
-			IF this.isReady THEN
-				this.M2.counter := this.M2.counter - 1;
-			END_IF;
-		END_IF;
-	END_IF;
-	
-	IF this.M3.forward THEN
-		this.M3.direction := TRUE;
-		IF this.M3.freq THEN
-			this.M3.freq := 0;
-			IF this.isReady THEN
-				this.M3.counter := this.M3.counter - 1;
-			END_IF;
-		ELSE
-			this.M3.freq := 1;
-			IF this.isReady THEN
-				this.M3.counter := this.M3.counter - 1;
-			END_IF;
-		END_IF;
-	END_IF;
-	
-	IF this.M3.backward THEN
-		this.M3.direction := FALSE;
-		IF this.M3.freq THEN
-			this.M3.freq := 0;
-			IF this.isReady THEN
-				this.M3.counter := this.M3.counter + 1;
-			END_IF;
-		ELSE
-			this.M3.freq := 1;
-			IF this.isReady THEN
-				this.M3.counter := this.M3.counter + 1;
-			END_IF;
-		END_IF;
-	END_IF;
-	
+	//speedCase
+	M1_speedCase;
+	M2_speedCase;
+	M3_speedCase;
 	IF this.btn1.pressed THEN
 		this.M1.backward := FALSE;
 	END_IF;
@@ -396,13 +257,15 @@ PROGRAM _CYCLIC
 	END_IF;
 	
 	IF this.btn4.pressed THEN
-		this.M3.counter	:= 0;
+		this.M3.counter	:= 0; // Andreas was here
 		this.M3.forward := FALSE;
 	END_IF;
 	
 	IF this.btn3.pressed THEN
 		this.M3.backward := FALSE;
 	END_IF;
+		
+
 END_PROGRAM
 
 PROGRAM _EXIT
