@@ -7,6 +7,10 @@ TYPE
 		forward : BOOL;
 		direction : BOOL;
 		counter : DINT;
+		goTo : BOOL;
+		goToCounter : DINT;
+		speedCaseTON : TON;
+		speedCase : USINT;
 	END_STRUCT;
 	this_typ : 	STRUCT 
 		M2 : m_typ;
@@ -19,6 +23,9 @@ TYPE
 		btn1 : btn_typ;
 		startCase : USINT;
 		start : BOOL;
+		startPSCase : USINT;
+		startPS : BOOL;
+		pencilSharp : BOOL;
 	END_STRUCT;
 	btn_typ : 	STRUCT 
 		pressed : BOOL;

@@ -4,28 +4,28 @@ import java.awt.Color;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.*;
 
 public class drawings extends JPanel {
-    Color[][] colorArray;
+    ArrayList<ArrayList<ArrayList<Integer>>> arrayList;
 
-    public drawings(Color[][] colorArray) {
-        this.colorArray = colorArray;
+    public drawings(ArrayList<ArrayList<ArrayList<Integer>>> arrayList) {
+        this.arrayList = arrayList;
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         this.setBackground(Color.WHITE);
+        for (int i = 0; i < this.arrayList.size() - 1; i++) {
+            ArrayList<ArrayList<Integer>> pair = this.arrayList.get(i);
+            int x1 = pair.get(0).get(1);
+            int y1 = pair.get(0).get(0);
+            int x2 = pair.get(1).get(1);
+            int y2 = pair.get(1).get(0);
 
-        for (int y = 0; y < colorArray.length; y++) {
-            for (int x = 0; x < colorArray.length; x++) {
-                if (colorArray[y][x].getRed() == 0 && colorArray[y][x].getGreen() == 0
-                        && colorArray[y][x].getBlue() == 0) {
-                    g.setColor(Color.BLACK);
-                    g.fillRect(y, x, 1, 1);
-                } else {
-                    // Don't draw.
-                }
-            }
+            g.setColor(Color.BLACK);
+            // g.fillRect(x1, y1, java.lang.Math.abs(x2 - x1), 1);
+            g.drawLine(x1, y1, x2, y2);
         }
     }
 }

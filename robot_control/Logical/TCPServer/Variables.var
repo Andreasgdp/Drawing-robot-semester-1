@@ -1,13 +1,14 @@
 VAR
-	test : USINT;
-	tcpst : TCPSTATE;
-	sendData : STRING[80];
-	receiveData : STRING[80];
-	TcpOpen1 : TcpOpen;
-	TcpServer1 : TcpServer;
-	TcpReceive1 : TcpRecv;
-	TcpSend1 : TcpSend;
-	TcpClose1 : TcpClose;
+	elPreben : BOOL; (*The most overpowered bollean expression on Funen*)
+	F_It_TON : TON;
+	coord_counter : USINT;
 	TcpClose2 : TcpClose;
-	goTo : STRING[80];
+	TcpClose1 : TcpClose;
+	TcpSend1 : TcpSend;
+	TcpReceive1 : TcpRecv;
+	TcpServer1 : TcpServer;
+	TcpOpen1 : TcpOpen;
+	receiveData : STRING[80];
+	sendData : STRING[80];
+	tcpst : TCPSTATE;
 END_VAR

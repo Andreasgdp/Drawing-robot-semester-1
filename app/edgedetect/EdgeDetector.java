@@ -186,16 +186,17 @@ public class EdgeDetector {
         // Find width, removing outer border due to filter
         int width = picture0.width();
         int height = picture0.height();
-        Color[][] pixelColor = new Color[width][height];
+        Color[][] pixelColor = new Color[height][width];
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                int value = 230;
+                // int value = 230;
+                int value = 100;
                 if (picture0.get(x, y).getRed() <= value && picture0.get(x, y).getGreen() <= value
                         && picture0.get(x, y).getBlue() <= value)
-                    pixelColor[x][y] = new Color(0);
+                    pixelColor[y][x] = new Color(0);
                 else
-                    pixelColor[x][y] = new Color(255, 255, 255);
+                    pixelColor[y][x] = new Color(255, 255, 255);
             }
         }
         return pixelColor;
@@ -207,23 +208,31 @@ public class EdgeDetector {
         ArrayList<Integer> coords = new ArrayList<Integer>();
         boolean drawBlackColor = true;
 
-        for (int x = 0; x < array.length; x++) {
-            for (int y = 0; y < array[x].length; y++) {
+        for (int y = 0; y < array.length; y++) {
+            for (int x = 0; x < array[y].length; x++) {
                 if (drawBlackColor) {
-                    if (array[x][y].getRed() == 0 && array[x][y].getBlue() == 0 && array[x][y].getGreen() == 0) {
-                        coords.add(x);
+                    if (array[y][x].getRed() == 0 && array[y][x].getBlue() == 0 && array[y][x].getGreen() == 0) {
                         coords.add(y);
-                        coords = new ArrayList<Integer>();
+                        coords.add(x);
                         plist.add(coords);
+                        coords = new ArrayList<Integer>();
                         drawBlackColor = false;
                     }
 
                 } else {
-                    if (array[x][y].getRed() == 255 && array[x][y].getBlue() == 255 && array[x][y].getGreen() == 255) {
-                        coords.add(x - 1);
+                    if (array[y][x].getRed() == 255 && array[y][x].getBlue() == 255 && array[y][x].getGreen() == 255) {
                         coords.add(y);
-                        coords = new ArrayList<Integer>();
+                        coords.add(x - 1);
                         plist.add(coords);
+                        coords = new ArrayList<Integer>();
+                        colorPairs.add(plist);
+                        plist = new ArrayList<ArrayList<Integer>>();
+                        drawBlackColor = true;
+                    } else if (x + 1 >= array[y].length) {
+                        coords.add(y);
+                        coords.add(x - 1);
+                        plist.add(coords);
+                        coords = new ArrayList<Integer>();
                         colorPairs.add(plist);
                         plist = new ArrayList<ArrayList<Integer>>();
                         drawBlackColor = true;
