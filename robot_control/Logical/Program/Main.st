@@ -156,7 +156,7 @@ PROGRAM _CYCLIC
 		IF this.M3.counter > -400 THEN
 			this.M3.goToCounter := -420;
 			this.M3.goTo := TRUE;
-		ELSE
+		ELSIF NOT pSharp THEN //prøvede rettelse
 			goTo := 'done';
 			this.M1.goToCounter := 0;
 			this.M2.goToCounter := 0;

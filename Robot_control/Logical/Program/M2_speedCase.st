@@ -4,20 +4,35 @@ ACTION M2_speedCase:
 	CASE this.M2.speedCase OF
 		0: // highest speed
 			this.M2.speedCaseTON.PT := T#0ms;
-		
+			
 		1:
+			this.M2.speedCaseTON.PT := T#1ms;
+		
+		2:
 			this.M2.speedCaseTON.PT := T#2ms;
 			
-		2:
-			this.M2.speedCaseTON.PT := T#4ms;
-		
 		3:
-			this.M2.speedCaseTON.PT := T#6ms;
+			this.M2.speedCaseTON.PT := T#3ms;
 		
 		4:
+			this.M2.speedCaseTON.PT := T#4ms;
+		
+		5:
+			this.M2.speedCaseTON.PT := T#5ms;
+			
+		6:
+			this.M2.speedCaseTON.PT := T#6ms;
+			
+		7:
+			this.M2.speedCaseTON.PT := T#7ms;
+			
+		8:
 			this.M2.speedCaseTON.PT := T#8ms;
 			
-		5:
+		9:
+			this.M2.speedCaseTON.PT := T#9ms;
+			
+		10:
 			this.M2.speedCaseTON.PT := T#10ms;
 		
 	END_CASE
@@ -67,7 +82,7 @@ ACTION M2_speedCase:
 		
 	END_IF
 	IF EDGEPOS(NOT(this.M2.backward)) OR EDGEPOS(NOT(this.M2.forward)) THEN
-		this.M2.speedCase := 5;
+		this.M2.speedCase := 10;
 		
 	END_IF
 
