@@ -21,13 +21,12 @@ public class App {
             String apath = "";
             EdgeDetector eDetect = new EdgeDetector(apath);
 
-            RobotClient client = new RobotClient("hostname", 5000);
+            RobotClient client = new RobotClient("192.168.0.20", 12345);
             try {
                 client.connect();
             } catch (Exception e) {
                 System.out.println(e);
-            }
-            // EdgeDetector eDetect = new EdgeDetector(path);         
+            }       
             while(true) {
                 try {
                     System.out.println("Write command:");
@@ -68,12 +67,12 @@ public class App {
                                     System.out.println("file exists");
                                     command = "open image"; 
                                     imageL = true;
-                                    // EdgeDetector eDetect = new EdgeDetector(apath);
-                                    // eDetect.loadNewImage(apath);
-                                    // System.out.println(eDetect);
+                                    EdgeDetector eDetector = new EdgeDetector(apath);
+                                    // eDetector.loadNewImage(apath);
+                                    System.out.println(eDetector);
                                 }
                                 else {
-                                    System.out.println("image dosnt exist in folder: app/images");
+                                    System.out.println("image does not exist in folder: app/images");
                                     System.out.println("do you wish to select an alternative path?");
                                     String diffpath = scan.nextLine();
                                     if(diffpath.startsWith("y")){
@@ -84,8 +83,8 @@ public class App {
                                             System.out.println("file exists");
                                             command = "open image"; 
                                             imageL = true;
-                                            // EdgeDetector eDetect = new EdgeDetector(alpath);
-                                            // System.out.println(eDetect);
+                                            EdgeDetector eDetector = new EdgeDetector(alpath);
+                                            System.out.println(eDetector);
                                         }
                                         else {
                                             System.out.println("file dosn't exist");
@@ -99,7 +98,7 @@ public class App {
                         if (connection) {
                             if (imageL == true && coordinatsL == true) {
                             System.out.println("Sending coordinats to PLC");
-                            // String command = eDetect.loadCordinates();
+                            ArrayList<ArrayList<ArrayList<Integer> > > command = eDetector.loadCoordinates();
                             client.write(command);
                             }
                             else if (imageL != true) {
@@ -121,8 +120,8 @@ public class App {
                             System.out.println("Loading coordinats");
                             command = "loadCoord";
                             coordinatsL = true;
-                            // Color[][] colorArray = eDetect.getColorArray();
-						    // eDetect.loadCoordinates(colorArray);
+                            Color[][] colorArray = eDetector.getColorArray();
+						    eDetector.getCoords(colorArray);
                         }
                         else {
                             System.out.println("no immage selected");
@@ -145,7 +144,7 @@ public class App {
                                         path = apath;
                                     }
                                     else {
-                                        System.out.println("image dosnt exist in folder: app/images");
+                                        System.out.println("image does not exist in folder: app/images");
                                         System.out.println("do you wish to select an alternative path?");
                                         String diffpath = scan.nextLine();
                                         if(diffpath.startsWith("y")){
@@ -186,7 +185,7 @@ public class App {
                         System.out.println("| HELP:                                                                     |");
                         System.out.println("| cc / change con      - Changes hostname and port                          |");
                         System.out.println("| i  / load image      - Loads image based on selected image name or path   |");
-                        System.out.println("| L  / load coordinats - Loads coordinats of the chosen image               |");
+                        System.out.println("| l  / load coordinats - Loads coordinats of the chosen image               |");
                         System.out.println("| re / reset           - Resets the PLC coordinats                          |");
                         System.out.println("| run                  - Loads image and coordinats, then sends them to PLC |");
                         System.out.println("| sd / send            - Sends coordinats to the PLC                        |");

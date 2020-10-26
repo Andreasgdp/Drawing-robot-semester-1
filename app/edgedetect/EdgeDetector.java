@@ -215,7 +215,7 @@ public class EdgeDetector {
         return arrayRepresentation;
     }
 
-    public  ArrayList<ArrayList<ArrayList<Integer> > > colorPair(Color[][] array) {
+    public  ArrayList<ArrayList<ArrayList<Integer> > > loadCoordinates(Color[][] array) {
         ArrayList<ArrayList<ArrayList<Integer> > > colorPairs = new ArrayList<ArrayList<ArrayList<Integer> > >();
         boolean colorSwitch = true;
         ArrayList<ArrayList<Integer> > plist = new ArrayList<ArrayList<Integer> >();
