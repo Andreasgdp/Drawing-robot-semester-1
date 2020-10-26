@@ -84,7 +84,7 @@ PROGRAM _CYCLIC
 		END_CASE;
 	END_IF
 	
-	IF goTo = 'ready' THEN
+	IF (goTo = 'ready') AND NOT pSharp THEN
 		IF (draw = TRUE) AND (case_draw <> 10) THEN
 			case_draw := 0;
 		ELSIF draw = FALSE THEN

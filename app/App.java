@@ -13,7 +13,7 @@ public class App {
 		boolean imageLoaded = false;
 		boolean coordsLoaded = false;
 
-		EdgeDetector eDetect = new EdgeDetector("app/images/download_inv.jpg");
+		EdgeDetector eDetect = new EdgeDetector("app/images/download.png");
 		// RobotClient client = new RobotClient("localhost", 4999);
 		// RobotClient client = new RobotClient("127.0.0.1", 12345);
 		RobotClient client = new RobotClient("10.0.0.50", 12345);
@@ -175,7 +175,7 @@ public class App {
 					// System.out.print("Write new img path: ");
 					// String imgPath = CMDscanner.next();
 					// imageLoaded = eDetect.loadNewImage(imgPath);
-					imageLoaded = eDetect.loadNewImage("app/images/download_inv.jpg");
+					imageLoaded = eDetect.loadNewImage("app/images/download.png");
 					if (imageLoaded) {
 						Color[][] colorArray = eDetect.getColorArray();
 						coordsLoaded = eDetect.loadCoordinates(colorArray);
