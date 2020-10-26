@@ -267,6 +267,7 @@ public class App {
 						System.out.println("Coordinates is not loaded! Use command 'coordinates' to load coordinates");
 					}
 				} else if (msg.startsWith("h") || msg.startsWith("help")) {
+					// TODO: Update help command w. all commands
 					System.out.println(" ___________________________________________________________________________");
 					System.out.println("| HELP:                                                                     |");
 					System.out.println("| cc / change con      - Changes hostname and port                          |");
