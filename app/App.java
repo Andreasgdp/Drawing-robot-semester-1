@@ -2,18 +2,14 @@ import robclient.RobotClient;
 import edgedetect.EdgeDetector;
 import drawing_in_java.drawings;
 
-import java.awt.image.BufferedImage;
-import java.io.*;
 import java.awt.Color;
 import java.util.*;
 import javax.swing.*;
 
 public class App {
 	public static void main(String[] args) {
-		App app = new App();
 		boolean imageLoaded = false;
 		boolean coordsLoaded = false;
-		String aPath = "app/images/";
 		String imgPath = "app/images/";
 
 		EdgeDetector eDetect = new EdgeDetector("app/images/download.png");
