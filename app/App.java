@@ -66,13 +66,13 @@ public class App {
 				}
 
 				else if (msg.startsWith("reset") || msg.startsWith("re")) {
-					app.reconnect(client);
+					client.reconnect();
 					client.write("rset");
 				}
 
 				else if (msg.startsWith("st") || msg.startsWith("stop")) {
 					// TODO: add function to recognize ESC-btn
-					app.reconnect(client);
+					client.reconnect();
 					client.write("stop");
 				}
 
@@ -118,6 +118,8 @@ public class App {
 				}
 
 				else if (msg.startsWith("send")) {
+					// TODO: add method within edgedetector to check if the image and coordinates
+					// are loaded to ensure that an error hasn't occured.
 					if (coordsLoaded) {
 						// client.write(eDetect.getCoordinates());
 						String draw = "0";
@@ -135,18 +137,18 @@ public class App {
 
 								// Send x
 								writeSuccess = client.write(x);
-								app.reconnect(client);
+								client.reconnect();
 
 								// Send y
 								if (writeSuccess) {
 									writeSuccess = client.write(y);
-									app.reconnect(client);
+									client.reconnect();
 								}
 
 								// Send draw
 								if (writeSuccess) {
 									writeSuccess = client.write(draw);
-									app.reconnect(client);
+									client.reconnect();
 								}
 								if (writeSuccess) {
 									String waitVariable = "test";
@@ -158,7 +160,7 @@ public class App {
 											waitVariable = "test";
 										}
 									}
-									app.reconnect(client);
+									client.reconnect();
 								} else {
 									System.out.println("A problem occurred when trying to send coordinates to the PLC");
 									break outer;
@@ -187,7 +189,7 @@ public class App {
 						}
 					}
 					System.out.println(waitVariable);
-					app.reconnect(client);
+					client.reconnect();
 					waitVariable = "test";
 					while (waitVariable.compareTo("done") != 0) {
 						waitVariable = client.read();
@@ -196,7 +198,7 @@ public class App {
 						}
 					}
 					System.out.println(waitVariable);
-					app.reconnect(client);
+					client.reconnect();
 				}
 
 				else if (msg.startsWith("run")) {
@@ -230,18 +232,18 @@ public class App {
 
 								// Send x
 								writeSuccess = client.write(x);
-								app.reconnect(client);
+								client.reconnect();
 
 								// Send y
 								if (writeSuccess) {
 									writeSuccess = client.write(y);
-									app.reconnect(client);
+									client.reconnect();
 								}
 
 								// Send draw
 								if (writeSuccess) {
 									writeSuccess = client.write(draw);
-									app.reconnect(client);
+									client.reconnect();
 								}
 								if (writeSuccess) {
 									String waitVariable = "test";
@@ -252,7 +254,7 @@ public class App {
 											waitVariable = "test";
 										}
 									}
-									app.reconnect(client);
+									client.reconnect();
 								} else {
 									System.out.println("A problem occurred when trying to send coordinates to the PLC");
 									break outer;
@@ -288,16 +290,5 @@ public class App {
 		scanner.close();
 		CMDscanner.close();
 		client.disconnect();
-	}
-
-	public void reconnect(RobotClient client) {
-		if (client.isConnected()) {
-			client.disconnect();
-			try {
-				client.connect();
-			} catch (Exception e) {
-				System.out.println("Cannot connect to PLC. ERR: " + e);
-			}
-		}
 	}
 }

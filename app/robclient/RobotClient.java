@@ -78,8 +78,8 @@ public class RobotClient {
                 waitVariable = "null";
             }
             long startTime = System.currentTimeMillis();
-            System.out.println("Message: " + message + " Wait: " + waitVariable + " Check: "
-                    + (waitVariable.equals(message)));
+            System.out.println(
+                    "Message: " + message + " Wait: " + waitVariable + " Check: " + (waitVariable.equals(message)));
             while (!waitVariable.equals(message)) {
                 waitVariable = this.read();
                 if (waitVariable == null) {
@@ -89,6 +89,21 @@ public class RobotClient {
             return (waitVariable.equals(message)) ? true : false;
         } else {
             return false;
+        }
+    }
+
+    /**
+     * Method to reconnect to the robot to ensure correct connection after a message
+     * has been send.
+     */
+    public void reconnect() {
+        if (this.isConnected()) {
+            this.disconnect();
+            try {
+                this.connect();
+            } catch (Exception e) {
+                System.out.println("Cannot connect to PLC. ERR: " + e);
+            }
         }
     }
 
