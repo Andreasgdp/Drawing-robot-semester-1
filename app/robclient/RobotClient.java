@@ -74,18 +74,22 @@ public class RobotClient {
             out.flush();
             String inputClient = this.read();
             String waitVariable = inputClient;
+
             if (waitVariable == null) {
                 waitVariable = "null";
             }
+
             long startTime = System.currentTimeMillis();
             System.out.println(
                     "Message: " + message + " Wait: " + waitVariable + " Check: " + (waitVariable.equals(message)));
+
             while (!waitVariable.equals(message)) {
                 waitVariable = this.read();
                 if (waitVariable == null) {
                     waitVariable = "null";
                 }
             }
+
             return (waitVariable.equals(message)) ? true : false;
         } else {
             return false;
@@ -99,6 +103,7 @@ public class RobotClient {
     public void reconnect() {
         if (this.isConnected()) {
             this.disconnect();
+
             try {
                 this.connect();
             } catch (Exception e) {
