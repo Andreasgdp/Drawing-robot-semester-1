@@ -6,12 +6,6 @@
 	"configurations": [
 		{
 			"type": "java",
-<<<<<<< HEAD
-			"name": "CodeLens (Launch) - App",
-			"request": "launch",
-			"mainClass": "App",
-			"projectName": "Drawing-robot-semester-1_f63e8fde"
-=======
 			"name": "CodeLens (Launch) - Test",
 			"request": "launch",
 			"mainClass": "Test",
@@ -23,19 +17,13 @@
 			"request": "launch",
 			"mainClass": "robclient.RobotClient",
 			"projectName": "Drawing-robot-semester-1_7aec37ad"
->>>>>>> b9ebd103117eaf6e83435b9a3399efd72780de6e
 		},
 		{
 			"type": "java",
 			"name": "CodeLens (Launch) - App",
 			"request": "launch",
-<<<<<<< HEAD
-			"mainClass": "app.App",
-			"projectName": "Drawing-robot-semester-1_f63e8fde"
-=======
 			"mainClass": "App",
-			"projectName": "Drawing-robot-semester-1_7aec37ad"
->>>>>>> b9ebd103117eaf6e83435b9a3399efd72780de6e
+			"projectName": "Drawing-robot-semester-1_7d2ec1ae"
 		},
 		{
 			"type": "java",
