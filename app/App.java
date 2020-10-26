@@ -13,7 +13,7 @@ public class App {
 		App app = new App();
 		boolean imageLoaded = false;
 		boolean coordsLoaded = false;
-		String apath = "app/images/";
+		String aPath = "app/images/";
 		String imgPath = "app/images/";
 
 		EdgeDetector eDetect = new EdgeDetector("app/images/download.png");
@@ -85,23 +85,21 @@ public class App {
 						System.out.println("no image name detected");
 					} else if (!iName.isEmpty()) {
 						imgPath = "app/images/" + iName;
-						File afile = new File(apath);
-						if (afile.exists()) {
+						File aFile = new File(aPath);
+						if (aFile.exists()) {
 							System.out.println("file exists");
 							imageLoaded = eDetect.loadNewImage(imgPath);
 						} else {
 							System.out.println("image dosnt exist in folder: app/images");
 							System.out.println("do you wish to select an alternative path?");
-							String diffpath = CMDscanner.nextLine();
-							if (diffpath.startsWith("y")) {
+							String diffPath = CMDscanner.nextLine();
+							if (diffPath.startsWith("y")) {
 								System.out.println("enter alternative image path:");
-								String alpath = CMDscanner.nextLine();
-								File alfile = new File(alpath);
-								if (alfile.exists()) {
+								String alPath = CMDscanner.nextLine();
+								File alFile = new File(alPath);
+								if (alFile.exists()) {
 									System.out.println("file exists");
-									imageLoaded = true;
-									// EdgeDetector eDetect = new EdgeDetector(alpath);
-									// System.out.println(eDetect);
+									imageLoaded = eDetect.loadNewImage(alPath);
 								} else {
 									System.out.println("file dosn't exist");
 								}
