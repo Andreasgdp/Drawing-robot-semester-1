@@ -13,13 +13,14 @@ public class App {
     public boolean imageL;
     public boolean coordinatsL;
     public static void main(String[] args) {
+            App app = new App();
             Scanner scan = new Scanner (System.in);
             boolean imageL = false;
             boolean coordinatsL = false;
             boolean connection = true;
             String path = "";
             String apath = "";
-            EdgeDetector eDetect = new EdgeDetector(apath);
+            EdgeDetector eDetector = new EdgeDetector(apath);
 
             RobotClient client = new RobotClient("192.168.0.20", 12345);
             try {
@@ -67,7 +68,7 @@ public class App {
                                     System.out.println("file exists");
                                     command = "open image"; 
                                     imageL = true;
-                                    EdgeDetector eDetector = new EdgeDetector(apath);
+                                    eDetector = new EdgeDetector(apath);
                                     // eDetector.loadNewImage(apath);
                                     System.out.println(eDetector);
                                 }
@@ -83,7 +84,7 @@ public class App {
                                             System.out.println("file exists");
                                             command = "open image"; 
                                             imageL = true;
-                                            EdgeDetector eDetector = new EdgeDetector(alpath);
+                                            eDetector = new EdgeDetector(alpath);
                                             System.out.println(eDetector);
                                         }
                                         else {
@@ -98,8 +99,22 @@ public class App {
                         if (connection) {
                             if (imageL == true && coordinatsL == true) {
                             System.out.println("Sending coordinats to PLC");
-                            ArrayList<ArrayList<ArrayList<Integer> > > command = eDetector.loadCoordinates();
-                            client.write(command);
+                            String draw = "0";
+                            String x = "0";
+                            String y = "0";
+                            Boolean writeSucces = false;
+                            Color[][] test = eDetector.getColorArray();
+                            ArrayList<ArrayList<ArrayList<Integer> > > coords = eDetector.loadCoordinates(test);
+                            for (int i = 0; i < coords.size(); i++) {
+                                for (int j = 0; j < 2; j++) {
+                                    x = Integer.toString(coords.get(i).get(j).get(0));
+                                    y = Integer.toString(coords.get(i).get(j).get(1));
+                                    draw = Integer.toString(j);
+
+                                }
+                            }
+                            client.write(draw);
+                            System.out.println(draw);
                             }
                             else if (imageL != true) {
                                 System.out.println("no immage loaded");
@@ -121,7 +136,7 @@ public class App {
                             command = "loadCoord";
                             coordinatsL = true;
                             Color[][] colorArray = eDetector.getColorArray();
-						    eDetector.getCoords(colorArray);
+						    eDetector.loadCoordinates(colorArray);
                         }
                         else {
                             System.out.println("no immage selected");
