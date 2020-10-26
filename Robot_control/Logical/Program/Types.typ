@@ -10,7 +10,10 @@ TYPE
 		counter : DINT;
 		goTo : BOOL;
 		goToCounter : DINT;
+<<<<<<< HEAD:Robot_control/Logical/Program/Types.typ
+=======
 		speedCase : USINT;
+>>>>>>> master:robot_control/Logical/Program/Types.typ
 	END_STRUCT;
 	this_typ : 	STRUCT 
 		M2 : m_typ;

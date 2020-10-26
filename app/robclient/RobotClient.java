@@ -17,6 +17,9 @@ import java.util.logging.Logger;
  */
 public class RobotClient {
 
+    public static void main(String[] args) {
+        
+    }
     private String hostname;
     private int port;
     private Socket connection;
@@ -58,7 +61,7 @@ public class RobotClient {
     }
 
     /**
-     * This method writes a message to the robot iff a connection to the robot
+     * This method writes a message to the robot if a connection to the robot
      * is established.
      *
      * @param message The message to write to the robot.

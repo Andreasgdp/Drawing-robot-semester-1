@@ -11,7 +11,10 @@ PROGRAM _INIT
 	this.M3.counter := 0;
 	this.startPS := FALSE;
 	this.startPSCase := 0;
+<<<<<<< HEAD:Robot_control/Logical/Program/Main.st
+=======
 	goTo := '';
+>>>>>>> master:robot_control/Logical/Program/Main.st
 END_PROGRAM
 
 PROGRAM _CYCLIC
@@ -48,14 +51,22 @@ PROGRAM _CYCLIC
 					this.M1.forward := FALSE;
 				END_IF;
 				
+<<<<<<< HEAD:Robot_control/Logical/Program/Main.st
+				IF this.M2.counter < 150 THEN
+=======
 				IF this.M2.counter < 300 THEN
+>>>>>>> master:robot_control/Logical/Program/Main.st
 					this.M2.forward := TRUE;
 				ELSE
 					//this.M1.backward := FALSE;
 					this.M2.forward := FALSE;
 				END_IF;
 				
+<<<<<<< HEAD:Robot_control/Logical/Program/Main.st
+				IF this.M1.counter >= 2500 AND this.M2.counter >= 150 THEN
+=======
 				IF this.M1.counter >= 10000 AND this.M2.counter >= 300 THEN
+>>>>>>> master:robot_control/Logical/Program/Main.st
 					this.startCase := 20;
 				END_IF;
 			20:
@@ -83,6 +94,8 @@ PROGRAM _CYCLIC
 		END_CASE;
 	END_IF
 	
+<<<<<<< HEAD:Robot_control/Logical/Program/Main.st
+=======
 	IF goTo = 'ready' THEN
 		IF (draw = TRUE) AND (case_draw <> 10) THEN
 			case_draw := 0;
@@ -106,6 +119,7 @@ PROGRAM _CYCLIC
 
 	END_IF;
 	
+>>>>>>> master:robot_control/Logical/Program/Main.st
 	//ny kode
 	IF this.M1.goTo AND (this.M1.goToCounter <> this.M1.counter) THEN
 		IF this.M1.counter < this.M1.goToCounter THEN
@@ -151,6 +165,61 @@ PROGRAM _CYCLIC
 		
 	END_IF
 
+<<<<<<< HEAD:Robot_control/Logical/Program/Main.st
+	IF this.startPS THEN
+		CASE this.startPSCase OF
+			0:
+				this.M1.goToCounter := this.M1.counter;
+				this.M3.goToCounter := this.M3.counter;
+				this.M3.backward := TRUE;
+				this.startPSCase := 5;
+			5:
+				IF this.M3.counter = 3500 THEN
+					this.M3.backward := FALSE;
+					this.startPSCase := 10;
+				END_IF
+			10:
+				this.M1.backward := TRUE;
+				IF this.btn1.pressed THEN
+					this.M1.backward := FALSE;
+					this.startPSCase := 15;
+				END_IF
+			15:
+				this.pencilSharp := TRUE;
+				this.M3.forward := TRUE;
+				IF this.btn4.pressed THEN
+					this.M3.forward := FALSE;
+					this.M3.backward := TRUE;
+					this.startPSCase := 20;
+				END_IF
+			20:
+				IF this.M3.counter = 3500 THEN
+					this.M3.backward := FALSE;
+					this.startPSCase := 25;
+					this.pencilSharp := FALSE;
+				END_IF
+			25:
+				this.M1.goTo := TRUE;
+				this.startPSCase := 30;
+				
+			30:
+				IF this.M1.goTo = FALSE THEN
+					this.M3.goTo := TRUE;
+					this.startPSCase := 35;
+				END_IF
+				
+			35:
+				this.startPS := FALSE;
+				
+		END_CASE
+	END_IF
+				
+			
+				
+				
+	//slut ny kode			
+
+=======
 	IF (this.M1.goTo = FALSE) AND (this.M2.goTo = FALSE) AND (this.M2.goToCounter = this.M2.counter) AND (this.M1.goToCounter = this.M1.counter) AND (goTo = 'ready') THEN
 		IF this.M3.counter < 300 THEN
 			this.M3.goToCounter := 320;
@@ -162,6 +231,7 @@ PROGRAM _CYCLIC
 			case_draw := 0;
 		END_IF;
 	END_IF;
+>>>>>>> master:robot_control/Logical/Program/Main.st
 	
 	IF this.startPS THEN
 		CASE this.startPSCase OF
