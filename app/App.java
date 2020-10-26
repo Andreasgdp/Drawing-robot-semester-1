@@ -3,6 +3,7 @@ import edgedetect.EdgeDetector;
 import drawing_in_java.drawings;
 
 import java.awt.image.BufferedImage;
+import java.io.*;
 import java.awt.Color;
 import java.util.*;
 import javax.swing.*;
@@ -12,6 +13,8 @@ public class App {
 		App app = new App();
 		boolean imageLoaded = false;
 		boolean coordsLoaded = false;
+		String apath = "app/images/";
+		String imgPath = "app/images/";
 
 		EdgeDetector eDetect = new EdgeDetector("app/images/download.png");
 		// RobotClient client = new RobotClient("localhost", 4999);
@@ -62,21 +65,49 @@ public class App {
 					}
 				}
 
-				else if (msg.startsWith("reset")) {
+				else if (msg.startsWith("reset") || msg.startsWith("re")) {
 					app.reconnect(client);
 					client.write("rset");
 				}
 
-				else if (msg.startsWith("stop")) {// TODO: add function to recognize ESC-btn
+				else if (msg.startsWith("st") || msg.startsWith("stop")) {
+					// TODO: add function to recognize ESC-btn
 					app.reconnect(client);
 					client.write("stop");
 				}
 
-				else if (msg.startsWith("image") || msg.startsWith("loadImage")) {
+				else if (msg.startsWith("i") || msg.startsWith("image") || msg.startsWith("loadImage")) {
 					System.out.print("Write new img path: ");
-					String imgPath = CMDscanner.next();
-					eDetect.loadNewImage(imgPath);
-					imageLoaded = true;
+					String iName = CMDscanner.nextLine();
+					// TODO: move this check of filepath to the loadNewImage method
+					// imageLoaded = eDetect.loadNewImage(imgPath);
+					if (iName.isEmpty()) {
+						System.out.println("no image name detected");
+					} else if (!iName.isEmpty()) {
+						imgPath = "app/images/" + iName;
+						File afile = new File(apath);
+						if (afile.exists()) {
+							System.out.println("file exists");
+							imageLoaded = eDetect.loadNewImage(imgPath);
+						} else {
+							System.out.println("image dosnt exist in folder: app/images");
+							System.out.println("do you wish to select an alternative path?");
+							String diffpath = CMDscanner.nextLine();
+							if (diffpath.startsWith("y")) {
+								System.out.println("enter alternative image path:");
+								String alpath = CMDscanner.nextLine();
+								File alfile = new File(alpath);
+								if (alfile.exists()) {
+									System.out.println("file exists");
+									imageLoaded = true;
+									// EdgeDetector eDetect = new EdgeDetector(alpath);
+									// System.out.println(eDetect);
+								} else {
+									System.out.println("file dosn't exist");
+								}
+							}
+						}
+					}
 				}
 
 				else if (msg.startsWith("coordinates") || msg.startsWith("loadCoordinates")) {
@@ -193,7 +224,7 @@ public class App {
 							// [[x1,y1],[x2,y2]]
 							for (int j = 0; j < 2; j++) {
 								// j = 0: [x1,y1] ; j = 1: [x2,y2]
-								int drawValue = (j == 0 && i != 0)  ? 0 : 1;
+								int drawValue = (j == 0 && i != 0) ? 0 : 1;
 								y = String.format("%04d", coords.get(i).get(j).get(0));
 								x = String.format("%04d", coords.get(i).get(j).get(1));
 								draw = String.format("%04d", drawValue);
@@ -235,6 +266,18 @@ public class App {
 					} else {
 						System.out.println("Coordinates is not loaded! Use command 'coordinates' to load coordinates");
 					}
+				} else if (msg.startsWith("h") || msg.startsWith("help")) {
+					System.out.println(" ___________________________________________________________________________");
+					System.out.println("| HELP:                                                                     |");
+					System.out.println("| cc / change con      - Changes hostname and port                          |");
+					System.out.println("| i  / load image      - Loads image based on selected image name or path   |");
+					System.out.println("| L  / load coordinats - Loads coordinats of the chosen image               |");
+					System.out.println("| re / reset           - Resets the PLC coordinats                          |");
+					System.out.println("| run                  - Loads image and coordinats, then sends them to PLC |");
+					System.out.println("| sd / send            - Sends coordinats to the PLC                        |");
+					System.out.println("| st / stop            - Stops the PLC                                      |");
+					System.out.println("| q  / quit            - Quits the program                                  |");
+					System.out.println("|___________________________________________________________________________|");
 				}
 
 				else {
