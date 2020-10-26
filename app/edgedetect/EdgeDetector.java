@@ -209,9 +209,11 @@ public class EdgeDetector {
         ArrayList<ArrayList<Integer>> plist = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> coords = new ArrayList<Integer>();
         boolean drawBlackColor = true;
+
         try {
             for (int y = 0; y < array.length; y++) {
                 for (int x = 0; x < array[y].length; x++) {
+
                     if (drawBlackColor) {
                         if (array[y][x].getRed() == 0 && array[y][x].getBlue() == 0 && array[y][x].getGreen() == 0) {
                             coords.add(y);
@@ -260,6 +262,7 @@ public class EdgeDetector {
         Scanner CMDscanner = new Scanner(System.in);
         boolean returnVal = false;
         File aFile = new File(imgPath);
+
         if (aFile.exists()) {
             System.out.println("file exists");
             this.imagePath = imgPath;
@@ -268,10 +271,12 @@ public class EdgeDetector {
             System.out.println("image dosnt exist in folder: app/images");
             System.out.println("do you wish to select an alternative path (Direct path)?");
             String diffPath = CMDscanner.nextLine();
+
             if (diffPath.startsWith("y")) {
                 System.out.println("enter alternative image path:");
                 String alPath = CMDscanner.nextLine();
                 File alFile = new File(alPath);
+
                 if (alFile.exists()) {
                     System.out.println("file exists");
                     this.imagePath = imgPath;
@@ -285,41 +290,6 @@ public class EdgeDetector {
     }
 
     public ArrayList<ArrayList<ArrayList<Integer>>> getPairCoords(Color[][] array) {
-        ArrayList<ArrayList<ArrayList<Integer>>> colorPairs = new ArrayList<ArrayList<ArrayList<Integer>>>();
-        ArrayList<ArrayList<Integer>> plist = new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> coords = new ArrayList<Integer>();
-        boolean colorSwitch = true;
-
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                if (colorSwitch) {
-                    if (array[i][j].getRed() == 0 && array[i][j].getBlue() == 0 && array[i][j].getGreen() == 0) {
-                        coords.add(i);
-                        coords.add(j);
-                        coords = new ArrayList<Integer>();
-                        plist.add(coords);
-                        colorSwitch = false;
-                    }
-
-                } else {
-                    if (array[i][j].getRed() == 255 && array[i][j].getBlue() == 255 && array[i][j].getGreen() == 255) {
-                        coords.add(i - 1);
-                        coords.add(j - 1);
-                        coords = new ArrayList<Integer>();
-                        plist.add(coords);
-                        colorPairs.add(plist);
-                        plist = new ArrayList<ArrayList<Integer>>();
-                        colorSwitch = true;
-                    }
-                }
-            }
-        }
-        return colorPairs;
-    }
-
-    public ArrayList<ArrayList<ArrayList<Integer>>> getPairCoords2(Color[][] array) {
-        ArrayList<int[][]> test = new ArrayList<int[][]>();
-
         ArrayList<ArrayList<ArrayList<Integer>>> colorPairs = new ArrayList<ArrayList<ArrayList<Integer>>>();
         ArrayList<ArrayList<Integer>> plist = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> coords = new ArrayList<Integer>();
