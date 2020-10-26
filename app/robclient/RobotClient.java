@@ -120,6 +120,9 @@ public class RobotClient {
         }
     }
 
+    /**
+     * Method to read a message from the robot.
+     */
     public String read() {
         String str = "";
         try {
