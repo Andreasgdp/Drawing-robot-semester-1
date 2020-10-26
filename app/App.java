@@ -121,7 +121,6 @@ public class App {
 					// TODO: add method within edgedetector to check if the image and coordinates
 					// are loaded to ensure that an error hasn't occured.
 					if (coordsLoaded) {
-						// client.write(eDetect.getCoordinates());
 						String draw = "0";
 						String x = "0";
 						String y = "0";
@@ -131,9 +130,12 @@ public class App {
 							// [[x1,y1],[x2,y2]]
 							for (int j = 0; j < 2; j++) {
 								// j = 0: [x1,y1] ; j = 1: [x2,y2]
-								x = Integer.toString(coords.get(i).get(j).get(0));
-								y = Integer.toString(coords.get(i).get(j).get(1));
-								draw = Integer.toString(j);
+								int drawValue = (j == 0 && i != 0) ? 0 : 1;
+								y = String.format("%04d", coords.get(i).get(j).get(0));
+								x = String.format("%04d", coords.get(i).get(j).get(1));
+								draw = String.format("%04d", drawValue);
+
+								System.out.println(x + "," + y + "," + draw);
 
 								// Send x
 								writeSuccess = client.write(x);
@@ -153,8 +155,7 @@ public class App {
 								if (writeSuccess) {
 									String waitVariable = "test";
 									long startTime = System.currentTimeMillis();
-									while (waitVariable.compareTo("done") != 0
-											|| (System.currentTimeMillis() - startTime) < 10000) {
+									while (waitVariable.compareTo("done") != 0) {
 										waitVariable = client.read();
 										if (waitVariable == null) {
 											waitVariable = "test";
