@@ -111,8 +111,7 @@ public class App {
 				else if (msg.startsWith("coordinates") || msg.startsWith("loadCoordinates")) {
 					if (imageLoaded) {
 						Color[][] colorArray = eDetect.getColorArray();
-						eDetect.loadCoordinates(colorArray);
-						coordsLoaded = true;
+						coordsLoaded = eDetect.loadCoordinates(colorArray);
 					} else {
 						System.out.println("Image is not loaded! Use command 'image' to load image");
 					}
