@@ -84,6 +84,8 @@ public class App {
 					} else if (!iName.isEmpty()) {
 						imgPath = "app/images/" + iName;
 						imageLoaded = eDetect.loadNewImage(imgPath);
+						// Resetting coordsloaded as it the image might not match the coords from before
+						coordsLoaded = false;
 					}
 				}
 
@@ -97,8 +99,6 @@ public class App {
 				}
 
 				else if (msg.startsWith("send")) {
-					// TODO: add method within edgedetector to check if the image and coordinates
-					// are loaded to ensure that an error hasn't occured.
 					if (coordsLoaded) {
 						String draw = "0";
 						String x = "0";
@@ -106,9 +106,7 @@ public class App {
 						boolean writeSuccess = false;
 						ArrayList<ArrayList<ArrayList<Integer>>> coords = eDetect.getCoordinates();
 						outer: for (int i = 0; i < coords.size(); i++) {
-							// [[x1,y1],[x2,y2]]
 							for (int j = 0; j < 2; j++) {
-								// j = 0: [x1,y1] ; j = 1: [x2,y2]
 								int drawValue = (j == 0 && i != 0) ? 0 : 1;
 								y = String.format("%04d", coords.get(i).get(j).get(0));
 								x = String.format("%04d", coords.get(i).get(j).get(1));
