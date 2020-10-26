@@ -183,6 +183,12 @@ public class EdgeDetector {
         return arrayRepresentation;
     }
 
+    /**
+     * This method runs through an image and creates a 2D array representation of
+     * the colors in the image.
+     * 
+     * @return A two-dimensional array with Color objects, representing a the image.
+     */
     public Color[][] getColorArray() {
         Picture picture0 = new Picture(imagePath);
         // Find width, removing outer border due to filter
@@ -204,6 +210,15 @@ public class EdgeDetector {
         return pixelColor;
     }
 
+    /**
+     * This method runs through a 2D representation of an image and saves
+     * coordinates in pairs: For each y-coordinate and each black line in said
+     * y-coordinate, 2 points are saved - one for the beginning of the black line
+     * and one for the end.
+     * 
+     * @param array Type: Color[][] - A two-dimensional array with Color objects,
+     *              representing a the image.
+     */
     public boolean loadCoordinates(Color[][] array) {
         ArrayList<ArrayList<ArrayList<Integer>>> colorPairs = new ArrayList<ArrayList<ArrayList<Integer>>>();
         ArrayList<ArrayList<Integer>> plist = new ArrayList<ArrayList<Integer>>();
@@ -254,10 +269,27 @@ public class EdgeDetector {
 
     }
 
+    /**
+     * This method returns the already prepared coordinates by method:
+     * loadCoordinates().
+     * 
+     * @return An ArrayList of paired coordinates.
+     */
     public ArrayList<ArrayList<ArrayList<Integer>>> getCoordinates() {
-        return this.coordinates;
+        if (!(this.coordinates == null)) {
+            return this.coordinates;
+        } else {
+            return null;
+        }
     }
 
+    /**
+     * This method takes an image path and checks if that path is valid. If the path
+     * is valid the image path is set to be the default image path for the class.
+     * 
+     * @param imgPath String of the image path.
+     * @return A boolean to represent if the image has been loaded or not.
+     */
     public boolean loadNewImage(String imgPath) {
         Scanner CMDscanner = new Scanner(System.in);
         boolean returnVal = false;
@@ -287,38 +319,5 @@ public class EdgeDetector {
             }
         }
         return returnVal;
-    }
-
-    public ArrayList<ArrayList<ArrayList<Integer>>> getPairCoords(Color[][] array) {
-        ArrayList<ArrayList<ArrayList<Integer>>> colorPairs = new ArrayList<ArrayList<ArrayList<Integer>>>();
-        ArrayList<ArrayList<Integer>> plist = new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> coords = new ArrayList<Integer>();
-        boolean colorSwitch = true;
-
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                if (colorSwitch) {
-                    if (array[i][j].getRed() == 0 && array[i][j].getBlue() == 0 && array[i][j].getGreen() == 0) {
-                        coords.add(i);
-                        coords.add(j);
-                        coords = new ArrayList<Integer>();
-                        plist.add(coords);
-                        colorSwitch = false;
-                    }
-
-                } else {
-                    if (array[i][j].getRed() == 255 && array[i][j].getBlue() == 255 && array[i][j].getGreen() == 255) {
-                        coords.add(i - 1);
-                        coords.add(j - 1);
-                        coords = new ArrayList<Integer>();
-                        plist.add(coords);
-                        colorPairs.add(plist);
-                        plist = new ArrayList<ArrayList<Integer>>();
-                        colorSwitch = true;
-                    }
-                }
-            }
-        }
-        return colorPairs;
     }
 }
