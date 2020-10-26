@@ -64,7 +64,7 @@ public class RobotClient {
 
     /**
      * This method writes a message to the robot iff a connection to the robot is
-     * established.
+     * established and returns weather the message sending was successful or not.
      *
      * @param message The message to write to the robot.
      */
