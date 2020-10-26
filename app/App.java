@@ -174,7 +174,7 @@ public class App {
 					}
 				}
 
-				else if (msg.startsWith("message")) {
+				else if (msg.startsWith("message") || msg.startsWith("command") || msg.startsWith("cmd")) {
 					System.out.print("Write the message for the plc: ");
 					String message = CMDscanner.nextLine();
 					client.write(message);
@@ -278,6 +278,20 @@ public class App {
 					System.out.println("| st / stop            - Stops the PLC                                      |");
 					System.out.println("| q  / quit            - Quits the program                                  |");
 					System.out.println("|___________________________________________________________________________|");
+				}
+
+				else if (msg.startsWith("cc") || msg.startsWith("change con")) {
+					System.out.println("Enter Hostname: ");
+					String hostname = CMDscanner.nextLine();
+					System.out.println("Enter Port: ");
+					String portString = CMDscanner.nextLine();
+					int port = Integer.parseInt(portString);
+					client = new RobotClient(hostname, port);
+					try {
+						client.connect();
+					} catch (Exception e) {
+						System.out.println("Cannot connect to PLC. ERR: " + e);
+					}
 				}
 
 				else {
