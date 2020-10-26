@@ -2,7 +2,9 @@ package edgedetect;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
@@ -250,9 +252,31 @@ public class EdgeDetector {
     }
 
     public boolean loadNewImage(String imgPath) {
-        this.imagePath = imgPath;
-        // TODO: Add method to check if path exists.
-        return true;
+        Scanner CMDscanner = new Scanner(System.in);
+        boolean returnVal = false;
+        File aFile = new File(imgPath);
+        if (aFile.exists()) {
+            System.out.println("file exists");
+            this.imagePath = imgPath;
+            returnVal = true;
+        } else {
+            System.out.println("image dosnt exist in folder: app/images");
+            System.out.println("do you wish to select an alternative path (Direct path)?");
+            String diffPath = CMDscanner.nextLine();
+            if (diffPath.startsWith("y")) {
+                System.out.println("enter alternative image path:");
+                String alPath = CMDscanner.nextLine();
+                File alFile = new File(alPath);
+                if (alFile.exists()) {
+                    System.out.println("file exists");
+                    this.imagePath = imgPath;
+                } else {
+                    System.out.println("file dosn't exist");
+                    returnVal = false;
+                }
+            }
+        }
+        return returnVal;
     }
 
     public ArrayList<ArrayList<ArrayList<Integer>>> getPairCoords(Color[][] array) {

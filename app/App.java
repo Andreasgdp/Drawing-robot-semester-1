@@ -79,32 +79,11 @@ public class App {
 				else if (msg.startsWith("i") || msg.startsWith("image") || msg.startsWith("loadImage")) {
 					System.out.print("Write new img path: ");
 					String iName = CMDscanner.nextLine();
-					// TODO: move this check of filepath to the loadNewImage method
-					// imageLoaded = eDetect.loadNewImage(imgPath);
 					if (iName.isEmpty()) {
 						System.out.println("no image name detected");
 					} else if (!iName.isEmpty()) {
 						imgPath = "app/images/" + iName;
-						File aFile = new File(aPath);
-						if (aFile.exists()) {
-							System.out.println("file exists");
-							imageLoaded = eDetect.loadNewImage(imgPath);
-						} else {
-							System.out.println("image dosnt exist in folder: app/images");
-							System.out.println("do you wish to select an alternative path?");
-							String diffPath = CMDscanner.nextLine();
-							if (diffPath.startsWith("y")) {
-								System.out.println("enter alternative image path:");
-								String alPath = CMDscanner.nextLine();
-								File alFile = new File(alPath);
-								if (alFile.exists()) {
-									System.out.println("file exists");
-									imageLoaded = eDetect.loadNewImage(alPath);
-								} else {
-									System.out.println("file dosn't exist");
-								}
-							}
-						}
+						imageLoaded = eDetect.loadNewImage(imgPath);
 					}
 				}
 
