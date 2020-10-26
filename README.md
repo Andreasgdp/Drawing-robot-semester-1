@@ -34,7 +34,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/Andreasgdp/Drawing-robot-semester-1">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="images_readme/logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Drawing robot 2000</h3>
@@ -225,4 +225,4 @@ Project Link: [https://github.com/andreasgdp/Drawing-robot-semester-1](https://g
 [license-url]: https://github.com/andreasgdp/Drawing-robot-semester-1/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/andreas-g-d-petersen-11707518b/
-[product-screenshot]: images/robot_arm.jpg
+[product-screenshot]: images_readme/robot_arm.jpg

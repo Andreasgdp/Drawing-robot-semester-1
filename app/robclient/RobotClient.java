@@ -20,6 +20,9 @@ import java.io.*;
  */
 public class RobotClient {
 
+    public static void main(String[] args) {
+        
+    }
     private String hostname;
     private int port;
     private Socket connection;
