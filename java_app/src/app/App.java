@@ -163,9 +163,8 @@ public class App {
 					System.out.print("Write the message for the plc: ");
 					String message = CMDscanner.nextLine();
 					client.write(message);
-
-					String waitVariable = inputClient;
-					String inputClient = client.read();
+					
+					String waitVariable = client.read();
 					if (waitVariable == null) {
 						waitVariable = "null";
 					}
