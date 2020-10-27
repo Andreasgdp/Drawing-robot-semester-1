@@ -1,4 +1,6 @@
 VAR
+	elPreben : BOOL; (*The most overpowered bollean expression on Funen*)
+	F_It_TON : TON;
 	coord_counter : USINT;
 	TcpClose2 : TcpClose;
 	TcpClose1 : TcpClose;
@@ -9,5 +11,4 @@ VAR
 	receiveData : STRING[80];
 	sendData : STRING[80];
 	tcpst : TCPSTATE;
-	test : USINT;
 END_VAR

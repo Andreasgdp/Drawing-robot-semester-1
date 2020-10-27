@@ -2,7 +2,6 @@
 TYPE
 	m_typ : 	STRUCT 
 		endSwitch : BOOL;
-		freq1 : BOOL;
 		freq : BOOL;
 		backward : BOOL;
 		forward : BOOL;
@@ -10,10 +9,8 @@ TYPE
 		counter : DINT;
 		goTo : BOOL;
 		goToCounter : DINT;
-<<<<<<< HEAD:Robot_control/Logical/Program/Types.typ
-=======
+		speedCaseTON : TON;
 		speedCase : USINT;
->>>>>>> master:robot_control/Logical/Program/Types.typ
 	END_STRUCT;
 	this_typ : 	STRUCT 
 		M2 : m_typ;

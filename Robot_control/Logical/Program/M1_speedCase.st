@@ -1,0 +1,90 @@
+
+ACTION M1_speedCase:
+	
+	CASE this.M1.speedCase OF
+		0: // highest speed
+			this.M1.speedCaseTON.PT := T#0ms;
+			
+		1:
+			this.M1.speedCaseTON.PT := T#1ms;
+		
+		2:
+			this.M1.speedCaseTON.PT := T#2ms;
+			
+		3:
+			this.M1.speedCaseTON.PT := T#3ms;
+		
+		4:
+			this.M1.speedCaseTON.PT := T#4ms;
+		
+		5:
+			this.M1.speedCaseTON.PT := T#5ms;
+			
+		6:
+			this.M1.speedCaseTON.PT := T#6ms;
+			
+		7:
+			this.M1.speedCaseTON.PT := T#7ms;
+			
+		8:
+			this.M1.speedCaseTON.PT := T#8ms;
+			
+		9:
+			this.M1.speedCaseTON.PT := T#9ms;
+			
+		10:
+			this.M1.speedCaseTON.PT := T#10ms;
+		
+	END_CASE
+	
+	IF this.M1.forward OR this.M1.backward THEN
+		IF this.M1.speedCaseTON.Q THEN
+			this.M1.speedCaseTON.IN := FALSE;
+				
+			IF this.M1.freq THEN
+				this.M1.freq 		:= FALSE;
+			ELSE
+				this.M1.freq		:= TRUE;
+			END_IF
+				
+		ELSE
+			this.M1.speedCaseTON.IN := TRUE;
+				
+		END_IF
+	END_IF
+	
+	IF this.M1.forward THEN
+		this.M1.direction := TRUE;
+	
+		IF EDGEPOS(this.M1.freq) THEN
+			this.M1.counter := this.M1.counter + 1;
+			
+			IF this.M1.speedCase > 0 THEN
+				this.M1.speedCase := this.M1.speedCase - 1;
+			END_IF
+				
+		ELSIF EDGEPOS(NOT(this.M1.freq)) THEN
+			this.M1.counter := this.M1.counter + 1;
+		END_IF;
+	ELSIF this.M1.backward THEN
+		this.M1.direction := FALSE;
+		
+		IF EDGEPOS(this.M1.freq) THEN
+			this.M1.counter := this.M1.counter - 1;
+			
+			IF this.M1.speedCase > 0 THEN
+				this.M1.speedCase := this.M1.speedCase - 1;
+			END_IF
+			
+		ELSIF EDGEPOS(NOT(this.M1.freq)) THEN
+			this.M1.counter := this.M1.counter - 1;
+		END_IF;
+		
+	END_IF
+	IF EDGEPOS(NOT(this.M1.backward)) OR EDGEPOS(NOT(this.M1.forward)) THEN
+		this.M1.speedCase := 10;
+		
+	END_IF
+
+	this.M1.speedCaseTON ();
+END_ACTION

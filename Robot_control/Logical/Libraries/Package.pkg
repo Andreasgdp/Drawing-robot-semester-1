@@ -10,5 +10,6 @@
     <Object Type="Library" Language="binary" Description="The AsOpcUas library provides interfaces to the OPC-UA server">AsOpcUas</Object>
     <Object Type="Library" Language="binary" Description="This library contains FBKs for exchanging data (data stream) via stream sockets (TCP).">AsTCP</Object>
     <Object Type="Library" Language="binary" Description="The AsBrStr Library contains FBKs for memory and character string handling.">AsBrStr</Object>
+    <Object Type="Library" Language="binary" Description="This library contains standard function blocks and functions for IEC 61131-3.">standard</Object>
   </Objects>
 </Package>
