@@ -14,7 +14,7 @@ public class App {
 		String imgPath = "app/images/";
 
 		EdgeDetector eDetect = new EdgeDetector("app/images/download.png");
-		RobotClient client = new RobotClient("10.0.0.50", 12345);
+		RobotClient client = new RobotClient("192.168.0.20", 12345);
 
 		try {
 			client.connect();
@@ -210,7 +210,7 @@ public class App {
 
 						outer: for (int i = 0; i < coords.size(); i++) {
 							for (int j = 0; j < 2; j++) {
-								int drawValue = (j == 0 && i != 0) ? 0 : 1;
+								int drawValue = (j == 0 || i == 0) ? 0 : 1;
 								y = String.format("%04d", coords.get(i).get(j).get(0));
 								x = String.format("%04d", coords.get(i).get(j).get(1));
 								draw = String.format("%04d", drawValue);
