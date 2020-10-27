@@ -196,7 +196,7 @@ public class App {
                         }
                     }
                     else if (message.startsWith("h") || message.startsWith("help")) {
-                        System.out.println(" ___________________________________________________________________________");
+                        System.out.println(" ___________________________________________________________________________ ");
                         System.out.println("| HELP:                                                                     |");
                         System.out.println("| cc / change con      - Changes hostname and port                          |");
                         System.out.println("| i  / load image      - Loads image based on selected image name or path   |");
