@@ -34,9 +34,6 @@
     <LibraryObject Name="AsBrStr" Source="Libraries.AsBrStr.lby" Memory="UserROM" Language="binary" Debugging="true" />
     <LibraryObject Name="runtime" Source="" Memory="UserROM" Language="Binary" Debugging="true" />
     <LibraryObject Name="astime" Source="" Memory="UserROM" Language="Binary" Debugging="true" />
-<<<<<<< HEAD:robot_control/Physical/Config1/X20CP1382/Cpu.sw
     <LibraryObject Name="standard" Source="Libraries.standard.lby" Memory="UserROM" Language="binary" Debugging="true" />
-=======
->>>>>>> master:Robot_control/Physical/Config1/X20CP1382/Cpu.sw
   </Libraries>
 </SwConfiguration>
