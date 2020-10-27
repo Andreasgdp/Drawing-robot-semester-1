@@ -42,8 +42,8 @@ public class App {
 						ArrayList<ArrayList<ArrayList<Integer>>> coordinates = eDetect.getCoordinates();
 						System.out.println(coordinates);
 
-						for (int i = 0; i < coordinates.size(); i++) {
-							System.out.println(coordinates.get(i));
+						for (ArrayList<ArrayList<Integer>> coordinate : coordinates) {
+							System.out.println(coordinate);
 						}
 					}
 				}
@@ -163,7 +163,7 @@ public class App {
 					System.out.print("Write the message for the plc: ");
 					String message = CMDscanner.nextLine();
 					client.write(message);
-					
+
 					String waitVariable = client.read();
 					if (waitVariable == null) {
 						waitVariable = "null";
