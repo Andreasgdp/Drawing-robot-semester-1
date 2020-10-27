@@ -154,7 +154,7 @@ public class App {
                                 File afile = new File(apath);
                                     if(afile.exists()){
                                         System.out.println("file exists");
-                                        command = "open image"; 
+                                        // command = "open image"; 
                                         imageL = true;
                                         path = apath;
                                     }
@@ -168,7 +168,7 @@ public class App {
                                             File alfile = new File(alpath);
                                             if(alfile.exists()){
                                                 System.out.println("image choosen");
-                                                command = "open image"; 
+                                                // command = "open image"; 
                                                 imageL = true;
                                                 path = alpath;
                                             }
