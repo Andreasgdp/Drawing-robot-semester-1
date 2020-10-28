@@ -85,9 +85,7 @@ PROGRAM _CYCLIC
 	END_IF
 	
 	IF (goTo = 'ready') AND NOT pSharp THEN
-		IF (draw = TRUE) AND (case_draw <> 10) THEN
-			case_draw := 0;
-		ELSIF draw = FALSE THEN
+		IF draw = FALSE THEN
 			case_draw := 10;
 		END_IF;
 		CASE case_draw OF
@@ -110,26 +108,29 @@ PROGRAM _CYCLIC
 				
 			5: // which height should we goto?
 				IF this.greyScale = 0 THEN
-					this.M3.goToCounter := -70;
+					this.M3.goToCounter := -600;
 					this.M3.goTo 		:= TRUE;
 				ELSIF this.greyScale = 1 THEN
-					this.M3.goToCounter := 0;
-					this.M3.goTo 		:= FALSE;
+					this.M3.goToCounter := -500;
+					this.M3.goTo 		:= TRUE;
 				ELSIF this.greyScale = 2 THEN
-					this.M3.goToCounter := 70;
+					this.M3.goToCounter := -400;
 					this.M3.goTo 		:= TRUE;
 				ELSIF this.greyScale = 3 THEN
-					this.M3.goToCounter := 140;
+					this.M3.goToCounter := -300;
 					this.M3.goTo 		:= TRUE;
 				ELSIF this.greyScale = 4 THEN
-					this.M3.goToCounter := 210;
+					this.M3.goToCounter := -200;
 					this.M3.goTo 		:= TRUE;
 				ELSIF this.greyScale = 5 THEN
-					this.M3.goToCounter := 210;
+					this.M3.goToCounter := -100;
+					this.M3.goTo 		:= TRUE;
+				ELSIF this.greyScale = 6 THEN
+					this.M3.goToCounter :=  0;
 					this.M3.goTo 		:= TRUE;
 				END_IF
 				
-				IF this.M3.counter = this.M3.goToCounter AND NOT(this.M3.goTo) THEN
+				IF this.M3.counter = this.M3.goToCounter (*this.M3.goTo = FALSE*) THEN
 					case_draw := 10;
 				END_IF
 					
@@ -138,6 +139,11 @@ PROGRAM _CYCLIC
 				this.M2.goToCounter := y_coord * 10;
 				this.M1.goTo := TRUE;
 				this.M2.goTo := TRUE;
+			
+				IF draw = 0 THEN
+					case_draw := 0;
+				END_IF
+			
 		END_CASE;
 
 	END_IF;
@@ -188,8 +194,8 @@ PROGRAM _CYCLIC
 	END_IF
 
 	IF (this.M1.goTo = FALSE) AND (this.M2.goTo = FALSE) AND (this.M2.goToCounter = this.M2.counter) AND (this.M1.goToCounter = this.M1.counter) AND (goTo = 'ready') THEN
-		IF this.M3.counter > -400 THEN
-			this.M3.goToCounter := -420;
+		IF this.M3.counter > -800 THEN
+			this.M3.goToCounter := -820;
 			this.M3.goTo := TRUE;
 		ELSIF NOT pSharp THEN //prøvede rettelse
 			goTo := 'done';
