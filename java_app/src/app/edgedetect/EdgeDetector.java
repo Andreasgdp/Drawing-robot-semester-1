@@ -186,12 +186,13 @@ public class EdgeDetector {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 // int value = 230;
-                int value = 100;
+                int value = 200;
                 if (picture0.get(x, y).getRed() <= value && picture0.get(x, y).getGreen() <= value
                         && picture0.get(x, y).getBlue() <= value)
                     pixelColor[y][x] = new Color(0);
                 else
                     pixelColor[y][x] = new Color(255, 255, 255);
+
             }
         }
         return pixelColor;
@@ -207,54 +208,72 @@ public class EdgeDetector {
      *              representing a the image.
      */
     public boolean loadCoordinates(Color[][] array) {
-        ArrayList<ArrayList<ArrayList<Integer>>> colorPairs = new ArrayList<>();
-        ArrayList<ArrayList<Integer>> plist = new ArrayList<>();
-        ArrayList<Integer> coords = new ArrayList<>();
+        ArrayList<ArrayList<ArrayList<Integer>>> colorPairs = new ArrayList<ArrayList<ArrayList<Integer>>>();
+        ArrayList<ArrayList<Integer>> plist = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> coords = new ArrayList<Integer>();
         boolean drawBlackColor = true;
 
-        try {
-            for (int y = 0; y < array.length; y++) {
-                for (int x = 0; x < array[y].length; x++) {
+        for (int y = 0; y < array.length; y++) {
 
+            boolean direction = (y % 2 == 0) ? true : false;
+            if (direction) {
+                for (int x = 0; x < array[y].length; x++) {
+                    // System.out.println(array[y][x]);
                     if (drawBlackColor) {
                         if (array[y][x].getRed() == 0 && array[y][x].getBlue() == 0 && array[y][x].getGreen() == 0) {
                             coords.add(y);
                             coords.add(x);
                             plist.add(coords);
-                            coords = new ArrayList<>();
+                            coords = new ArrayList<Integer>();
                             drawBlackColor = false;
                         }
 
                     } else {
-                        if (array[y][x].getRed() == 255 && array[y][x].getBlue() == 255
-                                && array[y][x].getGreen() == 255) {
+
+                        if ((array[y][x].getRed() == 255 && array[y][x].getBlue() == 255 && array[y][x].getGreen() == 255) || (x + 1 >= array[y].length)) {
                             coords.add(y);
                             coords.add(x - 1);
                             plist.add(coords);
-                            coords = new ArrayList<>();
+                            coords = new ArrayList<Integer>();
                             colorPairs.add(plist);
-                            plist = new ArrayList<>();
+                            plist = new ArrayList<ArrayList<Integer>>();
                             drawBlackColor = true;
-                        } else if (x + 1 >= array[y].length) {
+                        }
+                    }
+                }
+            } else {
+                for (int x = array[y].length-1; x > 0; x--) {
+                    // System.out.println(array[y][x]);
+                    if (drawBlackColor) {
+                        if (array[y][x].getRed() == 0 && array[y][x].getBlue() == 0 && array[y][x].getGreen() == 0) {
                             coords.add(y);
-                            coords.add(x - 1);
+                            coords.add(x);
                             plist.add(coords);
-                            coords = new ArrayList<>();
+                            coords = new ArrayList<Integer>();
+                            drawBlackColor = false;
+                        }
+
+                    } else {
+
+                        if ((array[y][x].getRed() == 255 && array[y][x].getBlue() == 255 && array[y][x].getGreen() == 255) || (x - 1 <= 0)) {
+                            coords.add(y);
+                            coords.add(x + 1);
+                            plist.add(coords);
+                            coords = new ArrayList<Integer>();
                             colorPairs.add(plist);
-                            plist = new ArrayList<>();
+                            plist = new ArrayList<ArrayList<Integer>>();
                             drawBlackColor = true;
                         }
                     }
                 }
             }
-            this.coordinates = colorPairs;
-            return true;
-        } catch (Exception e) {
-            System.out.println("Cannot load coordinates of image. ERR: " + e);
-            return false;
         }
-
+        // TODO: Add method to check if coords are loaded.
+        this.coordinates = colorPairs;
+        return true;
     }
+
+
 
     /**
      * This method returns the already prepared coordinates by method:
