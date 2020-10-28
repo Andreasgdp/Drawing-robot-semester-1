@@ -280,7 +280,7 @@ public final class Picture implements ActionListener {
 
    /**
      * Returns the color of pixel ({@code col}, {@code row}) as an {@code int}.
-     * Using this method can be more efficient than {@link #get()} because it does not
+     * Using this method can be more efficient than get() because it does not
      * create a {@code Color} object.
      *
      * @param col the column index
