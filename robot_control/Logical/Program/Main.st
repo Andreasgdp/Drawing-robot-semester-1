@@ -94,16 +94,45 @@ PROGRAM _CYCLIC
 			0:
 				IF this.btn4.pressed THEN
 					this.M3.forward := FALSE;
-					case_draw := 10;
+					case_draw := 5;
 					
 					// white
-					// lysest -70
+					// -70
 					// 0
-					// 
+					// 70
+					// 140
+					// 210
+					// Black
 					
 				ELSE
 					this.M3.forward := TRUE;
 				END_IF;
+				
+			5: // which height should we goto?
+				IF this.greyScale = 0 THEN
+					this.M3.goToCounter := -70;
+					this.M3.goTo 		:= TRUE;
+				ELSIF this.greyScale = 1 THEN
+					this.M3.goToCounter := 0;
+					this.M3.goTo 		:= FALSE;
+				ELSIF this.greyScale = 2 THEN
+					this.M3.goToCounter := 70;
+					this.M3.goTo 		:= TRUE;
+				ELSIF this.greyScale = 3 THEN
+					this.M3.goToCounter := 140;
+					this.M3.goTo 		:= TRUE;
+				ELSIF this.greyScale = 4 THEN
+					this.M3.goToCounter := 210;
+					this.M3.goTo 		:= TRUE;
+				ELSIF this.greyScale = 5 THEN
+					this.M3.goToCounter := 210;
+					this.M3.goTo 		:= TRUE;
+				END_IF
+				
+				IF this.M3.counter = this.M3.goToCounter AND NOT(this.M3.goTo) THEN
+					case_draw := 10;
+				END_IF
+					
 			10:
 				this.M1.goToCounter := x_coord * 10;
 				this.M2.goToCounter := y_coord * 10;
@@ -263,7 +292,7 @@ PROGRAM _CYCLIC
 	END_IF;
 	
 	IF EDGEPOS(this.btn4.pressed) THEN
-		IF NOT(this.M3.goToCounter > 0) THEN
+		IF NOT(this.M3.goTo) THEN
 			this.M3.counter	:= 0; // Kristoffer was here
 			this.M3.forward := FALSE;
 		END_IF

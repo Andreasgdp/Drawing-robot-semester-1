@@ -27,6 +27,7 @@ TYPE
 		startPSCase : USINT;
 		startPS : BOOL;
 		pencilSharp : BOOL;
+		greyScale : USINT;
 	END_STRUCT;
 	btn_typ : 	STRUCT 
 		pressed : BOOL;
