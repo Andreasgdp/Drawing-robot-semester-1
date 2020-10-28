@@ -16,7 +16,7 @@ END_PROGRAM
 
 PROGRAM _CYCLIC
 	(* Insert code here *)
-	IF this.start THEN
+	IF this.start AND gNettime <> 0 THEN
 		CASE this.startCase OF
 			0:
 				this.M3.backward := TRUE;
@@ -262,8 +262,8 @@ PROGRAM _CYCLIC
 		this.M2.backward := FALSE;
 	END_IF;
 	
-	IF this.btn4.pressed THEN
-		IF (NOT(this.M3.goToCounter > 0) OR NOT(this.M3.goTo) THEN
+	IF EDGEPOS(this.btn4.pressed) THEN
+		IF NOT(this.M3.goToCounter > 0) THEN
 			this.M3.counter	:= 0; // Kristoffer was here
 			this.M3.forward := FALSE;
 		END_IF
