@@ -11,11 +11,12 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-        boolean imageLoaded = false;
-        boolean coordsLoaded = false;
-        String imgPath = "app/images/";
+        String imgPath = "../images/";
+        String fileName = "download.png";
+        String imagePath = imgPath + fileName;
 
-        EdgeDetector eDetect = new EdgeDetector("app/images/download.png");
+        // The path of the image has to start w. "../images/" as it is the relative path from the file app/edgedetect/Picture.java.
+        EdgeDetector eDetect = new EdgeDetector(imagePath);
         RobotClient client = new RobotClient("192.168.0.20", 12345);
 
         try {
@@ -31,7 +32,7 @@ public class App {
                 System.out.print("Write command: ");
                 String msg = scanner.next();
                 // !---------------------------------------------------------------------------------------------------------------------
-                if (msg.startsWith("q") || msg.startsWith("quit")) {
+                if (msg.equals("q") || msg.equals("quit")) {
                     break;
                 } else if (msg.startsWith("test")) {
                     Color[][] testColor = eDetect.getColorArray();
@@ -47,119 +48,89 @@ public class App {
                     }
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
-                else if (msg.startsWith("show")) {
-                    int height = eDetect.getBufferedImage().getHeight();
-                    int width = eDetect.getBufferedImage().getWidth();
-
-                    System.out.println(height + " : " + width);
-
-                    JFrame f = new JFrame("Title");
-                    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    Color[][] colorArrayTest = eDetect.getColorArray();
-                    boolean coordsLoadedTest = eDetect.loadCoordinates(colorArrayTest);
-
-                    if (coordsLoadedTest) {
-                        ArrayList<ArrayList<ArrayList<Integer>>> arrayList = eDetect.getCoordinates();
-                        drawings d = new drawings(arrayList);
-                        f.add(d);
-                        f.setSize(width, height);
-                        f.setVisible(true);
-                    }
+                else if (msg.equals("show")) {
+                    ArrayList<ArrayList<ArrayList<Integer>>> coords = eDetect.getCoordinates();
+                    showImage(eDetect, coords);
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
-                else if (msg.startsWith("reset") || msg.startsWith("re")) {
+                else if (msg.equals("reset") || msg.equals("re")) {
                     client.reconnect();
                     client.write("rset");
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
-                else if (msg.startsWith("st") || msg.startsWith("stop")) {
+                else if (msg.equals("st") || msg.equals("stop")) {
                     // TODO: add function to recognize ESC-btn
                     client.reconnect();
                     client.write("stop");
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
-                else if (msg.startsWith("i") || msg.startsWith("image") || msg.startsWith("loadImage")) {
+                else if (msg.equals("i") || msg.equals("image") || msg.equals("loadImage")) {
                     System.out.print("Write new img path: ");
                     String iName = CMDscanner.nextLine();
 
                     if (iName.isEmpty()) {
                         System.out.println("no image name detected");
                     } else {
-                        imgPath = "app/images/" + iName;
-                        imageLoaded = eDetect.loadNewImage(imgPath);
-                        // Resetting coordsloaded as it the image might not match the coords from before
-                        coordsLoaded = false;
+                        imagePath = "../images/" + iName;
+                        eDetect.loadNewImage(imgPath);
                     }
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
-                else if (msg.startsWith("coordinates") || msg.startsWith("loadCoordinates")) {
-                    if (imageLoaded) {
-                        Color[][] colorArray = eDetect.getColorArray();
-                        coordsLoaded = eDetect.loadCoordinates(colorArray);
-                    } else {
-                        System.out.println("Image is not loaded! Use command 'image' to load image");
-                    }
-                }
-                // !---------------------------------------------------------------------------------------------------------------------
-                else if (msg.startsWith("send")) {
-                    if (coordsLoaded) {
-                        String draw = "0";
-                        String x = "0";
-                        String y = "0";
-                        boolean writeSuccess = false;
-                        ArrayList<ArrayList<ArrayList<Integer>>> coords = eDetect.getCoordinates();
+                else if (msg.equals("send")) {
+                    String draw = "0";
+                    String x = "0";
+                    String y = "0";
+                    boolean writeSuccess = false;
+                    ArrayList<ArrayList<ArrayList<Integer>>> coords = eDetect.getCoordinates();
 
-                        outer:
-                        for (int i = 0; i < coords.size(); i++) {
-                            for (int j = 0; j < 2; j++) {
-                                int drawValue = (j == 0 && i != 0) ? 0 : 1;
-                                y = String.format("%04d", coords.get(i).get(j).get(0));
-                                x = String.format("%04d", coords.get(i).get(j).get(1));
-                                draw = String.format("%04d", drawValue);
+                    outer:
+                    for (int i = 0; i < coords.size(); i++) {
+                        for (int j = 0; j < 2; j++) {
+                            int drawValue = (j == 0 && i != 0) ? 0 : 1;
+                            y = String.format("%04d", coords.get(i).get(j).get(0));
+                            x = String.format("%04d", coords.get(i).get(j).get(1));
+                            draw = String.format("%04d", drawValue);
 
-                                System.out.println(x + "," + y + "," + draw);
+                            System.out.println(x + "," + y + "," + draw);
 
-                                // Send x
-                                writeSuccess = client.write(x);
+                            // Send x
+                            writeSuccess = client.write(x);
+                            client.reconnect();
+
+                            // Send y
+                            if (writeSuccess) {
+                                writeSuccess = client.write(y);
                                 client.reconnect();
-
-                                // Send y
-                                if (writeSuccess) {
-                                    writeSuccess = client.write(y);
-                                    client.reconnect();
-                                }
-
-                                // Send draw
-                                if (writeSuccess) {
-                                    writeSuccess = client.write(draw);
-                                    client.reconnect();
-                                }
-
-                                if (writeSuccess) {
-                                    String waitVariable = "test";
-                                    long startTime = System.currentTimeMillis();
-
-                                    while (waitVariable.compareTo("done") != 0) {
-                                        waitVariable = client.read();
-                                        if (waitVariable == null) {
-                                            waitVariable = "test";
-                                        }
-                                    }
-
-                                    client.reconnect();
-                                } else {
-                                    System.out.println("A problem occurred when trying to send coordinates to the PLC");
-                                    break outer;
-                                }
-
                             }
+
+                            // Send draw
+                            if (writeSuccess) {
+                                writeSuccess = client.write(draw);
+                                client.reconnect();
+                            }
+
+                            if (writeSuccess) {
+                                String waitVariable = "test";
+                                long startTime = System.currentTimeMillis();
+
+                                while (waitVariable.compareTo("done") != 0) {
+                                    waitVariable = client.read();
+                                    if (waitVariable == null) {
+                                        waitVariable = "test";
+                                    }
+                                }
+
+                                client.reconnect();
+                            } else {
+                                System.out.println("A problem occurred when trying to send coordinates to the PLC");
+                                break outer;
+                            }
+
                         }
-                    } else {
-                        System.out.println("Coordinates is not loaded! Use command 'coordinates' to load coordinates");
                     }
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
-                else if (msg.startsWith("message") || msg.startsWith("command") || msg.startsWith("cmd")) {
+                else if (msg.equals("message") || msg.equals("command") || msg.equals("cmd")) {
                     System.out.print("Write the message for the plc: ");
                     String message = CMDscanner.nextLine();
                     client.write(message);
@@ -191,72 +162,10 @@ public class App {
                     client.reconnect();
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
-                else if (msg.startsWith("run")) {
-                    imageLoaded = eDetect.loadNewImage("app/images/download.png");
-
-                    if (imageLoaded) {
-                        Color[][] colorArray = eDetect.getColorArray();
-                        coordsLoaded = eDetect.loadCoordinates(colorArray);
-                    } else {
-                        System.out.println("Image is not loaded! Use command 'image' to load image");
-                    }
-
-                    if (coordsLoaded) {
-                        String draw = "0";
-                        String x = "0";
-                        String y = "0";
-                        boolean writeSuccess = false;
-                        ArrayList<ArrayList<ArrayList<Integer>>> coords = eDetect.getCoordinates();
-
-                        outer:
-                        for (ArrayList<ArrayList<Integer>> coord : coords) {
-                            for (int j = 0; j < 2; j++) {
-                                y = String.format("%04d", coord.get(j).get(0));
-                                x = String.format("%04d", coord.get(j).get(1));
-                                draw = String.format("%04d", j);
-
-                                System.out.println(x + "," + y + "," + draw);
-
-                                // Send x
-                                writeSuccess = client.write(x);
-                                client.reconnect();
-
-                                // Send y
-                                if (writeSuccess) {
-                                    writeSuccess = client.write(y);
-                                    client.reconnect();
-                                }
-
-                                // Send draw
-                                if (writeSuccess) {
-                                    writeSuccess = client.write(draw);
-                                    client.reconnect();
-                                }
-
-                                if (writeSuccess) {
-                                    String waitVariable = "test";
-                                    long startTime = System.currentTimeMillis();
-
-                                    while (waitVariable.compareTo("done") != 0) {
-                                        waitVariable = client.read();
-                                        if (waitVariable == null) {
-                                            waitVariable = "test";
-                                        }
-                                    }
-
-                                    client.reconnect();
-                                } else {
-                                    System.out.println("A problem occurred when trying to send coordinates to the PLC");
-                                    break outer;
-                                }
-
-                            }
-                        }
-                    } else {
-                        System.out.println("Coordinates is not loaded! Use command 'coordinates' to load coordinates");
-                    }
+                else if (msg.equals("run")) {
+                    runTest(eDetect, client);
                     // !---------------------------------------------------------------------------------------------------------------------
-                } else if (msg.startsWith("h") || msg.startsWith("help")) {
+                } else if (msg.equals("h") || msg.equals("help")) {
                     // TODO: Update help command w. all commands
                     System.out.println(" ___________________________________________________________________________");
                     System.out.println("| HELP:                                                                     |");
@@ -271,7 +180,7 @@ public class App {
                     System.out.println("|___________________________________________________________________________|");
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
-                else if (msg.startsWith("cc") || msg.startsWith("change con")) {
+                else if (msg.equals("cc") || msg.equals("change con")) {
                     System.out.println("Enter Hostname: ");
                     String hostname = CMDscanner.nextLine();
                     System.out.println("Enter Port: ");
@@ -287,8 +196,15 @@ public class App {
                     }
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
-                else if (msg.startsWith("edge")) {
-
+                else if (msg.equals("edge")) {
+                    // get coordinates
+                    ArrayList<ArrayList<ArrayList<Integer>>> cords = eDetect.getEdgeCords();
+                    // send coordinates
+                }
+                // !---------------------------------------------------------------------------------------------------------------------
+                else if (msg.equals("showedge")) {
+                    ArrayList<ArrayList<ArrayList<Integer>>> cords = eDetect.getEdgeCords();
+                    showImage(eDetect, cords);
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
                 else {
@@ -302,5 +218,72 @@ public class App {
         scanner.close();
         CMDscanner.close();
         client.disconnect();
+    }
+
+    private static void showImage(EdgeDetector eDetect, ArrayList<ArrayList<ArrayList<Integer>>> cords) {
+        int height = eDetect.getBufferedImage().getHeight();
+        int width = eDetect.getBufferedImage().getWidth();
+
+        System.out.println(height + " : " + width);
+
+        JFrame f = new JFrame("Title");
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        drawings d = new drawings(cords);
+        f.add(d);
+        f.setSize(width, height);
+        f.setVisible(true);
+    }
+
+    private static void runTest(EdgeDetector eDetect, RobotClient client) {
+        String draw = "0";
+        String x = "0";
+        String y = "0";
+        boolean writeSuccess = false;
+        ArrayList<ArrayList<ArrayList<Integer>>> coords = eDetect.getCoordinates();
+
+        outer:
+        for (ArrayList<ArrayList<Integer>> coord : coords) {
+            for (int j = 0; j < 2; j++) {
+                y = String.format("%04d", coord.get(j).get(0));
+                x = String.format("%04d", coord.get(j).get(1));
+                draw = String.format("%04d", j);
+
+                System.out.println(x + "," + y + "," + draw);
+
+                // Send x
+                writeSuccess = client.write(x);
+                client.reconnect();
+
+                // Send y
+                if (writeSuccess) {
+                    writeSuccess = client.write(y);
+                    client.reconnect();
+                }
+
+                // Send draw
+                if (writeSuccess) {
+                    writeSuccess = client.write(draw);
+                    client.reconnect();
+                }
+
+                if (writeSuccess) {
+                    String waitVariable = "test";
+                    long startTime = System.currentTimeMillis();
+
+                    while (waitVariable.compareTo("done") != 0) {
+                        waitVariable = client.read();
+                        if (waitVariable == null) {
+                            waitVariable = "test";
+                        }
+                    }
+
+                    client.reconnect();
+                } else {
+                    System.out.println("A problem occurred when trying to send coordinates to the PLC");
+                    break outer;
+                }
+
+            }
+        }
     }
 }

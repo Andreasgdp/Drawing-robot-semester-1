@@ -53,7 +53,6 @@ public class EdgeDetector {
         int[][] filter1 = { { -1, 0, 1 }, { -2, 0, 2 }, { -1, 0, 1 } };
 
         int[][] filter2 = { { 1, 2, 1 }, { 0, 0, 0 }, { -1, -2, -1 } };
-
         Picture picture0 = new Picture(imagePath);
         int width = picture0.width() - 2;
         int height = picture0.height() - 2;
@@ -215,7 +214,7 @@ public class EdgeDetector {
      * coordinates in pairs: For each y-coordinate and each black line in said
      * y-coordinate, 2 points are saved - one for the beginning of the black line
      * and one for the end.
-     * 
+     *
      * @param array Type: Color[][] - A two-dimensional array with Color objects,
      *              representing a the image.
      */
@@ -276,6 +275,8 @@ public class EdgeDetector {
      * @return An ArrayList of paired coordinates.
      */
     public ArrayList<ArrayList<ArrayList<Integer>>> getCoordinates() {
+        Color[][] array = this.getColorArray();
+        this.loadCoordinates(array);
         if (!(this.coordinates == null)) {
             return this.coordinates;
         } else {
@@ -319,5 +320,16 @@ public class EdgeDetector {
             }
         }
         return returnVal;
+    }
+
+    public ArrayList<ArrayList<ArrayList<Integer>>> getEdgeCords() {
+        // TODO add rotation of image so it is situated correctly when printing.
+        Color[][] array = this.getGreyscaleArray();
+        this.loadCoordinates(array);
+        if (!(this.coordinates == null)) {
+            return this.coordinates;
+        } else {
+            return null;
+        }
     }
 }
