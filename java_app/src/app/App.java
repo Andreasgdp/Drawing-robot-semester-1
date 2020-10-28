@@ -72,15 +72,15 @@ public class App {
                         System.out.println("no image name detected");
                     } else {
                         imagePath = "../images/" + iName;
-                        eDetect.loadNewImage(imgPath);
+                        eDetect.loadNewImage(imagePath);
                     }
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("send")) {
-                    String draw = "0";
-                    String x = "0";
-                    String y = "0";
-                    boolean writeSuccess = false;
+                    String draw;
+                    String x;
+                    String y;
+                    boolean writeSuccess;
                     ArrayList<ArrayList<ArrayList<Integer>>> coords = eDetect.getCoordinates();
 
                     outer:
@@ -164,7 +164,7 @@ public class App {
                 // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("run")) {
                     ArrayList<ArrayList<ArrayList<Integer>>> cords = eDetect.getCoordinates();
-                    runTest(eDetect, client, cords);
+                    runTest(client, cords);
                     // !---------------------------------------------------------------------------------------------------------------------
                 } else if (msg.equals("h") || msg.equals("help")) {
                     // TODO: Update help command w. all commands
@@ -201,7 +201,7 @@ public class App {
                     // get coordinates
                     ArrayList<ArrayList<ArrayList<Integer>>> cords = eDetect.getEdgeCords();
                     // send coordinates
-                    runTest(eDetect, client, cords);
+                    runTest(client, cords);
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("showedge")) {
@@ -236,11 +236,11 @@ public class App {
         f.setVisible(true);
     }
 
-    private static void runTest(EdgeDetector eDetect, RobotClient client, ArrayList<ArrayList<ArrayList<Integer>>> cords) {
-        String draw = "0";
-        String x = "0";
-        String y = "0";
-        boolean writeSuccess = false;
+    private static void runTest(RobotClient client, ArrayList<ArrayList<ArrayList<Integer>>> cords) {
+        String draw;
+        String x;
+        String y;
+        boolean writeSuccess;
 
         outer:
         for (ArrayList<ArrayList<Integer>> cord : cords) {
