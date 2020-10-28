@@ -11,6 +11,7 @@ TYPE
 		goToCounter : DINT;
 		speedCaseTON : TON;
 		speedCase : USINT;
+		overRideCase : USINT; (*This case is used if you want to go further than the endswitch*)
 	END_STRUCT;
 	this_typ : 	STRUCT 
 		M2 : m_typ;

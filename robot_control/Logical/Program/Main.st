@@ -95,6 +95,12 @@ PROGRAM _CYCLIC
 				IF this.btn4.pressed THEN
 					this.M3.forward := FALSE;
 					case_draw := 10;
+					
+					// white
+					// lysest -70
+					// 0
+					// 
+					
 				ELSE
 					this.M3.forward := TRUE;
 				END_IF;
@@ -257,9 +263,26 @@ PROGRAM _CYCLIC
 	END_IF;
 	
 	IF this.btn4.pressed THEN
-		this.M3.counter	:= 0; // Kristoffer was here
-		this.M3.forward := FALSE;
+		IF (NOT(this.M3.goToCounter > 0) OR NOT(this.M3.goTo) THEN
+			this.M3.counter	:= 0; // Kristoffer was here
+			this.M3.forward := FALSE;
+		END_IF
 	END_IF;
+	
+	CASE this.M3.overRideCase OF
+		0:
+			IF this.M3.goTo AND this.M3.goToCounter > 0 AND this.btn4.pressed THEN
+				this.M3.counter	:= 0; // Kristoffer was here
+				this.M3.overRideCase := 5;
+			END_IF
+					
+		5:
+			IF this.M3.goToCounter = this.M3.counter AND NOT(this.M3.goTo) AND this.M3.counter < 0 THEN
+				this.M3.overRideCase := 0;
+			END_IF
+		
+	END_CASE
+				
 	
 	IF this.btn3.pressed THEN
 		this.M3.backward := FALSE;
