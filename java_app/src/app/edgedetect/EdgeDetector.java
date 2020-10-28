@@ -1,27 +1,27 @@
 package app.edgedetect;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- *
  * @author ancla
  */
 public class EdgeDetector {
 
     private String imagePath;
     private ArrayList<ArrayList<ArrayList<Integer>>> coordinates;
+    private ArrayList<Point> sortedCoordinates;
 
     /**
-     * 
      * @param imagePath Path of the image to perform edgedetection on.
      */
     public EdgeDetector(String imagePath) {
         this.imagePath = imagePath;
         this.coordinates = null;
+        this.sortedCoordinates = null;
     }
 
     private int truncate(int a) {
@@ -33,14 +33,14 @@ public class EdgeDetector {
     /**
      * This method performs edge-detection of the image on the path provided to the
      * constructor, and returns a BufferedImage representation of the result.
-     * 
+     *
      * @return A BufferedImage-object representation of the image provided.
      */
     public BufferedImage getBufferedImage() {
 
-        int[][] filter1 = { { -1, 0, 1 }, { -2, 0, 2 }, { -1, 0, 1 } };
+        int[][] filter1 = {{-1, 0, 1}, {-2, 0, 2}, {-1, 0, 1}};
 
-        int[][] filter2 = { { 1, 2, 1 }, { 0, 0, 0 }, { -1, -2, -1 } };
+        int[][] filter2 = {{1, 2, 1}, {0, 0, 0}, {-1, -2, -1}};
         Picture picture0 = new Picture(imagePath);
         int width = picture0.width() - 2;
         int height = picture0.height() - 2;
@@ -80,14 +80,14 @@ public class EdgeDetector {
      * This method performs edge-detection of the image on the path provided to the
      * constructor, and returns a two-dimensional int-array representation of the
      * result.
-     * 
+     *
      * @return A two dimensional array showing the magnitude (intensity) in each
-     *         pixel of the picture provided.
+     * pixel of the picture provided.
      */
     public int[][] getMagnitudeArray() {
-        int[][] filter1 = { { -1, 0, 1 }, { -2, 0, 2 }, { -1, 0, 1 } };
+        int[][] filter1 = {{-1, 0, 1}, {-2, 0, 2}, {-1, 0, 1}};
 
-        int[][] filter2 = { { 1, 2, 1 }, { 0, 0, 0 }, { -1, -2, -1 } };
+        int[][] filter2 = {{1, 2, 1}, {0, 0, 0}, {-1, -2, -1}};
 
         Picture picture0 = new Picture(imagePath);
         int width = picture0.width() - 2;
@@ -126,14 +126,14 @@ public class EdgeDetector {
      * This method performs edge-detection of the image on the path provided to the
      * constructor, and returns a two-dimensional Color-array representation of the
      * result.
-     * 
+     *
      * @return A two-dimensional array with Color objects, representing a greyscale
-     *         interpretation of the image.
+     * interpretation of the image.
      */
     public Color[][] getGreyscaleArray() {
-        int[][] filter1 = { { -1, 0, 1 }, { -2, 0, 2 }, { -1, 0, 1 } };
+        int[][] filter1 = {{-1, 0, 1}, {-2, 0, 2}, {-1, 0, 1}};
 
-        int[][] filter2 = { { 1, 2, 1 }, { 0, 0, 0 }, { -1, -2, -1 } };
+        int[][] filter2 = {{1, 2, 1}, {0, 0, 0}, {-1, -2, -1}};
 
         Picture picture0 = new Picture(imagePath);
         // Find width, removing outer border due to filter
@@ -173,7 +173,7 @@ public class EdgeDetector {
     /**
      * This method runs through an image and creates a 2D array representation of
      * the colors in the image.
-     * 
+     *
      * @return A two-dimensional array with Color objects, representing a the image.
      */
     public Color[][] getColorArray() {
@@ -259,7 +259,7 @@ public class EdgeDetector {
     /**
      * This method returns the already prepared coordinates by method:
      * loadCoordinates().
-     * 
+     *
      * @return An ArrayList of paired coordinates.
      */
     public ArrayList<ArrayList<ArrayList<Integer>>> getCoordinates() {
@@ -275,7 +275,7 @@ public class EdgeDetector {
     /**
      * This method takes an image path and checks if that path is valid. If the path
      * is valid the image path is set to be the default image path for the class.
-     * 
+     *
      * @param imgPath String of the image path.
      */
     public void loadNewImage(String imgPath) {
@@ -313,5 +313,58 @@ public class EdgeDetector {
         } else {
             return null;
         }
+    }
+
+    public ArrayList<Point> getSortedCords() {
+        Color[][] array = this.getColorArray();
+        this.loadSortedCoordinates(array);
+        if (!(this.sortedCoordinates == null)) {
+            return this.sortedCoordinates;
+        } else {
+            return null;
+        }
+    }
+
+    public ArrayList<Point> convertCordsToPoints(Color[][] array) {
+        ArrayList<Point> pointList = new ArrayList<>();
+        for (int y = 0; y < array.length; y++) {
+            for (int x = 0; x < array[y].length; x++) {
+                pointList.add(new Point(x, y));
+            }
+        }
+        return pointList;
+    }
+
+    private void loadSortedCoordinates(Color[][] array) {
+        ArrayList<Point> myList = this.convertCordsToPoints(array);
+
+        ArrayList<Point> orderedList = new ArrayList<Point>();
+
+        orderedList.add(myList.remove(0)); //Arbitrary starting point
+
+        while (myList.size() > 0) {
+            //Find the index of the closest point (using another method)
+            int nearestIndex = findNearestIndex(orderedList.get(orderedList.size() - 1), myList);
+
+            //Remove from the unorderedList and add to the ordered one
+            orderedList.add(myList.remove(nearestIndex));
+        }
+
+        this.sortedCoordinates = orderedList;
+    }
+
+    private int findNearestIndex(Point thisPoint, ArrayList<Point> listToSearch) {
+        double nearestDistSquared = Double.POSITIVE_INFINITY;
+        int nearestIndex = -1;
+        for (int i = 0; i < listToSearch.size(); i++) {
+            Point point2 = listToSearch.get(i);
+            double distSQ = (thisPoint.x - point2.x) * (thisPoint.x - point2.x)
+                    + (thisPoint.y - point2.y) * (thisPoint.y - point2.y);
+            if (distSQ < nearestDistSquared) {
+                nearestDistSquared = distSQ;
+                nearestIndex = i;
+            }
+        }
+        return nearestIndex;
     }
 }
