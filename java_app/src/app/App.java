@@ -11,11 +11,11 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
+        // The path of the image has to start w. "../images/" as it is the relative path from the file app/edgedetect/Picture.java.
         String imgPath = "../images/";
         String fileName = "download.png";
         String imagePath = imgPath + fileName;
 
-        // The path of the image has to start w. "../images/" as it is the relative path from the file app/edgedetect/Picture.java.
         EdgeDetector eDetect = new EdgeDetector(imagePath);
         RobotClient client = new RobotClient("192.168.0.20", 12345);
 
