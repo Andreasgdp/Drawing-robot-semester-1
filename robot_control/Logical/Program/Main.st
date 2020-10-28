@@ -153,7 +153,7 @@ PROGRAM _CYCLIC
 	END_IF
 
 	IF (this.M1.goTo = FALSE) AND (this.M2.goTo = FALSE) AND (this.M2.goToCounter = this.M2.counter) AND (this.M1.goToCounter = this.M1.counter) AND (goTo = 'ready') THEN
-		IF this.M3.counter > -400 THEN
+		IF this.M3.counter > -400 AND (draw = 0) THEN
 			this.M3.goToCounter := -420;
 			this.M3.goTo := TRUE;
 		ELSIF NOT pSharp THEN //prøvede rettelse

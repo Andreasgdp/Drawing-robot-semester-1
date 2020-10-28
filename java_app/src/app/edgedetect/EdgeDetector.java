@@ -329,7 +329,9 @@ public class EdgeDetector {
         ArrayList<Point> pointList = new ArrayList<>();
         for (int y = 0; y < array.length; y++) {
             for (int x = 0; x < array[y].length; x++) {
-                pointList.add(new Point(x, y));
+                if (array[y][x].getRed() == 0 && array[y][x].getBlue() == 0 && array[y][x].getGreen() == 0) {
+                    pointList.add(new Point(x, y));
+                }
             }
         }
         return pointList;
@@ -337,6 +339,7 @@ public class EdgeDetector {
 
     private void loadSortedCoordinates(Color[][] array) {
         ArrayList<Point> myList = this.convertCordsToPoints(array);
+        System.out.println(myList.size());
 
         ArrayList<Point> orderedList = new ArrayList<Point>();
 
@@ -350,6 +353,7 @@ public class EdgeDetector {
             orderedList.add(myList.remove(nearestIndex));
         }
 
+        System.out.println(orderedList.size());
         this.sortedCoordinates = orderedList;
     }
 
