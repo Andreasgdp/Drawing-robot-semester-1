@@ -27,19 +27,7 @@ public class EdgeDetector {
     private int truncate(int a) {
         if (a < 127) {
             return 0;
-        } else if (a >= 255) {
-            return 255;
-        } else {
-            return a;
-        }
-    }
-
-    private int binaryTruncate(int a) {
-        if (a < 127) {
-            return 0;
-        } else {
-            return 255;
-        }
+        } else return Math.min(a, 255);
     }
 
     /**
@@ -219,9 +207,9 @@ public class EdgeDetector {
      *              representing a the image.
      */
     public boolean loadCoordinates(Color[][] array) {
-        ArrayList<ArrayList<ArrayList<Integer>>> colorPairs = new ArrayList<ArrayList<ArrayList<Integer>>>();
-        ArrayList<ArrayList<Integer>> plist = new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> coords = new ArrayList<Integer>();
+        ArrayList<ArrayList<ArrayList<Integer>>> colorPairs = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> plist = new ArrayList<>();
+        ArrayList<Integer> coords = new ArrayList<>();
         boolean drawBlackColor = true;
 
         try {
@@ -233,7 +221,7 @@ public class EdgeDetector {
                             coords.add(y);
                             coords.add(x);
                             plist.add(coords);
-                            coords = new ArrayList<Integer>();
+                            coords = new ArrayList<>();
                             drawBlackColor = false;
                         }
 
@@ -243,17 +231,17 @@ public class EdgeDetector {
                             coords.add(y);
                             coords.add(x - 1);
                             plist.add(coords);
-                            coords = new ArrayList<Integer>();
+                            coords = new ArrayList<>();
                             colorPairs.add(plist);
-                            plist = new ArrayList<ArrayList<Integer>>();
+                            plist = new ArrayList<>();
                             drawBlackColor = true;
                         } else if (x + 1 >= array[y].length) {
                             coords.add(y);
                             coords.add(x - 1);
                             plist.add(coords);
-                            coords = new ArrayList<Integer>();
+                            coords = new ArrayList<>();
                             colorPairs.add(plist);
-                            plist = new ArrayList<ArrayList<Integer>>();
+                            plist = new ArrayList<>();
                             drawBlackColor = true;
                         }
                     }
