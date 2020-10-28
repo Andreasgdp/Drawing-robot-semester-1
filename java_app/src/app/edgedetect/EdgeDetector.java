@@ -151,7 +151,7 @@ public class EdgeDetector {
         // Find width, removing outer border due to filter
         int width = picture0.width() - 2;
         int height = picture0.height() - 2;
-        Color[][] arrayRepresentation = new Color[width][height];
+        Color[][] arrayRepresentation = new Color[height][width];
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -175,7 +175,7 @@ public class EdgeDetector {
                 // int magnitude = 255 - truncate(Math.abs(gray1) + Math.abs(gray2));
                 int magnitude = 255 - truncate((int) Math.sqrt(gray1 * gray1 + gray2 * gray2));
                 Color grayscale = new Color(magnitude, magnitude, magnitude);
-                arrayRepresentation[x][y] = grayscale;
+                arrayRepresentation[y][x] = grayscale;
             }
         }
 
@@ -289,17 +289,14 @@ public class EdgeDetector {
      * is valid the image path is set to be the default image path for the class.
      * 
      * @param imgPath String of the image path.
-     * @return A boolean to represent if the image has been loaded or not.
      */
-    public boolean loadNewImage(String imgPath) {
+    public void loadNewImage(String imgPath) {
         Scanner CMDscanner = new Scanner(System.in);
-        boolean returnVal = false;
         File aFile = new File(imgPath);
 
         if (aFile.exists()) {
             System.out.println("file exists");
             this.imagePath = imgPath;
-            returnVal = true;
         } else {
             System.out.println("image dosnt exist in folder: app/images");
             System.out.println("do you wish to select an alternative path (Direct path)?");
@@ -315,15 +312,12 @@ public class EdgeDetector {
                     this.imagePath = imgPath;
                 } else {
                     System.out.println("file dosn't exist");
-                    returnVal = false;
                 }
             }
         }
-        return returnVal;
     }
 
     public ArrayList<ArrayList<ArrayList<Integer>>> getEdgeCords() {
-        // TODO add rotation of image so it is situated correctly when printing.
         Color[][] array = this.getGreyscaleArray();
         this.loadCoordinates(array);
         if (!(this.coordinates == null)) {
