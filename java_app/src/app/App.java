@@ -163,7 +163,8 @@ public class App {
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("run")) {
-                    runTest(eDetect, client);
+                    ArrayList<ArrayList<ArrayList<Integer>>> cords = eDetect.getCoordinates();
+                    runTest(eDetect, client, cords);
                     // !---------------------------------------------------------------------------------------------------------------------
                 } else if (msg.equals("h") || msg.equals("help")) {
                     // TODO: Update help command w. all commands
@@ -200,6 +201,7 @@ public class App {
                     // get coordinates
                     ArrayList<ArrayList<ArrayList<Integer>>> cords = eDetect.getEdgeCords();
                     // send coordinates
+                    runTest(eDetect, client, cords);
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("showedge")) {
@@ -234,18 +236,17 @@ public class App {
         f.setVisible(true);
     }
 
-    private static void runTest(EdgeDetector eDetect, RobotClient client) {
+    private static void runTest(EdgeDetector eDetect, RobotClient client, ArrayList<ArrayList<ArrayList<Integer>>> cords) {
         String draw = "0";
         String x = "0";
         String y = "0";
         boolean writeSuccess = false;
-        ArrayList<ArrayList<ArrayList<Integer>>> coords = eDetect.getCoordinates();
 
         outer:
-        for (ArrayList<ArrayList<Integer>> coord : coords) {
+        for (ArrayList<ArrayList<Integer>> cord : cords) {
             for (int j = 0; j < 2; j++) {
-                y = String.format("%04d", coord.get(j).get(0));
-                x = String.format("%04d", coord.get(j).get(1));
+                y = String.format("%04d", cord.get(j).get(0));
+                x = String.format("%04d", cord.get(j).get(1));
                 draw = String.format("%04d", j);
 
                 System.out.println(x + "," + y + "," + draw);
