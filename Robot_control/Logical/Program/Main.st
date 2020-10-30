@@ -153,8 +153,8 @@ PROGRAM _CYCLIC
 	END_IF
 
 	IF (this.M1.goTo = FALSE) AND (this.M2.goTo = FALSE) AND (this.M2.goToCounter = this.M2.counter) AND (this.M1.goToCounter = this.M1.counter) AND (goTo = 'ready') THEN
-		IF this.M3.counter > -400 THEN
-			this.M3.goToCounter := -420;
+		IF this.M3.counter > -100 THEN
+			this.M3.goToCounter := -120;
 			this.M3.goTo := TRUE;
 		ELSIF NOT pSharp THEN //prøvede rettelse
 			goTo := 'done';
@@ -205,12 +205,12 @@ PROGRAM _CYCLIC
 					sharp_counter := sharp_counter + 1;
 					sharp_counter2 := sharp_counter2 + 1;
 					
-					IF sharp_counter = 600 THEN
+					IF sharp_counter = 1500 THEN
 						this.M3.forward := FALSE;
 						this.M3.backward := TRUE;
 						sharp_counter := 0;
 						this.startPSCase := 20;
-					ELSIF sharp_counter2 = 200 THEN
+					ELSIF sharp_counter2 = 300 THEN
 						this.M3.forward := NOT this.M3.forward;
 						sharp_counter2 := 0;
 					END_IF;
