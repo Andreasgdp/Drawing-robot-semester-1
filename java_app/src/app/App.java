@@ -225,6 +225,7 @@ public class App {
                 else {
                     System.out.print("\nCommand '" + msg + "' is not a valid command!\n");
                 }
+                // !---------------------------------------------------------------------------------------------------------------------
 
             } catch (Exception e) {
                 System.out.println("CMD exited w. this err: " + e);
@@ -238,15 +239,7 @@ public class App {
     private static void showImageAnimated(EdgeDetector eDetect, ArrayList<ArrayList<Point>> cords) {
         int height = eDetect.getBufferedImage().getHeight();
         int width = eDetect.getBufferedImage().getWidth();
-
-        System.out.println(height + " : " + width);
-        AnimatedDraw d = new AnimatedDraw(cords);
-        System.out.println("shit works here");
-        JFrame f = new JFrame("Title");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setSize(width, height);
-        f.add(d);
-        f.setVisible(true);
+        new AnimatedDraw(cords, width, height);
     }
 
     private static void showImage(EdgeDetector eDetect, ArrayList<ArrayList<ArrayList<Integer>>> cords) {
