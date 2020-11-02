@@ -7,6 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class AnimatedDraw extends JPanel {
+<<<<<<< HEAD
     public AnimatedDraw(ArrayList<Point> points, int width, int height) {
         EventQueue.invokeLater(() -> {
             try {
@@ -59,6 +60,20 @@ public class AnimatedDraw extends JPanel {
                 g.fillRect(points.get(i).x, points.get(i).y, 1, 1);
             }
             g2d.dispose();
+=======
+    private ArrayList<Point> points;
+
+    public AnimatedDraw(ArrayList<Point> points) {
+        this.points = points;
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        this.setBackground(Color.WHITE);
+        g.setColor(Color.BLACK);
+        for (Point point : this.points) {
+            g.fillRect(point.x, point.y, 1, 1);
+>>>>>>> parent of a01e562... Try to sort correctly
         }
 
     }
