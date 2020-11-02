@@ -35,7 +35,7 @@ public class GUI {
             send.addActionListener(e -> new EdgeDetector(imagePath));
 
         JButton reset = new JButton("Reset");
-        send.addActionListener(e -> new EdgeDetector(""));
+            reset.addActionListener(e -> new EdgeDetector(""));
 
         panel.add(label); //Components added by Flow layout
         panel.add(tf);
