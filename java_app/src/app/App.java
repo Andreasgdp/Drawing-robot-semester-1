@@ -15,11 +15,12 @@ public class App {
     public static void main(String[] args) {
         // The path of the image has to start w. "../images/" as it is the relative path from the file app/edgedetect/Picture.java.
         String imgPath = "../images/";
-        String fileName = "download.png";
+        String fileName = "small_sandwitch.jpg";
         String imagePath = imgPath + fileName;
 
         EdgeDetector eDetect = new EdgeDetector(imagePath);
-        RobotClient client = new RobotClient("192.168.0.20", 12345);
+        // RobotClient client = new RobotClient("192.168.0.20", 12345);
+        RobotClient client = new RobotClient("127.0.0.1", 12345);
 
         try {
             client.connect();
@@ -212,8 +213,6 @@ public class App {
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("sort")) {
-                    // group
-                    // sort
                     // https://stackoverflow.com/questions/25287834/how-to-sort-a-collection-of-points-so-that-they-set-up-one-after-another
                     ArrayList<Point> cords = eDetect.getSortedCords();
                     runSortTest(client, cords);
@@ -319,7 +318,7 @@ public class App {
         for (Point cord : cords) {
             y = String.format("%04d", cord.y);
             x = String.format("%04d", cord.x);
-            draw = String.format("%04d", 1);
+            draw = String.format("%04d", cord.drawVal);
 
             System.out.println(x + "," + y + "," + draw);
 

@@ -339,25 +339,28 @@ public class EdgeDetector {
 
     private void loadSortedCoordinates(Color[][] array) {
         ArrayList<Point> myList = this.convertCordsToPoints(array);
-        System.out.println(myList.size());
-
         ArrayList<Point> orderedList = new ArrayList<Point>();
 
         orderedList.add(myList.remove(0)); //Arbitrary starting point
-
+        int liftCounter = 0;
         while (myList.size() > 0) {
             //Find the index of the closest point (using another method)
-            int nearestIndex = findNearestIndex(orderedList.get(orderedList.size() - 1), myList);
+            IndexDist nearestIndexDist = findNearestIndex(orderedList.get(orderedList.size() - 1), myList);
 
+            if (nearestIndexDist.dist > 5) {
+                myList.get(nearestIndexDist.index).setDrawVal(0);
+                liftCounter++;
+            } else { // TODO: when the grayscale is implemented, this needs to be removed
+                myList.get(nearestIndexDist.index).setDrawVal(1);
+            }
             //Remove from the unorderedList and add to the ordered one
-            orderedList.add(myList.remove(nearestIndex));
+            orderedList.add(myList.remove(nearestIndexDist.index));
         }
-
-        System.out.println(orderedList.size());
+        System.out.println("Lifts needed to draw this image: " + liftCounter);
         this.sortedCoordinates = orderedList;
     }
 
-    private int findNearestIndex(Point thisPoint, ArrayList<Point> listToSearch) {
+    private IndexDist findNearestIndex(Point thisPoint, ArrayList<Point> listToSearch) {
         double nearestDistSquared = Double.POSITIVE_INFINITY;
         int nearestIndex = -1;
         for (int i = 0; i < listToSearch.size(); i++) {
@@ -369,6 +372,6 @@ public class EdgeDetector {
                 nearestIndex = i;
             }
         }
-        return nearestIndex;
+        return new IndexDist(nearestIndex, nearestDistSquared);
     }
 }
