@@ -13,7 +13,7 @@ public class EdgeDetector {
 
     private String imagePath;
     private ArrayList<ArrayList<ArrayList<Integer>>> coordinates;
-    private ArrayList<Point> sortedCoordinates;
+    private ArrayList<ArrayList<Point>> sortedCoordinates;
 
     /**
      * @param imagePath Path of the image to perform edgedetection on.
@@ -315,7 +315,7 @@ public class EdgeDetector {
         }
     }
 
-    public ArrayList<Point> getSortedCords() {
+    public ArrayList<ArrayList<Point>> getSortedCords() {
         Color[][] array = this.getColorArray();
         this.loadSortedCoordinates(array);
         if (!(this.sortedCoordinates == null)) {
@@ -338,37 +338,44 @@ public class EdgeDetector {
     }
 
     private void loadSortedCoordinates(Color[][] array) {
+        ArrayList<ArrayList<Point>> groupsArray = new ArrayList<>();
         ArrayList<Point> myList = this.convertCordsToPoints(array);
         System.out.println(myList.size());
 
-        ArrayList<Point> orderedList = new ArrayList<Point>();
+        ArrayList<Point> groupOrderedList = new ArrayList<>();
 
-        orderedList.add(myList.remove(0)); //Arbitrary starting point
+        groupOrderedList.add(myList.remove(0)); //Arbitrary starting point
 
         while (myList.size() > 0) {
             //Find the index of the closest point (using another method)
-            int nearestIndex = findNearestIndex(orderedList.get(orderedList.size() - 1), myList);
+            DistIndex distIndex = findNearestIndex(groupOrderedList.get(groupOrderedList.size() - 1), myList);
 
-            //Remove from the unorderedList and add to the ordered one
-            orderedList.add(myList.remove(nearestIndex));
+
+            if (distIndex.distance < 100) {
+                //Remove from the unorderedList and add to the ordered one
+                groupOrderedList.add(myList.remove(distIndex.index));
+            } else {
+                groupsArray.add(groupOrderedList);
+                groupOrderedList = new ArrayList<>();
+                groupOrderedList.add(myList.remove(distIndex.index));
+            }
         }
-
-        System.out.println(orderedList.size());
-        this.sortedCoordinates = orderedList;
+        this.sortedCoordinates = groupsArray;
     }
 
-    private int findNearestIndex(Point thisPoint, ArrayList<Point> listToSearch) {
+    private DistIndex findNearestIndex(Point thisPoint, ArrayList<Point> listToSearch) {
         double nearestDistSquared = Double.POSITIVE_INFINITY;
         int nearestIndex = -1;
+        double distSQ = Double.POSITIVE_INFINITY;;
         for (int i = 0; i < listToSearch.size(); i++) {
             Point point2 = listToSearch.get(i);
-            double distSQ = (thisPoint.x - point2.x) * (thisPoint.x - point2.x)
+            distSQ = (thisPoint.x - point2.x) * (thisPoint.x - point2.x)
                     + (thisPoint.y - point2.y) * (thisPoint.y - point2.y);
             if (distSQ < nearestDistSquared) {
                 nearestDistSquared = distSQ;
                 nearestIndex = i;
             }
         }
-        return nearestIndex;
+        return new DistIndex(nearestIndex, distSQ);
     }
 }

@@ -212,15 +212,13 @@ public class App {
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("sort")) {
-                    // group
-                    // sort
                     // https://stackoverflow.com/questions/25287834/how-to-sort-a-collection-of-points-so-that-they-set-up-one-after-another
-                    ArrayList<Point> cords = eDetect.getSortedCords();
+                    ArrayList<ArrayList<Point>> cords = eDetect.getSortedCords();
                     runSortTest(client, cords);
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("showsort") || msg.equals("ss")) {
-                    ArrayList<Point> cords = eDetect.getSortedCords();
+                    ArrayList<ArrayList<Point>> cords = eDetect.getSortedCords();
                     showImageAnimated(eDetect, cords);
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
@@ -237,7 +235,7 @@ public class App {
         client.disconnect();
     }
 
-    private static void showImageAnimated(EdgeDetector eDetect, ArrayList<Point> cords) {
+    private static void showImageAnimated(EdgeDetector eDetect, ArrayList<ArrayList<Point>> cords) {
         int height = eDetect.getBufferedImage().getHeight();
         int width = eDetect.getBufferedImage().getWidth();
 
@@ -317,52 +315,54 @@ public class App {
         }
     }
 
-    private static void runSortTest(RobotClient client, ArrayList<Point> cords) {
+    private static void runSortTest(RobotClient client, ArrayList<ArrayList<Point>> cords) {
         String draw;
         String x;
         String y;
         boolean writeSuccess;
+        for (ArrayList<Point> group: cords) {
+            for (Point cord : group) {
+                y = String.format("%04d", cord.y);
+                x = String.format("%04d", cord.x);
+                draw = String.format("%04d", 1);
 
-        for (Point cord : cords) {
-            y = String.format("%04d", cord.y);
-            x = String.format("%04d", cord.x);
-            draw = String.format("%04d", 1);
+                System.out.println(x + "," + y + "," + draw);
 
-            System.out.println(x + "," + y + "," + draw);
-
-            // Send x
-            writeSuccess = client.write(x);
-            client.reconnect();
-
-            // Send y
-            if (writeSuccess) {
-                writeSuccess = client.write(y);
+                // Send x
+                writeSuccess = client.write(x);
                 client.reconnect();
-            }
 
-            // Send draw
-            if (writeSuccess) {
-                writeSuccess = client.write(draw);
-                client.reconnect();
-            }
-
-            if (writeSuccess) {
-                String waitVariable = "test";
-                long startTime = System.currentTimeMillis();
-
-                while (waitVariable.compareTo("done") != 0) {
-                    waitVariable = client.read();
-                    if (waitVariable == null) {
-                        waitVariable = "test";
-                    }
+                // Send y
+                if (writeSuccess) {
+                    writeSuccess = client.write(y);
+                    client.reconnect();
                 }
 
-                client.reconnect();
-            } else {
-                System.out.println("A problem occurred when trying to send coordinates to the PLC");
-                break;
-            }
+                // Send draw
+                if (writeSuccess) {
+                    writeSuccess = client.write(draw);
+                    client.reconnect();
+                }
 
+                if (writeSuccess) {
+                    String waitVariable = "test";
+                    long startTime = System.currentTimeMillis();
+
+                    while (waitVariable.compareTo("done") != 0) {
+                        waitVariable = client.read();
+                        if (waitVariable == null) {
+                            waitVariable = "test";
+                        }
+                    }
+
+                    client.reconnect();
+                } else {
+                    System.out.println("A problem occurred when trying to send coordinates to the PLC");
+                    break;
+                }
+
+            }
         }
+
     }
 }
