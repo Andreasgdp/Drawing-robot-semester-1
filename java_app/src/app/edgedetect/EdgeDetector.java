@@ -197,6 +197,21 @@ public class EdgeDetector {
         return pixelColor;
     }
 
+    public Color[][] getRealColorArray() {
+        Picture picture0 = new Picture(imagePath);
+        // Find width, removing outer border due to filter
+        int width = picture0.width();
+        int height = picture0.height();
+        Color[][] pixelColor = new Color[height][width];
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                pixelColor[y][x] = new Color(picture0.get(x, y).getRed(), picture0.get(x, y).getGreen(), picture0.get(x, y).getBlue());
+            }
+        }
+        return pixelColor;
+    }
+
     /**
      * This method runs through a 2D representation of an image and saves
      * coordinates in pairs: For each y-coordinate and each black line in said
@@ -316,7 +331,7 @@ public class EdgeDetector {
     }
 
     public ArrayList<Point> getSortedCords() {
-        Color[][] array = this.getColorArray();
+        Color[][] array = this.getRealColorArray();
         this.loadSortedCoordinates(array);
         if (!(this.sortedCoordinates == null)) {
             return this.sortedCoordinates;
@@ -329,8 +344,13 @@ public class EdgeDetector {
         ArrayList<Point> pointList = new ArrayList<>();
         for (int y = 0; y < array.length; y++) {
             for (int x = 0; x < array[y].length; x++) {
-                if (array[y][x].getRed() == 0 && array[y][x].getBlue() == 0 && array[y][x].getGreen() == 0) {
-                    pointList.add(new Point(x, y));
+                int ggb = (array[y][x].getRed() + array[y][x].getBlue() + array[y][x].getGreen() + 3)/3-1;
+                ggb = (ggb + 51) / 51 - 1;
+                // Tager ikke ggb == 5 med fordi det er hvide koordinater, som ikke skal tegnes.
+                if (ggb == 0 || ggb == 1 || ggb == 2 || ggb == 3 || ggb == 4) {
+                    Point point = new Point(x, y);
+                    point.setDrawVal(ggb);
+                    pointList.add(point);
                 }
             }
         }
@@ -339,7 +359,10 @@ public class EdgeDetector {
 
     private void loadSortedCoordinates(Color[][] array) {
         ArrayList<Point> myList = this.convertCordsToPoints(array);
-        ArrayList<Point> orderedList = new ArrayList<Point>();
+        for (Point point : myList) {
+            // System.out.println("(" + point.x + "; " + point.y + ") w. colorval: " + point.drawVal);
+        }
+        ArrayList<Point> orderedList = new ArrayList<>();
 
         orderedList.add(myList.remove(0)); //Arbitrary starting point
         int liftCounter = 0;
@@ -350,8 +373,6 @@ public class EdgeDetector {
             if (nearestIndexDist.dist > 5) {
                 myList.get(nearestIndexDist.index).setDrawVal(0);
                 liftCounter++;
-            } else { // TODO: when the grayscale is implemented, this needs to be removed
-                myList.get(nearestIndexDist.index).setDrawVal(1);
             }
             //Remove from the unorderedList and add to the ordered one
             orderedList.add(myList.remove(nearestIndexDist.index));

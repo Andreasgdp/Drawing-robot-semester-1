@@ -54,19 +54,26 @@ public class AnimatedDraw extends JPanel {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g.create();
-            g2d.setColor(Color.BLACK);
-            boolean colorSwitch = false;
+
+            // Simulation-----------------------------
+            // g2d.setColor(Color.BLACK);
+            // boolean colorSwitch = false;
+            // ---------------------------------------
+
 
             for (int i = 0; i < index; i++) {
+                g2d.setColor(new Color(points.get(i).drawVal * 51, points.get(i).drawVal * 51, points.get(i).drawVal * 51));
                 if (points.get(i+1).drawVal == 1 && i < index - 1) {
                     g2d.drawLine(points.get(i).x, points.get(i).y, points.get(i + 1).x, points.get(i + 1).y);
                 } else {
-                    if (colorSwitch) {
-                        g2d.setColor(Color.RED);
-                    } else {
-                        g2d.setColor(Color.BLACK);
-                    }
-                    colorSwitch = !colorSwitch;
+                    // Simulation-----------------------------
+                    // if (colorSwitch) {
+                    //     g2d.setColor(Color.RED);
+                    // } else {
+                    //     g2d.setColor(Color.BLACK);
+                    // }
+                    // colorSwitch = !colorSwitch;
+                    // ---------------------------------------
                     g2d.fillRect(points.get(i).x, points.get(i).y, 1, 1);
                 }
             }
