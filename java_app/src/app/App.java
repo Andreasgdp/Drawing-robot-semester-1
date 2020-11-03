@@ -15,12 +15,12 @@ public class App {
     public static void main(String[] args) {
         // The path of the image has to start w. "../images/" as it is the relative path from the file app/edgedetect/Picture.java.
         String imgPath = "../images/";
-        String fileName = "small_yoda.png";
+        String fileName = "very_small_yoda.jpg";
         String imagePath = imgPath + fileName;
 
         EdgeDetector eDetect = new EdgeDetector(imagePath);
-        // RobotClient client = new RobotClient("192.168.0.20", 12345);
-        RobotClient client = new RobotClient("127.0.0.1", 12345);
+        RobotClient client = new RobotClient("192.168.0.20", 12345);
+        // RobotClient client = new RobotClient("127.0.0.1", 12345);
 
         try {
             client.connect();

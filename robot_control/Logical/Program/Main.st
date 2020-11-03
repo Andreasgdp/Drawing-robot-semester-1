@@ -126,7 +126,7 @@ PROGRAM _CYCLIC
 					this.M3.goTo 		:= TRUE;
 				ELSIF this.greyScale = 5 THEN
 					this.M3.goToCounter := -90;
-					this.M3.goTo 		:= TRUE;..
+					this.M3.goTo 		:= TRUE;
 //				ELSIF this.greyScale = 6 THEN
 //					this.M3.goToCounter :=  0;
 //					this.M3.goTo 		:= TRUE;
@@ -137,8 +137,8 @@ PROGRAM _CYCLIC
 				END_IF
 					
 			10:
-				this.M1.goToCounter := x_coord * 10;
-				this.M2.goToCounter := y_coord * 10;
+				this.M1.goToCounter := x_coord * 40;
+				this.M2.goToCounter := y_coord * 40;
 				this.M1.goTo := TRUE;
 				this.M2.goTo := TRUE;
 			
