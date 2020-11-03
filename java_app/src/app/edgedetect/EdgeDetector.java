@@ -185,15 +185,20 @@ public class EdgeDetector {
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                // int value = 230;
-                int value = 100;
-                if (picture0.get(x, y).getRed() <= value && picture0.get(x, y).getGreen() <= value
-                        && picture0.get(x, y).getBlue() <= value)
-                    pixelColor[y][x] = new Color(0);
-                else
-                    pixelColor[y][x] = new Color(255, 255, 255);
+               int colorAverage = ((picture0.get(x, y).getRed() + picture0.get(x, y).getGreen() + picture0.get(x, y).getBlue())+3)/3;
+               // int value = 230;
+                //int value = 200;
+                for (int colorvalue = 51;  colorvalue < 307; colorvalue+=51) {
+                    if ((colorAverage <= colorvalue) && ((colorAverage+51) > colorvalue)) {
+                        pixelColor[y][x] = new Color((colorvalue - 51), (colorvalue - 51), (colorvalue - 51));
+                    }
+                   /* else if (colorAverage >= 205){
+                        pixelColor[y][x] = new Color(255, 255, 255);
+                    }*/
+                }
             }
         }
+
         return pixelColor;
     }
 
@@ -227,49 +232,184 @@ public class EdgeDetector {
         ArrayList<Integer> coords = new ArrayList<>();
         boolean drawBlackColor = true;
 
-        try {
-            for (int y = 0; y < array.length; y++) {
-                for (int x = 0; x < array[y].length; x++) {
+        for (int y = 0; y < array.length; y++) {
 
+            boolean direction = (y % 2 == 0) ? true : false;
+            if (direction) {
+                for (int x = 0; x < array[y].length; x++) {
+                    // System.out.println(array[y][x]);
                     if (drawBlackColor) {
                         if (array[y][x].getRed() == 0 && array[y][x].getBlue() == 0 && array[y][x].getGreen() == 0) {
                             coords.add(y);
                             coords.add(x);
                             plist.add(coords);
-                            coords = new ArrayList<>();
+                            coords = new ArrayList<Integer>();
                             drawBlackColor = false;
                         }
 
                     } else {
-                        if (array[y][x].getRed() == 255 && array[y][x].getBlue() == 255
-                                && array[y][x].getGreen() == 255) {
+
+                        if ((array[y][x].getRed() == 255 && array[y][x].getBlue() == 255 && array[y][x].getGreen() == 255) || (x + 1 >= array[y].length)) {
                             coords.add(y);
                             coords.add(x - 1);
                             plist.add(coords);
-                            coords = new ArrayList<>();
+                            coords = new ArrayList<Integer>();
                             colorPairs.add(plist);
-                            plist = new ArrayList<>();
+                            plist = new ArrayList<ArrayList<Integer>>();
                             drawBlackColor = true;
-                        } else if (x + 1 >= array[y].length) {
+                        }
+                    }
+                }
+            } else {
+                for (int x = array[y].length-1; x > 0; x--) {
+                    // System.out.println(array[y][x]);
+                    if (drawBlackColor) {
+                        if (array[y][x].getRed() == 0 && array[y][x].getBlue() == 0 && array[y][x].getGreen() == 0) {
                             coords.add(y);
-                            coords.add(x - 1);
+                            coords.add(x);
                             plist.add(coords);
-                            coords = new ArrayList<>();
+                            coords = new ArrayList<Integer>();
+                            drawBlackColor = false;
+                        }
+
+                    } else {
+
+                        if ((array[y][x].getRed() == 255 && array[y][x].getBlue() == 255 && array[y][x].getGreen() == 255) || (x - 1 <= 0)) {
+                            coords.add(y);
+                            coords.add(x + 1);
+                            plist.add(coords);
+                            coords = new ArrayList<Integer>();
                             colorPairs.add(plist);
-                            plist = new ArrayList<>();
+                            plist = new ArrayList<ArrayList<Integer>>();
                             drawBlackColor = true;
                         }
                     }
                 }
             }
-            this.coordinates = colorPairs;
-            return true;
-        } catch (Exception e) {
-            System.out.println("Cannot load coordinates of image. ERR: " + e);
-            return false;
         }
-
+        // TODO: Add method to check if coords are loaded.
+        this.coordinates = colorPairs;
+        return true;
     }
+
+
+    public boolean loadGreyCoordinates(Color[][] array) {
+        ArrayList<ArrayList<ArrayList<Integer>>> greyPairs = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> plist = new ArrayList<>();
+        ArrayList<Integer> coords = new ArrayList<>();
+            //The third coord int is greyscale
+        // different greyscale colors 0, 51, 102, 153, 204, 255,
+
+
+        for (int y = 0; y < array.length-1; y++) {
+            boolean direction = (y % 2 == 0) ? true : false;
+            if (direction) {
+                for (int x = 0; x < array[y].length; x++) {
+                    if (((array[y][x].getRed() + array[y][x].getBlue() + array[y][x].getGreen() + 3) / 3 - 1) < 205) {
+                        int ggb = (array[y][x].getRed() + array[y][x].getBlue() + array[y][x].getGreen() + 3) / 3 - 1;
+
+                        if (x == 0) {
+                            coords.add(y);
+                            coords.add(x);
+                            coords.add((ggb + 51) / 51 - 1);
+                            plist.add(coords);
+                            coords = new ArrayList<Integer>();
+                        }
+                        if ((x >= 0) && (x <= (array[y].length - 2))) {
+                            if (x > 0) {
+                                if (((array[y][x].getRed() == ggb && array[y][x].getBlue() == ggb && array[y][x].getGreen() == ggb)
+                                        && !(array[y][x - 1].getRed() == ggb && array[y][x - 1].getBlue() == ggb && array[y][x - 1].getGreen() == ggb))) {
+                                    coords.add(y);
+                                    coords.add(x);
+                                    coords.add((ggb + 51) / 51 - 1);
+                                    plist.add(coords);
+                                    coords = new ArrayList<Integer>();
+                                }
+                            }
+                            if (x < (array[y].length - 2))
+                                if ((!(array[y][x + 1].getRed() == ggb && array[y][x + 1].getBlue() == ggb && array[y][x + 1].getGreen() == ggb)
+                                        && (array[y][x].getRed() == ggb && array[y][x].getBlue() == ggb && array[y][x].getGreen() == ggb))) {
+                                    coords.add(y);
+                                    coords.add(x);
+                                    coords.add((ggb + 51) / 51 - 1);
+                                    plist.add(coords);
+                                    coords = new ArrayList<Integer>();
+                                    greyPairs.add(plist);
+                                    plist = new ArrayList<ArrayList<Integer>>();
+                                }
+                        }
+                        if (x == array[y].length - 1) {
+                            coords.add(y);
+                            coords.add(x);
+                            coords.add((ggb + 51) / 51 - 1);
+                            plist.add(coords);
+                            coords = new ArrayList<Integer>();
+                            greyPairs.add(plist);
+                            plist = new ArrayList<ArrayList<Integer>>();
+                        }
+                    }
+                }
+            } else {
+                for (int x = array[y].length - 1; x > -1; x--) {
+                    if (((array[y][x].getRed() + array[y][x].getBlue() + array[y][x].getGreen() + 3) / 3 - 1) < 205) {
+                        int ggb = (array[y][x].getRed() + array[y][x].getBlue() + array[y][x].getGreen() + 3) / 3 - 1;
+
+                        if (x == array[y].length - 1) {
+                            coords.add(y);
+                            coords.add(x);
+                            coords.add((ggb + 51) / 51 - 1);
+                            plist.add(coords);
+                            coords = new ArrayList<Integer>();
+                        }
+                        if ((x >= 0) && (x <= (array[y].length - 2))) {
+                            if (x < (array[y].length - 2)) {
+                                if ((!(array[y][x + 1].getRed() == ggb && array[y][x + 1].getBlue() == ggb && array[y][x + 1].getGreen() == ggb)
+                                        && (array[y][x].getRed() == ggb && array[y][x].getBlue() == ggb && array[y][x].getGreen() == ggb))) {
+                                    coords.add(y);
+                                    coords.add(x);
+                                    coords.add((ggb + 51) / 51 - 1);
+                                    plist.add(coords);
+                                    coords = new ArrayList<Integer>();
+                                }
+                            }
+                            if (x > 0) {
+                                if (((array[y][x].getRed() == ggb && array[y][x].getBlue() == ggb && array[y][x].getGreen() == ggb)
+                                        && !(array[y][x - 1].getRed() == ggb && array[y][x - 1].getBlue() == ggb && array[y][x - 1].getGreen() == ggb))) {
+                                    coords.add(y);
+                                    coords.add(x);
+                                    coords.add((ggb + 51) / 51 - 1);
+                                    plist.add(coords);
+                                    coords = new ArrayList<Integer>();
+                                    greyPairs.add(plist);
+                                    plist = new ArrayList<ArrayList<Integer>>();
+                                }
+                            }
+                        }
+                        if (x == 0) {
+                            coords.add(y);
+                            coords.add(x);
+                            coords.add((ggb + 51) / 51 - 1);
+                            plist.add(coords);
+                            coords = new ArrayList<Integer>();
+                            greyPairs.add(plist);
+                            plist = new ArrayList<ArrayList<Integer>>();
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println(greyPairs);
+        /*for (int i = 0; i < greyPairs.size(); i++) {
+            if (greyPairs.get(i).size() != 2) {
+                System.out.println(greyPairs.get(i-1) + " : " + greyPairs.get(i));
+            }
+        }*/
+        // System.out.println(greyPairs);
+        // TODO: Add method to check if coords are loaded.
+        this.coordinates = greyPairs;
+        return true;
+    }
+
 
     /**
      * This method returns the already prepared coordinates by method:
@@ -279,7 +419,7 @@ public class EdgeDetector {
      */
     public ArrayList<ArrayList<ArrayList<Integer>>> getCoordinates() {
         Color[][] array = this.getColorArray();
-        this.loadCoordinates(array);
+        this.loadGreyCoordinates(array);
         if (!(this.coordinates == null)) {
             return this.coordinates;
         } else {

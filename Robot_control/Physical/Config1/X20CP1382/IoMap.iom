@@ -10,4 +10,5 @@ VAR_CONFIG
 	::Program:this.btn4.pressed AT %IX."X1".DigitalInput04;
 	::Program:this.btn3.pressed AT %IX."X1".DigitalInput01;
 	::Program:this.pencilSharp AT %QX."X3".DigitalOutput08;
+	gNettime  AT %ID."X20CP1382".IF6.Nettime;
 END_VAR

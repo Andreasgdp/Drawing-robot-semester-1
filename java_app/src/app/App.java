@@ -268,7 +268,7 @@ public class App {
             for (int j = 0; j < 2; j++) {
                 y = String.format("%04d", cord.get(j).get(0));
                 x = String.format("%04d", cord.get(j).get(1));
-                draw = String.format("%04d", j);
+                draw = String.format("%04d", cord.get(j).get(2));
 
                 System.out.println(x + "," + y + "," + draw);
 
