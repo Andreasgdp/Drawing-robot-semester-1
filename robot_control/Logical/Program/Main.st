@@ -16,7 +16,7 @@ END_PROGRAM
 
 PROGRAM _CYCLIC
 	(* Insert code here *)
-	IF this.start THEN
+	IF this.start AND gNettime <> 0 THEN
 		CASE this.startCase OF
 			0:
 				this.M3.backward := TRUE;
@@ -84,25 +84,68 @@ PROGRAM _CYCLIC
 		END_CASE;
 	END_IF
 	
+	this.greyScale := DINT_TO_USINT(draw);
+	
 	IF (goTo = 'ready') AND NOT pSharp THEN
-		IF (draw = TRUE) AND (case_draw <> 10) THEN
-			case_draw := 0;
-		ELSIF draw = FALSE THEN
+		IF draw = FALSE THEN
 			case_draw := 10;
 		END_IF;
 		CASE case_draw OF
 			0:
 				IF this.btn4.pressed THEN
 					this.M3.forward := FALSE;
-					case_draw := 10;
+					case_draw := 5;
+					
+					// white
+					// -70
+					// 0
+					// 70
+					// 140
+					// 210
+					// Black
+					
 				ELSE
 					this.M3.forward := TRUE;
 				END_IF;
+				
+			5: // which height should we goto?
+				IF this.greyScale = 0 THEN
+					this.M3.goToCounter := 50;
+					this.M3.goTo 		:= TRUE;
+				ELSIF this.greyScale = 1 THEN
+					this.M3.goToCounter := 20;
+					this.M3.goTo 		:= TRUE;
+				ELSIF this.greyScale = 2 THEN
+					this.M3.goToCounter := 0;
+					this.M3.goTo 		:= TRUE;
+				ELSIF this.greyScale = 3 THEN
+					this.M3.goToCounter := -30;
+					this.M3.goTo 		:= TRUE;
+				ELSIF this.greyScale = 4 THEN
+					this.M3.goToCounter := -60;
+					this.M3.goTo 		:= TRUE;
+				ELSIF this.greyScale = 5 THEN
+					this.M3.goToCounter := -90;
+					this.M3.goTo 		:= TRUE;..
+//				ELSIF this.greyScale = 6 THEN
+//					this.M3.goToCounter :=  0;
+//					this.M3.goTo 		:= TRUE;
+				END_IF
+				
+				IF this.M3.counter = this.M3.goToCounter (*this.M3.goTo = FALSE*) THEN
+					case_draw := 10;
+				END_IF
+					
 			10:
 				this.M1.goToCounter := x_coord * 10;
 				this.M2.goToCounter := y_coord * 10;
 				this.M1.goTo := TRUE;
 				this.M2.goTo := TRUE;
+			
+				IF draw = 0 THEN
+					case_draw := 0;
+				END_IF
+			
 		END_CASE;
 
 	END_IF;
@@ -166,7 +209,7 @@ PROGRAM _CYCLIC
 		//		goTo := 'done';
 	END_IF;
 	
-	IF draw = 1 THEN
+	IF draw < 5 THEN
 		dull_counter := dull_counter + 1;
 	END_IF;
 	
@@ -205,12 +248,12 @@ PROGRAM _CYCLIC
 					sharp_counter := sharp_counter + 1;
 					sharp_counter2 := sharp_counter2 + 1;
 					
-					IF sharp_counter = 1500 THEN
+					IF sharp_counter = 600 THEN
 						this.M3.forward := FALSE;
 						this.M3.backward := TRUE;
 						sharp_counter := 0;
 						this.startPSCase := 20;
-					ELSIF sharp_counter2 = 300 THEN
+					ELSIF sharp_counter2 = 200 THEN
 						this.M3.forward := NOT this.M3.forward;
 						sharp_counter2 := 0;
 					END_IF;
@@ -256,10 +299,27 @@ PROGRAM _CYCLIC
 		this.M2.backward := FALSE;
 	END_IF;
 	
-	IF this.btn4.pressed THEN
-		this.M3.counter	:= 0; // Kristoffer was here
-		this.M3.forward := FALSE;
+	IF EDGEPOS(this.btn4.pressed) THEN
+		IF NOT(this.M3.goTo) THEN
+			this.M3.counter	:= 0; // Kristoffer was here
+			this.M3.forward := FALSE;
+		END_IF
 	END_IF;
+	
+	CASE this.M3.overRideCase OF
+		0:
+			IF this.M3.goTo AND this.M3.goToCounter > 0 AND this.btn4.pressed THEN
+				this.M3.counter	:= 0; // Kristoffer was here
+				this.M3.overRideCase := 5;
+			END_IF
+					
+		5:
+			IF this.M3.goToCounter = this.M3.counter AND NOT(this.M3.goTo) AND this.M3.counter < 0 THEN
+				this.M3.overRideCase := 0;
+			END_IF
+		
+	END_CASE
+				
 	
 	IF this.btn3.pressed THEN
 		this.M3.backward := FALSE;
