@@ -82,7 +82,7 @@ ACTION M2_speedCase:
 		
 	END_IF
 	IF EDGEPOS(NOT(this.M2.backward)) OR EDGEPOS(NOT(this.M2.forward)) THEN
-		this.M2.speedCase := 3;
+		this.M2.speedCase := 10;
 		
 	END_IF
 

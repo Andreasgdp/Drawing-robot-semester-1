@@ -13,7 +13,7 @@ public class App {
     public static void main(String[] args) {
         // The path of the image has to start w. "../images/" as it is the relative path from the file app/edgedetect/Picture.java.
         String imgPath = "../images/";
-        String fileName = "small_sandwitch.jpg";
+        String fileName = "small_yoda.png";
         String imagePath = imgPath + fileName;
 
         EdgeDetector eDetect = new EdgeDetector(imagePath);
@@ -247,7 +247,7 @@ public class App {
             for (int j = 0; j < 2; j++) {
                 y = String.format("%04d", cord.get(j).get(0));
                 x = String.format("%04d", cord.get(j).get(1));
-                draw = String.format("%04d", j);
+                draw = String.format("%04d", cord.get(j).get(2));
 
                 System.out.println(x + "," + y + "," + draw);
 
