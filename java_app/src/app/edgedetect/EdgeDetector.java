@@ -313,6 +313,11 @@ public class EdgeDetector {
                                     plist.add(pixel);
                                     greyPairs.add(plist);
                                     plist = new ArrayList<>();
+                                } else if (plist.get(0).y != pixel.y) {
+                                    plist.add(plist.get(0));
+                                    greyPairs.add(plist);
+                                    plist = new ArrayList<>();
+                                    plist.add(pixel);
                                 }
                             }
                         }
@@ -341,6 +346,11 @@ public class EdgeDetector {
                                     plist.add(pixel);
                                     greyPairs.add(plist);
                                     plist = new ArrayList<>();
+                                } else if (plist.get(0).y != pixel.y) {
+                                    plist.add(plist.get(0));
+                                    greyPairs.add(plist);
+                                    plist = new ArrayList<>();
+                                    plist.add(pixel);
                                 }
                             }
                         }
@@ -354,7 +364,6 @@ public class EdgeDetector {
                 }
             }
         }
-
         this.greyLineCoordinates = greyPairs;
         return true;
     }
