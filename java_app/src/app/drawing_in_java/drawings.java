@@ -26,7 +26,7 @@ public class drawings extends JPanel {
             int y2 = pair.get(1).get(0);
             //System.out.println((pair.get(0).get(2)*51));
             //System.out.println(x1 + "," + y1 + " : " + x2 + "," + y2);
-            Color color = new Color((pair.get(0).get(2)*51), (pair.get(0).get(2)*51), (pair.get(0).get(2)*51));
+            Color color = new Color((pair.get(1).get(2)*51), (pair.get(1).get(2)*51), (pair.get(1).get(2)*51));
             g.setColor(color);
             // g.fillRect(x1, y1, java.lang.Math.abs(x2 - x1), 1);
             g.drawLine(x1, y1, x2, y2);
