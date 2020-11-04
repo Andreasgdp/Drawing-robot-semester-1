@@ -1,6 +1,8 @@
 VAR
+	SPEED : TIME;
 	gNettime : DINT;
 	pSharp : BOOL;
+	draw_old : DINT;
 	draw : DINT := 0;
 	y_coord : DINT := 0;
 	x_coord : DINT := 0;
