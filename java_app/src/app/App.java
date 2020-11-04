@@ -13,7 +13,7 @@ public class App {
     public static void main(String[] args) {
         // The path of the image has to start w. "../images/" as it is the relative path from the file app/edgedetect/Picture.java.
         String imgPath = "../images/";
-        String fileName = "download.png";
+        String fileName = "square.jpg";
         String imagePath = imgPath + fileName;
 
         EdgeDetector eDetect = new EdgeDetector(imagePath);
@@ -85,11 +85,13 @@ public class App {
 
                     outer:
                     for (int i = 0; i < coords.size(); i++) {
-                        for (int j = 0; j < 2; j++) {
-                            int drawValue = (j == 0 && i != 0) ? 0 : 1;
+                        for (int j = 0; j < 3; j++) {
+                            // int drawValue = (j == 0 && i != 0) ? 0 : 1;
                             y = String.format("%04d", coords.get(i).get(j).get(0));
                             x = String.format("%04d", coords.get(i).get(j).get(1));
-                            draw = String.format("%04d", drawValue);
+                            draw = String.format("%04d", coords.get(i).get(j).get(2));
+
+                            //coords[ [ [100][55] ]  [ [[127] [84] []] [[99] [33]] ]   [ [33][22] ] ]
 
                             System.out.println(x + "," + y + "," + draw);
 
@@ -247,7 +249,7 @@ public class App {
             for (int j = 0; j < 2; j++) {
                 y = String.format("%04d", cord.get(j).get(0));
                 x = String.format("%04d", cord.get(j).get(1));
-                draw = String.format("%04d", j);
+                draw = String.format("%04d", cord.get(j).get(2));
 
                 System.out.println(x + "," + y + "," + draw);
 

@@ -186,7 +186,7 @@ public class EdgeDetector {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 // int value = 230;
-                int value = (picture0.get(x, y).getRed() + picture0.get(x, y).getBlue() + picture0.get(x, y).getGreen()) / 3;
+                int value = (picture0.get(x, y).getRed() + picture0.get(x, y).getBlue() + picture0.get(x, y).getGreen() + 3) / 3 - 1;
                 if (value >= 0 && value < 42)
                     pixelColor[y][x] = new Color(0);
                 if (value >=42 && value < 84)
@@ -218,15 +218,141 @@ public class EdgeDetector {
         ArrayList<ArrayList<Integer>> plist = new ArrayList<>();
         ArrayList<Integer> coords = new ArrayList<>();
         boolean drawBlackColor = true;
+        int z = 0;
 
-        try {
+        for (int y = 0; y < array.length; y++) {
+            for (int x = 0; x < array[y].length; x++) {
+                if (drawBlackColor == true) {
+                    int value = (array[y][x].getRed() + array[y][x].getBlue() + array[y][x].getGreen() + 3) / 3 - 1;
+                    if (value >= 0 && value < 42)
+                        z = 0;
+                    if (value >= 42 && value < 84)
+                        z = 1;
+                    if (value >= 84 && value < 126)
+                        z = 2;
+                    if (value >= 126 && value < 168)
+                        z = 3;
+                    if (value >= 168 && value < 210)
+                        z = 4;
+                    if (value >= 220 && value <= 255)
+                        z = 5;
+
+//                    System.out.println("hey1");
+                    coords.add(y);
+                    coords.add(x);
+                    coords.add(z);
+                    plist.add(coords);
+                    coords = new ArrayList<>();
+                    drawBlackColor = false;
+
+                    } else if (drawBlackColor = false) {
+                    int value = (array[y][x].getRed() + array[y][x].getBlue() + array[y][x].getGreen() + 3) / 3 - 1;
+                    if ((value >= 0 && value < 42) && z != 0)
+                        coords.add(y);
+                        coords.add(x - 1);
+                        coords.add(z);
+                        plist.add(coords);
+                        coords = new ArrayList<>();
+                        colorPairs.add(plist);
+                        plist = new ArrayList<>();
+                        drawBlackColor = true;
+                        z = 0;
+
+                    if ((value >= 42 && value < 84) && z != 1)
+                        coords.add(y);
+                        coords.add(x - 1);
+                        coords.add(z);
+                        plist.add(coords);
+                        coords = new ArrayList<>();
+                        colorPairs.add(plist);
+                        plist = new ArrayList<>();
+                        drawBlackColor = true;
+                        z = 1;
+
+                    if ((value >= 84 && value < 126) && z != 2)
+                        coords.add(y);
+                        coords.add(x - 1);
+                        coords.add(z);
+                        plist.add(coords);
+                        coords = new ArrayList<>();
+                        colorPairs.add(plist);
+                        plist = new ArrayList<>();
+                        drawBlackColor = true;
+                        z = 2;
+
+                    if ((value >= 126 && value < 168) && z != 3)
+                        coords.add(y);
+                        coords.add(x - 1);
+                        coords.add(z);
+                        plist.add(coords);
+                        coords = new ArrayList<>();
+                        colorPairs.add(plist);
+                        plist = new ArrayList<>();
+                        drawBlackColor = true;
+                        z = 3;
+
+                    if ((value >= 168 && value < 210) && z != 4)
+                        coords.add(y);
+                        coords.add(x - 1);
+                        coords.add(z);
+                        plist.add(coords);
+                        coords = new ArrayList<>();
+                        colorPairs.add(plist);
+                        plist = new ArrayList<>();
+                        drawBlackColor = true;
+                        z = 4;
+
+                    if ((value >= 220 && value <= 255) && z != 5)
+                        coords.add(y);
+                        coords.add(x - 1);
+                        coords.add(z);
+                        plist.add(coords);
+                        coords = new ArrayList<>();
+                        colorPairs.add(plist);
+                        plist = new ArrayList<>();
+                        drawBlackColor = true;
+                        z = 5;
+
+                    } else if (x + 1 >= array[y].length) {
+                        coords.add(y);
+                        coords.add(x - 1);
+                        coords.add(z);
+                        plist.add(coords);
+                        coords = new ArrayList<>();
+                        colorPairs.add(plist);
+                        plist = new ArrayList<>();
+                        drawBlackColor = true;
+                }
+            }
+        }
+        // System.out.println(colorPairs); // temp <- Emil was here
+        this.coordinates = colorPairs;
+        return true;
+    }
+
+        /*try {
             for (int y = 0; y < array.length; y++) {
                 for (int x = 0; x < array[y].length; x++) {
-
+                    // System.out.println("hey");
                     if (drawBlackColor) {
-                        if (array[y][x].getRed() == 0 && array[y][x].getBlue() == 0 && array[y][x].getGreen() == 0) {
+                        if (array[y][x].getRed() != 255 && array[y][x].getBlue() != 255 && array[y][x].getGreen() != 255) {
+                            int value = (array[y][x].getRed() + array[y][x].getBlue() + array[y][x].getGreen() + 3) / 3 - 1;
+                            if (value >= 0 && value < 42)
+                                z = 0;
+                            if (value >=42 && value < 84)
+                                z = 1;
+                            if (value >=84 && value < 126)
+                                z = 2;
+                            if (value >=126 && value < 168)
+                                z = 3;
+                            if (value >=168 && value < 210)
+                                z = 4;
+                            if (value >=220 && value <= 255)
+                                z = 5;
+                            System.out.println("hey1");
                             coords.add(y);
                             coords.add(x);
+                            coords.add(z);
                             plist.add(coords);
                             coords = new ArrayList<>();
                             drawBlackColor = false;
@@ -254,6 +380,7 @@ public class EdgeDetector {
                     }
                 }
             }
+            System.out.println(colorPairs); // temp <- Emil was here
             this.coordinates = colorPairs;
             return true;
         } catch (Exception e) {
@@ -261,7 +388,7 @@ public class EdgeDetector {
             return false;
         }
 
-    }
+    }*/
 
     /**
      * This method returns the already prepared coordinates by method:
