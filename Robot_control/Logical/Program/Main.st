@@ -97,22 +97,22 @@ PROGRAM _CYCLIC
 				
 			5: // which height should we goto?
 				IF this.greyScale = 0 THEN
-					this.M3.goToCounter := 50;
+					this.M3.goToCounter := 60;
 					this.M3.goTo 		:= TRUE;
 				ELSIF this.greyScale = 1 THEN
-					this.M3.goToCounter := 20;
+					this.M3.goToCounter := 30;
 					this.M3.goTo 		:= TRUE;
 				ELSIF this.greyScale = 2 THEN
 					this.M3.goToCounter := 0;
 					this.M3.goTo 		:= TRUE;
 				ELSIF this.greyScale = 3 THEN
-					this.M3.goToCounter := -30;
+					this.M3.goToCounter := -50;
 					this.M3.goTo 		:= TRUE;
 				ELSIF this.greyScale = 4 THEN
-					this.M3.goToCounter := -60;
+					this.M3.goToCounter := -100;
 					this.M3.goTo 		:= TRUE;
 				ELSIF this.greyScale = 5 THEN
-					this.M3.goToCounter := -90;
+					this.M3.goToCounter := -150;
 					this.M3.goTo 		:= TRUE;
 				END_IF
 				
@@ -121,8 +121,8 @@ PROGRAM _CYCLIC
 				END_IF
 					
 			10: // Goto all the coordinates, and then go back to state 0 to calculate next coordinate
-				this.M1.goToCounter := x_coord * 10;
-				this.M2.goToCounter := y_coord * 10;
+				this.M1.goToCounter := x_coord * 30;
+				this.M2.goToCounter := y_coord * 30;
 				this.M1.goTo := TRUE;
 				this.M2.goTo := TRUE;
 				this.M3.goTo := TRUE;
