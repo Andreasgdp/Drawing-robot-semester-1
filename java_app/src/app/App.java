@@ -1,7 +1,9 @@
 package app;
 
+import app.drawing_in_java.AnimatedDraw;
 import app.drawing_in_java.drawings;
 import app.edgedetect.EdgeDetector;
+import app.edgedetect.Point;
 import app.robclient.RobotClient;
 
 import javax.swing.*;
@@ -13,11 +15,12 @@ public class App {
     public static void main(String[] args) {
         // The path of the image has to start w. "../images/" as it is the relative path from the file app/edgedetect/Picture.java.
         String imgPath = "../images/";
-        String fileName = "small_yoda.png";
+        String fileName = "download_nobar.jpg";
         String imagePath = imgPath + fileName;
 
         EdgeDetector eDetect = new EdgeDetector(imagePath);
         RobotClient client = new RobotClient("192.168.0.20", 12345);
+        // RobotClient client = new RobotClient("127.0.0.1", 12345);
 
         try {
             client.connect();
@@ -209,9 +212,21 @@ public class App {
                     showImage(eDetect, cords);
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
+                else if (msg.equals("sort")) {
+                    // https://stackoverflow.com/questions/25287834/how-to-sort-a-collection-of-points-so-that-they-set-up-one-after-another
+                    ArrayList<Point> cords = eDetect.getSortedCords();
+                    runSortTest(client, cords);
+                }
+                // !---------------------------------------------------------------------------------------------------------------------
+                else if (msg.equals("showsort") || msg.equals("ss")) {
+                    ArrayList<Point> cords = eDetect.getSortedCords();
+                    showImageAnimated(eDetect, cords);
+                }
+                // !---------------------------------------------------------------------------------------------------------------------
                 else {
                     System.out.print("\nCommand '" + msg + "' is not a valid command!\n");
                 }
+                // !---------------------------------------------------------------------------------------------------------------------
 
             } catch (Exception e) {
                 System.out.println("CMD exited w. this err: " + e);
@@ -220,6 +235,12 @@ public class App {
         scanner.close();
         CMDscanner.close();
         client.disconnect();
+    }
+
+    private static void showImageAnimated(EdgeDetector eDetect, ArrayList<Point> cords) {
+        int height = eDetect.getBufferedImage().getHeight();
+        int width = eDetect.getBufferedImage().getWidth();
+        new AnimatedDraw(cords, width, height);
     }
 
     private static void showImage(EdgeDetector eDetect, ArrayList<ArrayList<ArrayList<Integer>>> cords) {
@@ -285,6 +306,55 @@ public class App {
                 }
 
             }
+        }
+    }
+
+    private static void runSortTest(RobotClient client, ArrayList<Point> cords) {
+        String draw;
+        String x;
+        String y;
+        boolean writeSuccess;
+
+        for (Point cord : cords) {
+            y = String.format("%04d", cord.y);
+            x = String.format("%04d", cord.x);
+            draw = String.format("%04d", cord.drawVal);
+
+            System.out.println(x + "," + y + "," + draw);
+
+            // Send x
+            writeSuccess = client.write(x);
+            client.reconnect();
+
+            // Send y
+            if (writeSuccess) {
+                writeSuccess = client.write(y);
+                client.reconnect();
+            }
+
+            // Send draw
+            if (writeSuccess) {
+                writeSuccess = client.write(draw);
+                client.reconnect();
+            }
+
+            if (writeSuccess) {
+                String waitVariable = "test";
+                long startTime = System.currentTimeMillis();
+
+                while (waitVariable.compareTo("done") != 0) {
+                    waitVariable = client.read();
+                    if (waitVariable == null) {
+                        waitVariable = "test";
+                    }
+                }
+
+                client.reconnect();
+            } else {
+                System.out.println("A problem occurred when trying to send coordinates to the PLC");
+                break;
+            }
+
         }
     }
 }
