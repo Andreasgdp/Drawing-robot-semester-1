@@ -28,6 +28,8 @@ TYPE
 		startPS : BOOL;
 		pencilSharp : BOOL;
 		greyScale : USINT;
+		print : BOOL; (*If print is equal to 1 then it should be printing*)
+		coord : coord_typ;
 	END_STRUCT;
 	btn_typ : 	STRUCT 
 		pressed : BOOL;

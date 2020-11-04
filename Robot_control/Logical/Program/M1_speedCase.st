@@ -26,14 +26,14 @@ ACTION M1_speedCase:
 		7:
 			this.M1.speedCaseTON.PT := SPEED + T#7ms;
 			
-		8:
-			this.M1.speedCaseTON.PT := SPEED + T#8ms;
-			
-		9:
-			this.M1.speedCaseTON.PT := SPEED + T#9ms;
-			
-		10:
-			this.M1.speedCaseTON.PT := SPEED + T#10ms;
+//		8:
+//			this.M1.speedCaseTON.PT := SPEED + T#8ms;
+//			
+//		9:
+//			this.M1.speedCaseTON.PT := SPEED + T#9ms;
+//			
+//		10:
+//			this.M1.speedCaseTON.PT := SPEED + T#10ms;
 		
 	END_CASE
 	

@@ -26,14 +26,14 @@ ACTION M3_speedCase:
 		7:
 			this.M3.speedCaseTON.PT := SPEED + T#7ms;
 			
-		8:
-			this.M3.speedCaseTON.PT := SPEED + T#8ms;
-			
-		9:
-			this.M3.speedCaseTON.PT := SPEED + T#9ms;
-			
-		10:
-			this.M3.speedCaseTON.PT := SPEED + T#10ms;
+//		8:
+//			this.M3.speedCaseTON.PT := SPEED + T#8ms;
+//			
+//		9:
+//			this.M3.speedCaseTON.PT := SPEED + T#9ms;
+//			
+//		10:
+//			this.M3.speedCaseTON.PT := SPEED + T#10ms;
 		
 	END_CASE
 	
@@ -82,7 +82,7 @@ ACTION M3_speedCase:
 		
 	END_IF
 	IF EDGEPOS(NOT(this.M3.backward)) OR EDGEPOS(NOT(this.M3.forward)) THEN
-		this.M3.speedCase := 10;
+		this.M3.speedCase := 7;
 		
 	END_IF
 

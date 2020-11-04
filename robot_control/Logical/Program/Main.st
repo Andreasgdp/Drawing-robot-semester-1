@@ -1,7 +1,7 @@
 
 PROGRAM _INIT
 	(* Insert code here *)
-	// this.start := TRUE;
+	this.start := TRUE;
 	this.startCase := 0;
 	this.isReady := FALSE;
 	this.M1.counter := 0;
@@ -80,38 +80,45 @@ PROGRAM _CYCLIC
 					this.startCase := 35;
 				END_IF;
 			35:
-				this.start := FALSE;
+				this.start 		:= FALSE;
+				this.startCase 	:= FALSE;
 						
 		END_CASE;
 	END_IF
 	
-	this.greyScale := DINT_TO_USINT(draw);
+	(*this.greyScale := DINT_TO_USINT(draw);*)
 	
-	IF (goTo = 'ready') AND NOT pSharp THEN
-		IF draw = FALSE THEN
-			case_draw := 10;
-		END_IF;
+	IF NOT pSharp THEN
 		CASE case_draw OF
 			0: // start the case
+				IF coord[LENGT_OF_COORD].x <> -1 AND coord[LENGT_OF_COORD].y <> -1 AND coord[LENGT_OF_COORD].z <> -1 THEN
+					this.coord.x := coord[LENGT_OF_COORD].x;
+					this.coord.y := coord[LENGT_OF_COORD].y;
+					this.coord.z := coord[LENGT_OF_COORD].z;
+					coord[LENGT_OF_COORD].x := -1;
+					coord[LENGT_OF_COORD].y := -1;
+					coord[LENGT_OF_COORD].z := -1;
 					case_draw := 5;
+				END_IF
+				
 				
 			5: // which height should we goto?
-				IF this.greyScale = 0 THEN
+				IF this.coord.z = 0 THEN
 					this.M3.goToCounter := 60;
 					this.M3.goTo 		:= TRUE;
-				ELSIF this.greyScale = 1 THEN
+				ELSIF this.coord.z = 1 THEN
 					this.M3.goToCounter := 30;
 					this.M3.goTo 		:= TRUE;
-				ELSIF this.greyScale = 2 THEN
+				ELSIF this.coord.z = 2 THEN
 					this.M3.goToCounter := 0;
 					this.M3.goTo 		:= TRUE;
-				ELSIF this.greyScale = 3 THEN
+				ELSIF this.coord.z = 3 THEN
 					this.M3.goToCounter := -50;
 					this.M3.goTo 		:= TRUE;
-				ELSIF this.greyScale = 4 THEN
+				ELSIF this.coord.z = 4 THEN
 					this.M3.goToCounter := -100;
 					this.M3.goTo 		:= TRUE;
-				ELSIF this.greyScale = 5 THEN
+				ELSIF this.coord.z = 5 THEN
 					this.M3.goToCounter := -150;
 					this.M3.goTo 		:= TRUE;
 				END_IF
@@ -121,17 +128,14 @@ PROGRAM _CYCLIC
 				END_IF
 					
 			10: // Goto all the coordinates, and then go back to state 0 to calculate next coordinate
-				this.M1.goToCounter := x_coord * 30;
-				this.M2.goToCounter := y_coord * 30;
+				this.M1.goToCounter := this.coord.x * 30;
+				this.M2.goToCounter := this.coord.y * 30;
 				this.M1.goTo := TRUE;
 				this.M2.goTo := TRUE;
-				this.M3.goTo := TRUE;
+//				this.M3.goTo := TRUE;
 			
-				IF draw <> draw_old OR (this.M1.goToCounter = this.M1.counter AND this.M2.goToCounter = this.M2.counter AND this.M3.goToCounter = this.M3.counter) THEN
-					draw_old := draw;
+				IF (this.M1.goToCounter = this.M1.counter AND this.M2.goToCounter = this.M2.counter AND this.M3.goToCounter = this.M3.counter) THEN
 					case_draw := 0;
-					goTo := 'done';
-					
 				END_IF
 			
 		END_CASE;
@@ -186,7 +190,7 @@ PROGRAM _CYCLIC
 		dull_counter := dull_counter + 1;
 	END_IF;
 	
-	IF (dull_counter > 300000) AND (draw = 0) THEN
+	IF (dull_counter > 300000) THEN
 		pSharp := TRUE;
 		dull_counter := 0;
 		this.startPS := TRUE;

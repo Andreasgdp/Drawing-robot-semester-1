@@ -8,7 +8,14 @@ PROGRAM _INIT
 	sendData := '';
 	receiveData := '';
 	goTo := '';
-	END_PROGRAM
+	
+	FOR i:= 0 TO LENGT_OF_COORD DO
+		coord[i].x := -1;  
+		coord[i].y := -1;
+		coord[i].z := -1;
+	END_FOR;
+	
+END_PROGRAM
 	
 PROGRAM _CYCLIC
 	CASE tcpst OF
@@ -33,9 +40,12 @@ PROGRAM _CYCLIC
 				sendData := receiveData := '';
 				// goTo := '';
 				coord_counter := coord_counter + 1;
-				IF coord_counter >= 4 THEN
+				IF coord_counter >= 4 AND coord[0].x = -1 AND coord[0].y = -1 AND coord[0].z = -1 THEN
+					coord[0].x := x_coord;
+					coord[0].y := y_coord;
+					coord[0].z := draw;
 					coord_counter := 1;
-					goTo := 'ready';
+					goTo := 'done';
 					elPreben := TRUE;
 				END_IF
 				
@@ -58,7 +68,7 @@ PROGRAM _CYCLIC
 			IF goTo = 'done' THEN
 				tcpst := TCPSTATE_SERVER_CREATE;
 			ELSIF goTo = '' AND elPreben = TRUE THEN
-				F_It_TON.PT 	:= T#5000ms;
+				F_It_TON.PT 	:= T#500ms;
 				F_It_TON.IN 	:= TRUE;
 				
 				IF F_It_TON.Q THEN
@@ -108,6 +118,19 @@ PROGRAM _CYCLIC
 		F_It_TON.IN := FALSE;
 	END_IF
 	
+	// Logic for FIFO with coordinates
+	FOR i := 1 TO LENGT_OF_COORD DO
+		IF (coord[i].x = -1 AND coord[i].y = -1 AND coord[i].z = -1) AND
+		   (coord[i - 1].x <> -1 AND coord[i - 1].y <> -1 AND coord[i -1].z <> -1) THEN
+			coord[i].x 		:= coord[i - 1].x;
+			coord[i].y 		:= coord[i - 1].y;
+			coord[i].z 		:= coord[i - 1].z;
+			coord[i - 1].x	:= -1;
+			coord[i - 1].y	:= -1;
+			coord[i - 1].z	:= -1;
+			
+		END_IF
+	END_FOR;
 	
 	F_It_TON();
 	
