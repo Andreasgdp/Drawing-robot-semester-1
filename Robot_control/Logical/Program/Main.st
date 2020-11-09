@@ -277,7 +277,7 @@ PROGRAM _CYCLIC
 		this.M2.backward := FALSE;
 	END_IF;
 	
-	IF EDGEPOS(this.btn4.pressed) THEN
+	IF EDGEPOS(this.btn4.pressed) AND NOT(pSharp) THEN
 		IF NOT(this.M3.goTo) THEN
 			this.M3.counter	:= 0; // Emil was here
 			this.M3.forward := FALSE;
