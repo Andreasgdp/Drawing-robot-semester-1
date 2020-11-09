@@ -12,7 +12,8 @@ PROGRAM _INIT
 	this.startPS := FALSE;
 	this.startPSCase := 0;
 	goTo := '';
-	SPEED := 0;
+	this.topSpeed 		:= T#0ms; 	// This parameter will slow the topspeed of all axis.
+	this.acceleration	:= 10;		// This parameter will set the acceleration of all axis.
 END_PROGRAM
 
 PROGRAM _CYCLIC
@@ -128,8 +129,8 @@ PROGRAM _CYCLIC
 				END_IF
 					
 			10: // Goto all the coordinates, and then go back to state 0 to calculate next coordinate
-				this.M1.goToCounter := this.coord.x * 30;
-				this.M2.goToCounter := this.coord.y * 30;
+				this.M1.goToCounter := this.coord.x * 20;
+				this.M2.goToCounter := this.coord.y * 20;
 				this.M1.goTo := TRUE;
 				this.M2.goTo := TRUE;
 //				this.M3.goTo := TRUE;

@@ -29,11 +29,11 @@
     </Connector>
     <Parameter ID="ConfigurationID" Value="robot_control_Config1" />
     <Parameter ID="SystemTick" Value="1000" />
-    <Parameter ID="TaskClassIdleTime" Value="2000" />
+    <Parameter ID="TaskClassIdleTime" Value="1000" />
     <Parameter ID="Cyclic1Duration" Value="1000" />
     <Parameter ID="Cyclic1Tolerance" Value="1000" />
-    <Parameter ID="Cyclic2Duration" Value="5000" />
-    <Parameter ID="Cyclic2Tolerance" Value="5000" />
+    <Parameter ID="Cyclic2Duration" Value="2000" />
+    <Parameter ID="Cyclic2Tolerance" Value="2000" />
   </Module>
   <Module Name="X20TB1F" Type="X20TB1F" Version="1.0.0.0" />
   <Module Name="X20TB1F1" Type="X20TB1F" Version="1.0.0.0" />

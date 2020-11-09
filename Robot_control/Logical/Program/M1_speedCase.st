@@ -3,37 +3,37 @@ ACTION M1_speedCase:
 	
 	CASE this.M1.speedCase OF
 		0: // highest speed
-			this.M1.speedCaseTON.PT := SPEED;
+			this.M1.speedCaseTON.PT := this.topSpeed;
 			
 		1:
-			this.M1.speedCaseTON.PT := SPEED + T#1ms;
+			this.M1.speedCaseTON.PT := this.topSpeed + T#1ms;
 		
 		2:
-			this.M1.speedCaseTON.PT := SPEED + T#2ms;
+			this.M1.speedCaseTON.PT := this.topSpeed + T#2ms;
 			
 		3:
-			this.M1.speedCaseTON.PT := SPEED + T#3ms;
+			this.M1.speedCaseTON.PT := this.topSpeed + T#3ms;
 		
 		4:
-			this.M1.speedCaseTON.PT := SPEED + T#4ms;
+			this.M1.speedCaseTON.PT := this.topSpeed + T#4ms;
 		
 		5:
-			this.M1.speedCaseTON.PT := SPEED + T#5ms;
+			this.M1.speedCaseTON.PT := this.topSpeed + T#5ms;
 			
 		6:
-			this.M1.speedCaseTON.PT := SPEED + T#6ms;
+			this.M1.speedCaseTON.PT := this.topSpeed + T#6ms;
 			
 		7:
-			this.M1.speedCaseTON.PT := SPEED + T#7ms;
+			this.M1.speedCaseTON.PT := this.topSpeed + T#7ms;
 			
-//		8:
-//			this.M1.speedCaseTON.PT := SPEED + T#8ms;
-//			
-//		9:
-//			this.M1.speedCaseTON.PT := SPEED + T#9ms;
-//			
-//		10:
-//			this.M1.speedCaseTON.PT := SPEED + T#10ms;
+		8:
+			this.M1.speedCaseTON.PT := this.topSpeed + T#8ms;
+			
+		9:
+			this.M1.speedCaseTON.PT := this.topSpeed + T#9ms;
+			
+		10:
+			this.M1.speedCaseTON.PT := this.topSpeed + T#10ms;
 		
 	END_CASE
 	
@@ -82,7 +82,7 @@ ACTION M1_speedCase:
 		
 	END_IF
 	IF EDGEPOS(NOT(this.M1.backward)) OR EDGEPOS(NOT(this.M1.forward)) THEN
-		this.M1.speedCase := 10;
+		this.M1.speedCase := this.acceleration;
 		
 	END_IF
 

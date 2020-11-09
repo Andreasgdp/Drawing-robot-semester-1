@@ -1,6 +1,5 @@
 VAR
 	coord : ARRAY[0..LENGT_OF_COORD] OF coord_typ;
-	SPEED : TIME;
 	gNettime : DINT;
 	pSharp : BOOL;
 	draw_old : DINT;
@@ -9,6 +8,7 @@ VAR
 	x_coord : DINT := 0;
 	goTo : STRING[80];
 END_VAR
+(*SPEED : TIME;*)
 (*Global constants*)
 VAR CONSTANT
 	LENGT_OF_COORD : USINT := 200; (*maximum number of stored coords*)
