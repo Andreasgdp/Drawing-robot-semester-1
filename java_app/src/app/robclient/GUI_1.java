@@ -49,14 +49,6 @@ public class GUI_1 extends JFrame {
                 JOptionPane.showMessageDialog(rootPanel, "Showing", "Printing Robot", -1);
             }
         });
-        formattedTextField1.addKeyListener(new KeyAdapter() {
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-                super.keyTyped(e);
-                input = input + e;
-            }
-        });
         showEdgeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -69,6 +61,15 @@ public class GUI_1 extends JFrame {
                 JOptionPane.showMessageDialog(rootPanel, "Showing Grey", "Printing Robot", -1);
             }
         });
+        formattedTextField1.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                input = input + e;
+            }
+        });
+
     }
 
 
