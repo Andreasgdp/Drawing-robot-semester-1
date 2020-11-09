@@ -18,10 +18,11 @@ PROGRAM _INIT
 END_PROGRAM
 	
 PROGRAM _CYCLIC
+	
 	CASE tcpst OF
 		TCPSTATE_SOCKET_OPEN :
 			TcpOpen1.enable := TRUE;
-			TcpOpen1.port := 12345;
+			TcpOpen1.port := 2050;
 			TcpOpen1.options := tcpOPT_REUSEADDR;
 			TcpOpen1();
 			IF (TcpOpen1.status = ERR_OK) OR (TcpOpen1.status = 32600) THEN
@@ -32,10 +33,13 @@ PROGRAM _CYCLIC
 			IF goTo = sendData AND goTo = receiveData AND goTo <> '' THEN
 				IF coord_counter = 1 THEN
 					x_coord := brsatoi(ADR(goTo));
+					goTo := '';
 				ELSIF coord_counter = 2 THEN
 					y_coord := brsatoi(ADR(goTo));
+					goTo := '';
 				ELSIF coord_counter = 3 THEN
 					draw := brsatoi(ADR(goTo));
+					goTo := '';
 				END_IF
 				sendData := receiveData := '';
 				// goTo := '';
@@ -48,36 +52,21 @@ PROGRAM _CYCLIC
 					goTo := 'done';
 					elPreben := TRUE;
 				END_IF
-				
 			END_IF;
-			IF NOT pSharp THEN
-				IF goTo = 'done' THEN
-					sendData := goTo;
-					// goTo := '';
-					tcpst := TCPSTATE_SEND;
-				END_IF;
-			END_IF;
+			
 			TcpServer1.enable := TRUE;
 			TcpServer1.ident := TcpOpen1.ident;
 			TcpServer1();
-			IF (TcpServer1.status = ERR_OK) OR (TcpServer1.status = 32600) THEN
+			
+			IF goTo = 'done' AND (TcpServer1.status = ERR_OK) OR (TcpServer1.status = 32600) THEN
+				sendData := goTo;
+				// goTo := '';
+				tcpst := TCPSTATE_SEND;
+			ELSIF (TcpServer1.status = ERR_OK) OR (TcpServer1.status = 32600) THEN
 				tcpst := TCPSTATE_RECEIVE;
 			END_IF
 	
-		TCPSTATE_RECEIVE :
-			IF goTo = 'done' THEN
-				tcpst := TCPSTATE_SERVER_CREATE;
-			ELSIF goTo = '' AND elPreben = TRUE THEN
-				F_It_TON.PT 	:= T#500ms;
-				F_It_TON.IN 	:= TRUE;
-				
-				IF F_It_TON.Q THEN
-					goTo 		:= 'done';
-					elPreben 	:= FALSE;
-					F_It_TON.IN := TRUE;
-				END_IF
-			END_IF
-			
+		TCPSTATE_RECEIVE :			
 			TcpReceive1.enable := TRUE;
 			TcpReceive1.ident := TcpServer1.identclnt;
 			TcpReceive1.pData := ADR(receiveData);
@@ -106,7 +95,8 @@ PROGRAM _CYCLIC
 			TcpClose1.enable := TRUE;
 			TcpClose1.ident := TcpServer1.identclnt;
 			TcpClose1();
-			IF (TcpClose1.status = ERR_OK) OR (TcpClose1.status = 32600) THEN
+			IF (TcpClose1.status = ERR_OK) THEN
+				test := FALSE;
 				TcpServer1.enable := FALSE;
 				TcpServer1();
 				tcpst := TCPSTATE_SERVER_CREATE;
@@ -144,5 +134,5 @@ PROGRAM _EXIT
 	TcpClose2.enable := TRUE;
 	TcpClose2.ident := TcpOpen1.ident;
 	TcpClose2();
-	END_PROGRAM
+END_PROGRAM
 	
