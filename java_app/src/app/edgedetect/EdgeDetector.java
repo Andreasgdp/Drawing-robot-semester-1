@@ -392,46 +392,9 @@ public class EdgeDetector {
                 }
             }
         }
-        for (int i = 0; i < greyPairs.size() - 1; i++) {
-            System.out.print( "[ " + greyPairs.get(i).get(0).y + " , " + greyPairs.get(i).get(0).x + " , " + greyPairs.get(i).get(0).drawVal + " : " + greyPairs.get(i).get(1).y + " , " + greyPairs.get(i).get(1).x + " , " + greyPairs.get(i).get(1).drawVal + " ]");
-
-        }
-//        for (int i = 0; i < greyPairs.size(); i++) {
-//            if (greyPairs.get(i).size() != 2){
-//                System.out.println("FAIL " + i);
-//            }
-//        }
-//        for (int i = 0; i < greyPairs.size(); i++) {
-//                if (greyPairs.get(i) != greyPairsTest.get(i)) {
-//                    System.out.println(greyPairs.get(i).get(0).y + " , " + greyPairs.get(i).get(0).x + " , " + greyPairs.get(i).get(0).drawVal + " : " + greyPairs.get(i).get(1).y + " , " + greyPairs.get(i).get(1).x + " , " + greyPairs.get(i).get(1).drawVal);
-//                    System.out.println(greyPairsTest.get(i).get(0).y + " , " + greyPairsTest.get(i).get(0).x + " , " + greyPairsTest.get(i).get(0).drawVal + " : " + greyPairsTest.get(i).get(1).y + " , " + greyPairsTest.get(i).get(1).x + " , " + greyPairsTest.get(i).get(1).drawVal);
-//
-//                }
-//
-//        }
         this.greyLineCoordinates = greyPairs;
         return true;
     }
-
-//    public void sorter (ArrayList<ArrayList<Point>> array){
-////        ArrayList<ArrayList<Point>> greyPairsSorted = new ArrayList<>();
-//        ArrayList<Point> tempPoint = new ArrayList();
-//
-//        for (int i = 0; i < array.size(); i++) {
-//            for (int j = i; j > 0; j--) {
-//                if ((array.get(j).get(0).y == (array.get(i).get(0).y - 1)) &&
-//                        (array.get(j).get(0).drawVal == array.get(j-1).get(0).drawVal) &&
-//                        (((array.get(j).get(0).x >= array.get(i).get(0).x) && (array.get(j).get(0).x <= array.get(i).get(1).x)) ||
-//                                ((array.get(j).get(1).x >= array.get(i).get(0).x) && (array.get(j).get(1).x <= array.get(i).get(1).x)))) {
-//                    tempPoint = array.get(i);
-//                    for (int k = i; k > (j -1); k--) {
-//                        array.set(k, array.get(k - 1));
-//                        array.set(j, array.get(i));
-//                    }
-//                }
-//            }
-//        }
-//    }
 
     /**
      * This method returns the already prepared coordinates by method:
