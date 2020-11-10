@@ -1,5 +1,6 @@
 package app.edgedetect;
 
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -323,7 +324,11 @@ public class EdgeDetector {
                         }
                     }else {
                         if (!(plist.isEmpty())) {
-                            plist.add(plist.get(0));
+                            if (plist.get(0).y == y) {
+                                plist.add(this.convertPixelToPoint(x - 1, y, array[y][x - 1]));
+                            } else {
+                                plist.add(plist.get(0));
+                            }
                             greyPairs.add(plist);
                             plist = new ArrayList<>();
                         }
@@ -356,7 +361,11 @@ public class EdgeDetector {
                         }
                     }else {
                         if (!(plist.isEmpty())) {
-                            plist.add(plist.get(0));
+                            if (plist.get(0).y == y) {
+                                plist.add(this.convertPixelToPoint(x + 1, y, array[y][x + 1]));
+                            }else{
+                                plist.add(plist.get(0));
+                            }
                             greyPairs.add(plist);
                             plist = new ArrayList<>();
                         }
@@ -364,10 +373,65 @@ public class EdgeDetector {
                 }
             }
         }
+
+        ArrayList<Point> tempPoint = new ArrayList();
+        for (int i = 0; i < greyPairs.size(); i++) {
+            for (int j = i - 1; j > 0; j--) {
+                int middelPointI = (greyPairs.get(i).get(0).x + greyPairs.get(i).get(1).x) / 2;
+                int middelPointJ = (greyPairs.get(j).get(0).x + greyPairs.get(j).get(1).x) / 2;
+                if ((greyPairs.get(j).get(0).y == (greyPairs.get(i).get(0).y - 1)) &&
+                        /*(greyPairs.get(j).get(0).drawVal == greyPairs.get(i).get(0).drawVal) &&*/
+                        (((middelPointJ >= greyPairs.get(i).get(0).x) && (middelPointJ <= greyPairs.get(i).get(1).x)) ||
+                                ((middelPointI >= greyPairs.get(j).get(0).x) && (middelPointI <= greyPairs.get(j).get(1).x)))) {
+
+                    tempPoint = greyPairs.get(i);
+                    for (int k = i; k > (j + 1); k--) {
+                        greyPairs.set(k, greyPairs.get(k - 1));
+                    }
+                        greyPairs.set((j + 1), tempPoint);
+                }
+            }
+        }
+        for (int i = 0; i < greyPairs.size() - 1; i++) {
+            System.out.print( "[ " + greyPairs.get(i).get(0).y + " , " + greyPairs.get(i).get(0).x + " , " + greyPairs.get(i).get(0).drawVal + " : " + greyPairs.get(i).get(1).y + " , " + greyPairs.get(i).get(1).x + " , " + greyPairs.get(i).get(1).drawVal + " ]");
+
+        }
+//        for (int i = 0; i < greyPairs.size(); i++) {
+//            if (greyPairs.get(i).size() != 2){
+//                System.out.println("FAIL " + i);
+//            }
+//        }
+//        for (int i = 0; i < greyPairs.size(); i++) {
+//                if (greyPairs.get(i) != greyPairsTest.get(i)) {
+//                    System.out.println(greyPairs.get(i).get(0).y + " , " + greyPairs.get(i).get(0).x + " , " + greyPairs.get(i).get(0).drawVal + " : " + greyPairs.get(i).get(1).y + " , " + greyPairs.get(i).get(1).x + " , " + greyPairs.get(i).get(1).drawVal);
+//                    System.out.println(greyPairsTest.get(i).get(0).y + " , " + greyPairsTest.get(i).get(0).x + " , " + greyPairsTest.get(i).get(0).drawVal + " : " + greyPairsTest.get(i).get(1).y + " , " + greyPairsTest.get(i).get(1).x + " , " + greyPairsTest.get(i).get(1).drawVal);
+//
+//                }
+//
+//        }
         this.greyLineCoordinates = greyPairs;
         return true;
     }
 
+//    public void sorter (ArrayList<ArrayList<Point>> array){
+////        ArrayList<ArrayList<Point>> greyPairsSorted = new ArrayList<>();
+//        ArrayList<Point> tempPoint = new ArrayList();
+//
+//        for (int i = 0; i < array.size(); i++) {
+//            for (int j = i; j > 0; j--) {
+//                if ((array.get(j).get(0).y == (array.get(i).get(0).y - 1)) &&
+//                        (array.get(j).get(0).drawVal == array.get(j-1).get(0).drawVal) &&
+//                        (((array.get(j).get(0).x >= array.get(i).get(0).x) && (array.get(j).get(0).x <= array.get(i).get(1).x)) ||
+//                                ((array.get(j).get(1).x >= array.get(i).get(0).x) && (array.get(j).get(1).x <= array.get(i).get(1).x)))) {
+//                    tempPoint = array.get(i);
+//                    for (int k = i; k > (j -1); k--) {
+//                        array.set(k, array.get(k - 1));
+//                        array.set(j, array.get(i));
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     /**
      * This method returns the already prepared coordinates by method:
