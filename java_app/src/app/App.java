@@ -1,6 +1,7 @@
 package app;
 
 import app.drawing_in_java.AnimatedDraw;
+import app.drawing_in_java.AnimatedDrawTest;
 import app.drawing_in_java.DrawArraylistArrayListPoint;
 import app.drawing_in_java.drawings;
 import app.edgedetect.EdgeDetector;
@@ -16,7 +17,7 @@ public class App {
     public static void main(String[] args) {
         // The path of the image has to start w. "../images/" as it is the relative path from the file app/edgedetect/Picture.java.
         String imgPath = "../images/";
-        String fileName = "small_sandwitch.jpg";
+        String fileName = "very_small_yoda.jpg";
         String imagePath = imgPath + fileName;
 
         EdgeDetector eDetect = new EdgeDetector(imagePath);
@@ -57,7 +58,7 @@ public class App {
                     showImage(eDetect, coords);
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
-                else if (msg.equals("showgreyline")) {
+                else if (msg.equals("showgreyline") || msg.equals("sgl")) {
                     ArrayList<ArrayList<Point>> coords = eDetect.getGreyLineCoordinates();
                     showGereyLineImage(eDetect, coords);
                 }
@@ -232,7 +233,12 @@ public class App {
                 // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("showsort") || msg.equals("ss")) {
                     ArrayList<Point> cords = eDetect.getSortedCords();
-                    showImageAnimated(eDetect, cords);
+                    showImageAnimated(eDetect, cords, false);
+                }
+                // !---------------------------------------------------------------------------------------------------------------------
+                else if (msg.equals("showsorttest") || msg.equals("sst")) {
+                    ArrayList<Point> cords = eDetect.getSortedCords();
+                    showImageAnimated(eDetect, cords, true);
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
                 else {
@@ -263,10 +269,14 @@ public class App {
         f.setVisible(true);
     }
 
-    private static void showImageAnimated(EdgeDetector eDetect, ArrayList<Point> cords) {
+    private static void showImageAnimated(EdgeDetector eDetect, ArrayList<Point> cords, boolean test) {
         int height = eDetect.getBufferedImage().getHeight();
         int width = eDetect.getBufferedImage().getWidth();
-        new AnimatedDraw(cords, width, height);
+        if (test) {
+            new AnimatedDrawTest(cords, width, height);
+        } else {
+            new AnimatedDraw(cords, width, height);
+        }
     }
 
     private static void showImage(EdgeDetector eDetect, ArrayList<ArrayList<ArrayList<Integer>>> cords) {
