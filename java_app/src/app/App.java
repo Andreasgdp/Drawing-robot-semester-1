@@ -1,9 +1,6 @@
 package app;
 
-import app.drawing_in_java.AnimatedDraw;
-import app.drawing_in_java.AnimatedDrawTest;
-import app.drawing_in_java.DrawArraylistArrayListPoint;
-import app.drawing_in_java.drawings;
+import app.drawing_in_java.*;
 import app.edgedetect.EdgeDetector;
 import app.edgedetect.Point;
 import app.robclient.RobotClient;
@@ -61,6 +58,11 @@ public class App {
                 else if (msg.equals("showgreyline") || msg.equals("sgl")) {
                     ArrayList<ArrayList<Point>> coords = eDetect.getGreyLineCoordinates();
                     showGereyLineImage(eDetect, coords);
+                }
+                // !---------------------------------------------------------------------------------------------------------------------
+                else if (msg.equals("animategreyline") || msg.equals("agl")) {
+                    ArrayList<ArrayList<Point>> coords = eDetect.getGreyLineCoordinates();
+                    animateImageAnimated(eDetect, coords);
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("reset") || msg.equals("re")) {
@@ -267,6 +269,12 @@ public class App {
         f.add(d);
         f.setSize(width, height);
         f.setVisible(true);
+    }
+
+    private static void animateImageAnimated(EdgeDetector eDetect, ArrayList<ArrayList<Point>> cords) {
+        int height = eDetect.getBufferedImage().getHeight();
+        int width = eDetect.getBufferedImage().getWidth();
+        new AnimatedDrawGreyline(cords, width, height);
     }
 
     private static void showImageAnimated(EdgeDetector eDetect, ArrayList<Point> cords, boolean test) {
