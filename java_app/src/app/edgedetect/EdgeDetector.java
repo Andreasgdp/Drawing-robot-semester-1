@@ -380,7 +380,7 @@ public class EdgeDetector {
                 int middelPointI = (greyPairs.get(i).get(0).x + greyPairs.get(i).get(1).x) / 2;
                 int middelPointJ = (greyPairs.get(j).get(0).x + greyPairs.get(j).get(1).x) / 2;
                 if ((greyPairs.get(j).get(0).y == (greyPairs.get(i).get(0).y - 1)) &&
-                        /*(greyPairs.get(j).get(0).drawVal == greyPairs.get(i).get(0).drawVal) &&*/
+                        (greyPairs.get(j).get(0).drawVal == greyPairs.get(i).get(0).drawVal) &&
                         (((middelPointJ >= greyPairs.get(i).get(0).x) && (middelPointJ <= greyPairs.get(i).get(1).x)) ||
                                 ((middelPointI >= greyPairs.get(j).get(0).x) && (middelPointI <= greyPairs.get(j).get(1).x)))) {
 
