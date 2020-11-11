@@ -396,7 +396,7 @@ public class EdgeDetector {
                 int middelPointI = (greyPairs.get(i).get(0).x + greyPairs.get(i).get(1).x) / 2;
                 int middelPointJ = (greyPairs.get(j).get(0).x + greyPairs.get(j).get(1).x) / 2;
                 if ((greyPairs.get(j).get(0).y == (greyPairs.get(i).get(0).y - 1)) &&
-                        /*(greyPairs.get(j).get(0).drawVal == greyPairs.get(i).get(0).drawVal) &&*/
+                        (greyPairs.get(j).get(0).drawVal == greyPairs.get(i).get(0).drawVal) &&
                         (((middelPointJ >= greyPairs.get(i).get(0).x) && (middelPointJ <= greyPairs.get(i).get(1).x)) ||
                                 ((middelPointI >= greyPairs.get(j).get(0).x) && (middelPointI <= greyPairs.get(j).get(1).x)))) {
 
@@ -483,27 +483,43 @@ public class EdgeDetector {
 
     public ArrayList<Point> convertCordsToPoints(Color[][] array) {
         ArrayList<Point> pointList = new ArrayList<>();
+        int scales = 6;
+        int devider = 256/scales;
+        int[] counter = new int[scales + 1];
+
         for (int y = 0; y < array.length; y++) {
             for (int x = 0; x < array[y].length; x++) {
-                int ggb = (((array[y][x].getRed() + array[y][x].getBlue() + array[y][x].getGreen() + 3)/3-1) + 51) / 51 - 1;
+                int ggb = (((array[y][x].getRed() + array[y][x].getBlue() + array[y][x].getGreen() + 3)/3) + devider) / devider - 1;
+
+                counter[ggb]++;
+
                 // Tager ikke ggb == 5 med fordi det er hvide koordinater, som ikke skal tegnes.
-                if (ggb == 0 || ggb == 1 || ggb == 2 || ggb == 3 || ggb == 4) {
+                if (ggb < scales - 1) {
                     Point point = new Point(x, y);
                     point.setDrawVal(ggb);
                     pointList.add(point);
                 }
             }
         }
+        for (int i = 0; i < counter.length; i++) {
+            System.out.println(i + ": " + counter[i]);
+        }
+
         return pointList;
     }
 
     public Point convertPixelToPoint(int x, int y, Color pixel) {
         Point point = null;
-        int ggb = (((pixel.getRed() + pixel.getBlue() + pixel.getGreen() + 3)/3-1) + 51) / 51 - 1;
+        int scales = 6;
+        int devider = 256/scales;
+        int ggb = (((pixel.getRed() + pixel.getBlue() + pixel.getGreen() + 3)/3) + devider) / devider - 1;
         // Tager ikke ggb == 5 med fordi det er hvide koordinater, som ikke skal tegnes.
-        if (ggb == 0 || ggb == 1 || ggb == 2 || ggb == 3 || ggb == 4 || ggb == 5) {
+        if (ggb < scales - 1) {
             point = new Point(x, y);
             point.setDrawVal(ggb);
+        } else {
+            point = new Point(x, y);
+            point.setDrawVal(5);
         }
         return point;
     }
