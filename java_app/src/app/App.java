@@ -1,7 +1,6 @@
 package app;
 
-import app.drawing_in_java.AnimatedDraw;
-import app.drawing_in_java.drawings;
+import app.drawing_in_java.*;
 import app.edgedetect.EdgeDetector;
 import app.edgedetect.Point;
 import app.robclient.RobotClient;
@@ -54,6 +53,16 @@ public class App {
                 else if (msg.equals("show")) {
                     ArrayList<ArrayList<ArrayList<Integer>>> coords = eDetect.getCoordinates();
                     showImage(eDetect, coords);
+                }
+                // !---------------------------------------------------------------------------------------------------------------------
+                else if (msg.equals("showgreyline") || msg.equals("sgl")) {
+                    ArrayList<ArrayList<Point>> coords = eDetect.getGreyLineCoordinates();
+                    showGereyLineImage(eDetect, coords);
+                }
+                // !---------------------------------------------------------------------------------------------------------------------
+                else if (msg.equals("animategreyline") || msg.equals("agl")) {
+                    ArrayList<ArrayList<Point>> coords = eDetect.getGreyLineCoordinates();
+                    animateImageAnimated(eDetect, coords);
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("reset") || msg.equals("re")) {
@@ -168,8 +177,14 @@ public class App {
                 else if (msg.equals("run")) {
                     ArrayList<ArrayList<ArrayList<Integer>>> cords = eDetect.getCoordinates();
                     runTest(client, cords);
-                    // !---------------------------------------------------------------------------------------------------------------------
-                } else if (msg.equals("h") || msg.equals("help")) {
+                }
+                // !---------------------------------------------------------------------------------------------------------------------
+                else if (msg.equals("runGreyLine")) {
+                    ArrayList<ArrayList<Point>> cords = eDetect.getGreyLineCoordinates();
+                    runGreyLineTest(client, cords);
+                }
+                // !---------------------------------------------------------------------------------------------------------------------
+                else if (msg.equals("h") || msg.equals("help")) {
                     // TODO: Update help command w. all commands
                     System.out.println(" ___________________________________________________________________________");
                     System.out.println("| HELP:                                                                     |");
@@ -220,7 +235,25 @@ public class App {
                 // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("showsort") || msg.equals("ss")) {
                     ArrayList<Point> cords = eDetect.getSortedCords();
-                    showImageAnimated(eDetect, cords);
+                    showImageAnimated(eDetect, cords, false);
+                }
+                // !---------------------------------------------------------------------------------------------------------------------
+                else if (msg.equals("showsorttest") || msg.equals("sst")) {
+                    ArrayList<Point> cords = eDetect.getSortedCords();
+                    showImageAnimated(eDetect, cords, true);
+                }
+                // !---------------------------------------------------------------------------------------------------------------------
+                else if (msg.equals("allsimulations") || msg.equals("sim")) {
+                    ArrayList<ArrayList<ArrayList<Integer>>> cords1 = eDetect.getCoordinates();
+                    showImage(eDetect, cords1);
+                    ArrayList<ArrayList<Point>> cords2 = eDetect.getGreyLineCoordinates();
+                    showGereyLineImage(eDetect, cords2);
+                    animateImageAnimated(eDetect, cords2);
+                    ArrayList<ArrayList<ArrayList<Integer>>> cords3 = eDetect.getEdgeCords();
+                    showImage(eDetect, cords3);
+                    ArrayList<Point> cords4 = eDetect.getSortedCords();
+                    showImageAnimated(eDetect, cords4, false);
+                    showImageAnimated(eDetect, cords4, true);
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
                 else {
@@ -237,10 +270,34 @@ public class App {
         client.disconnect();
     }
 
-    private static void showImageAnimated(EdgeDetector eDetect, ArrayList<Point> cords) {
+    private static void showGereyLineImage(EdgeDetector eDetect, ArrayList<ArrayList<Point>> cords) {
         int height = eDetect.getBufferedImage().getHeight();
         int width = eDetect.getBufferedImage().getWidth();
-        new AnimatedDraw(cords, width, height);
+
+        System.out.println(height + " : " + width);
+
+        JFrame f = new JFrame("Title");
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        DrawArraylistArrayListPoint d = new DrawArraylistArrayListPoint(cords);
+        f.add(d);
+        f.setSize(width, height);
+        f.setVisible(true);
+    }
+
+    private static void animateImageAnimated(EdgeDetector eDetect, ArrayList<ArrayList<Point>> cords) {
+        int height = eDetect.getBufferedImage().getHeight();
+        int width = eDetect.getBufferedImage().getWidth();
+        new AnimatedDrawGreyline(cords, width, height);
+    }
+
+    private static void showImageAnimated(EdgeDetector eDetect, ArrayList<Point> cords, boolean test) {
+        int height = eDetect.getBufferedImage().getHeight();
+        int width = eDetect.getBufferedImage().getWidth();
+        if (test) {
+            new AnimatedDrawTest(cords, width, height);
+        } else {
+            new AnimatedDraw(cords, width, height);
+        }
     }
 
     private static void showImage(EdgeDetector eDetect, ArrayList<ArrayList<ArrayList<Integer>>> cords) {
@@ -268,7 +325,59 @@ public class App {
             for (int j = 0; j < 2; j++) {
                 y = String.format("%04d", cord.get(j).get(0));
                 x = String.format("%04d", cord.get(j).get(1));
-                draw = String.format("%04d", cord.get(j).get(2));
+                draw = String.format("%04d", j);
+
+                System.out.println(x + "," + y + "," + draw);
+
+                // Send x
+                writeSuccess = client.write(x);
+                client.reconnect();
+
+                // Send y
+                if (writeSuccess) {
+                    writeSuccess = client.write(y);
+                    client.reconnect();
+                }
+
+                // Send draw
+                if (writeSuccess) {
+                    writeSuccess = client.write(draw);
+                    client.reconnect();
+                }
+
+                if (writeSuccess) {
+                    String waitVariable = "test";
+                    long startTime = System.currentTimeMillis();
+
+                    while (waitVariable.compareTo("done") != 0) {
+                        waitVariable = client.read();
+                        if (waitVariable == null) {
+                            waitVariable = "test";
+                        }
+                    }
+
+                    client.reconnect();
+                } else {
+                    System.out.println("A problem occurred when trying to send coordinates to the PLC");
+                    break outer;
+                }
+
+            }
+        }
+    }
+
+    private static void runGreyLineTest(RobotClient client, ArrayList<ArrayList<Point>> cords) {
+        String draw;
+        String x;
+        String y;
+        boolean writeSuccess;
+
+        outer:
+        for (ArrayList<Point> cord : cords) {
+            for (int j = 0; j < 2; j++) {
+                y = String.format("%04d", cord.get(j).y);
+                x = String.format("%04d", cord.get(j).x);
+                draw = String.format("%04d", cord.get(j).drawVal);
 
                 System.out.println(x + "," + y + "," + draw);
 

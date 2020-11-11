@@ -6,8 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class AnimatedDraw extends JPanel {
-    public AnimatedDraw(ArrayList<Point> points, int width, int height) {
+public class AnimatedDrawGreyline extends JPanel {
+    public AnimatedDrawGreyline(ArrayList<ArrayList<Point>> points, int width, int height) {
         EventQueue.invokeLater(() -> {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -26,17 +26,17 @@ public class AnimatedDraw extends JPanel {
 
     public static class TestPane extends JPanel {
 
-        ArrayList<Point> points;
+        ArrayList<ArrayList<Point>> points;
         int width;
         int height;
         int index = 0;
 
 
-        public TestPane(ArrayList<Point> points, int width, int height) {
+        public TestPane(ArrayList<ArrayList<Point>> points, int width, int height) {
             this.points = points;
             this.width = width;
             this.height = height;
-            Timer timer = new Timer(1, e -> {
+            Timer timer = new Timer(5, e -> {
                 if (index < points.size()) {
                     index++;
                 }
@@ -56,13 +56,18 @@ public class AnimatedDraw extends JPanel {
             Graphics2D g2d = (Graphics2D) g.create();
 
             for (int i = 0; i < index; i++) {
+                ArrayList<Point> pair = this.points.get(i);
+                int x1 = pair.get(0).x;
+                int y1 = pair.get(0).y;
+                int x2 = pair.get(1).x;
+                int y2 = pair.get(1).y;
+                //System.out.println((pair.get(0).get(2)*51));
+                //System.out.println(x1 + "," + y1 + " : " + x2 + "," + y2);
                 int val = 256 / 6;
-                g2d.setColor(new Color(points.get(i).drawVal * val, points.get(i).drawVal * val, points.get(i).drawVal * val));
-                if (points.get(i+1).drawVal == 1 && i < index - 1) {
-                    g2d.drawLine(points.get(i).x, points.get(i).y, points.get(i + 1).x, points.get(i + 1).y);
-                } else {
-                    g2d.fillRect(points.get(i).x, points.get(i).y, 1, 1);
-                }
+                Color color = new Color((pair.get(0).drawVal * val), (pair.get(0).drawVal*val), (pair.get(0).drawVal*val));
+                g.setColor(color);
+                // g.fillRect(x1, y1, java.lang.Math.abs(x2 - x1), 1);
+                g.drawLine(x1, y1, x2, y2);
             }
             g2d.dispose();
         }

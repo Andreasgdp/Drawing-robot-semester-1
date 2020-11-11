@@ -6,8 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class AnimatedDraw extends JPanel {
-    public AnimatedDraw(ArrayList<Point> points, int width, int height) {
+public class AnimatedDrawTest extends JPanel {
+    public AnimatedDrawTest(ArrayList<Point> points, int width, int height) {
         EventQueue.invokeLater(() -> {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -55,12 +55,20 @@ public class AnimatedDraw extends JPanel {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g.create();
 
+            g2d.setColor(Color.BLACK);
+            boolean colorSwitch = false;
+
+
             for (int i = 0; i < index; i++) {
-                int val = 256 / 6;
-                g2d.setColor(new Color(points.get(i).drawVal * val, points.get(i).drawVal * val, points.get(i).drawVal * val));
-                if (points.get(i+1).drawVal == 1 && i < index - 1) {
+                if (points.get(i+1).drawVal != 0 && i < index - 1) {
                     g2d.drawLine(points.get(i).x, points.get(i).y, points.get(i + 1).x, points.get(i + 1).y);
                 } else {
+                    if (colorSwitch) {
+                        g2d.setColor(Color.RED);
+                    } else {
+                        g2d.setColor(Color.BLACK);
+                    }
+                    colorSwitch = !colorSwitch;
                     g2d.fillRect(points.get(i).x, points.get(i).y, 1, 1);
                 }
             }
