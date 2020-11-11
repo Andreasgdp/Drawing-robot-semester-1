@@ -14,7 +14,7 @@ public class App {
     public static void main(String[] args) {
         // The path of the image has to start w. "../images/" as it is the relative path from the file app/edgedetect/Picture.java.
         String imgPath = "../images/";
-        String fileName = "very_small_yoda.jpg";
+        String fileName = "small_sandwitch.jpg";
         String imagePath = imgPath + fileName;
 
         EdgeDetector eDetect = new EdgeDetector(imagePath);
@@ -241,6 +241,19 @@ public class App {
                 else if (msg.equals("showsorttest") || msg.equals("sst")) {
                     ArrayList<Point> cords = eDetect.getSortedCords();
                     showImageAnimated(eDetect, cords, true);
+                }
+                // !---------------------------------------------------------------------------------------------------------------------
+                else if (msg.equals("allsimulations") || msg.equals("sim")) {
+                    ArrayList<ArrayList<ArrayList<Integer>>> cords1 = eDetect.getCoordinates();
+                    showImage(eDetect, cords1);
+                    ArrayList<ArrayList<Point>> cords2 = eDetect.getGreyLineCoordinates();
+                    showGereyLineImage(eDetect, cords2);
+                    animateImageAnimated(eDetect, cords2);
+                    ArrayList<ArrayList<ArrayList<Integer>>> cords3 = eDetect.getEdgeCords();
+                    showImage(eDetect, cords3);
+                    ArrayList<Point> cords4 = eDetect.getSortedCords();
+                    showImageAnimated(eDetect, cords4, false);
+                    showImageAnimated(eDetect, cords4, true);
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
                 else {
