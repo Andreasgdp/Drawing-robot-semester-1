@@ -305,19 +305,23 @@ public class EdgeDetector {
         for (int y = 0; y < array.length; y++) {
             boolean direction = y % 2 == 0;
             if (direction) {
-                for (int x = 1; x < array[y].length - 1; x++) {
+                for (int x = 0; x < array[y].length; x++) {
                     Point pixel = this.convertPixelToPoint(x, y, array[y][x]);
                     if (pixel.drawVal != 5){
                         if (plist.isEmpty()) {
                             plist.add(pixel);
                         } else { // Not empty
                             if ((plist.get(0).drawVal != pixel.drawVal)) {
-                                plist.add(this.convertPixelToPoint(x - 1, y, array[y][x - 1]));
+                                if (x == 0){
+                                    plist.add(this.convertPixelToPoint(x, y - 1, array[y - 1][x]));
+                                } else {
+                                    plist.add(this.convertPixelToPoint(x - 1, y, array[y][x - 1]));
+                                }
                                 greyPairs.add(plist);
                                 plist = new ArrayList<>();
                                 plist.add(pixel);
                             } else {
-                                if (x == array[y].length - 2) {
+                                if (x == array[y].length - 1) {
                                     plist.add(pixel);
                                     greyPairs.add(plist);
                                     plist = new ArrayList<>();
@@ -342,19 +346,24 @@ public class EdgeDetector {
                     }
                 }
             } else {
-                for (int x = array[y].length - 2; x > 0; x--) {
+                for (int x = array[y].length - 1; x > -1; x--) {
                     Point pixel = this.convertPixelToPoint(x, y, array[y][x]);
-                    if (pixel.drawVal != 5){
+
+                    if (pixel.drawVal != 5) {
                         if (plist.isEmpty()) {
                             plist.add(pixel);
                         } else { // Not empty
                             if ((plist.get(0).drawVal != pixel.drawVal)) {
-                                plist.add(this.convertPixelToPoint(x + 1, y, array[y][x + 1]));
+                                if (x == array[y].length - 1) {
+                                    plist.add(this.convertPixelToPoint(x - 1, y, array[y - 1][x]));
+                                } else {
+                                    plist.add(this.convertPixelToPoint(x + 1, y, array[y][x + 1]));
+                                }
                                 greyPairs.add(plist);
                                 plist = new ArrayList<>();
                                 plist.add(pixel);
                             } else {
-                                if (x == 1) {
+                                if (x == 0) {
                                     plist.add(pixel);
                                     greyPairs.add(plist);
                                     plist = new ArrayList<>();
@@ -366,11 +375,11 @@ public class EdgeDetector {
                                 }
                             }
                         }
-                    }else {
+                    } else {
                         if (!(plist.isEmpty())) {
                             if (plist.get(0).y == y) {
                                 plist.add(this.convertPixelToPoint(x + 1, y, array[y][x + 1]));
-                            }else{
+                            } else {
                                 plist.add(plist.get(0));
                             }
                             greyPairs.add(plist);
