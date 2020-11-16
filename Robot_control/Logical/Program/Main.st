@@ -105,35 +105,39 @@ PROGRAM _CYCLIC
 				
 			5: // which height should we goto?
 				IF this.coord.z = 0 THEN
-					this.M3.goToCounter := 60;
+					this.M3.goToCounter := 400;
 					this.M3.goTo 		:= TRUE;
 				ELSIF this.coord.z = 1 THEN
-					this.M3.goToCounter := 30;
+					this.M3.goToCounter := 1;
 					this.M3.goTo 		:= TRUE;
 				ELSIF this.coord.z = 2 THEN
-					this.M3.goToCounter := 0;
+					this.M3.goToCounter := -60;
 					this.M3.goTo 		:= TRUE;
 				ELSIF this.coord.z = 3 THEN
-					this.M3.goToCounter := -50;
+					this.M3.goToCounter := -66;
 					this.M3.goTo 		:= TRUE;
 				ELSIF this.coord.z = 4 THEN
-					this.M3.goToCounter := -100;
+					this.M3.goToCounter := -72;
 					this.M3.goTo 		:= TRUE;
+				
+				
 				ELSIF this.coord.z = 5 THEN
-					this.M3.goToCounter := -150;
+					this.M3.goToCounter := -140;
 					this.M3.goTo 		:= TRUE;
 				END_IF
 				
-				IF this.M3.counter = this.M3.goToCounter (*this.M3.goTo = FALSE*) THEN
+				IF this.M3.counter = this.M3.goToCounter THEN
 					case_draw := 10;
 				END_IF
 					
 			10: // Goto all the coordinates, and then go back to state 0 to calculate next coordinate
-				this.M1.goToCounter := this.coord.x * 20;
-				this.M2.goToCounter := this.coord.y * 20;
+				this.M1.goToCounter := this.coord.x * 45;
+				this.M2.goToCounter := this.coord.y * 45;
 				this.M1.goTo := TRUE;
 				this.M2.goTo := TRUE;
-//				this.M3.goTo := TRUE;
+				IF this.M3.counter <> this.M3.goToCounter THEN
+					this.M3.goTo := TRUE;
+				END_IF			
 			
 				IF (this.M1.goToCounter = this.M1.counter AND this.M2.goToCounter = this.M2.counter AND this.M3.goToCounter = this.M3.counter) THEN
 					case_draw := 0;
@@ -147,9 +151,10 @@ PROGRAM _CYCLIC
 	IF this.M1.goTo AND (this.M1.goToCounter <> this.M1.counter) THEN
 		IF this.M1.counter < this.M1.goToCounter THEN
 			this.M1.forward := TRUE;
+			this.M1.backward := FALSE;
 		ELSIF this.M1.counter > this.M1.goToCounter THEN
 			this.M1.backward := TRUE;
-	
+			this.M1.forward := FALSE;
 		END_IF
 	ELSIF this.M1.goTo AND (this.M1.goToCounter = this.M1.counter) THEN
 		this.M1.backward := FALSE;
@@ -162,9 +167,10 @@ PROGRAM _CYCLIC
 	IF this.M2.goTo AND (this.M2.goToCounter <> this.M2.counter) THEN
 		IF this.M2.counter < this.M2.goToCounter THEN
 			this.M2.forward := TRUE;
+			this.M2.backward := FALSE;
 		ELSIF this.M2.counter > this.M2.goToCounter THEN
 			this.M2.backward := TRUE;
-			
+			this.M2.forward := FALSE;
 		END_IF
 	ELSIF this.M2.goTo AND (this.M2.goToCounter = this.M2.counter) THEN
 		this.M2.backward := FALSE;
@@ -177,8 +183,10 @@ PROGRAM _CYCLIC
 	IF this.M3.goTo AND (this.M3.goToCounter <> this.M3.counter) THEN
 		IF this.M3.counter < this.M3.goToCounter THEN
 			this.M3.forward := TRUE;
+			this.M3.backward := FALSE;
 		ELSIF this.M3.counter > this.M3.goToCounter THEN
 			this.M3.backward := TRUE;
+			this.M3.forward := FALSE;
 	
 		END_IF
 	ELSIF this.M3.goTo AND (this.M3.goToCounter = this.M3.counter) THEN
@@ -191,7 +199,7 @@ PROGRAM _CYCLIC
 		dull_counter := dull_counter + 1;
 	END_IF;
 	
-	IF (dull_counter > 300000) THEN
+	IF (dull_counter > 150000) THEN
 		pSharp := TRUE;
 		dull_counter := 0;
 		this.startPS := TRUE;
@@ -244,8 +252,16 @@ PROGRAM _CYCLIC
 				END_IF
 			25:
 				this.M1.goTo := TRUE;
-				this.startPSCase := 30;
+				this.startPSCase := 27;
+			27:
+				IF this.M1.goTo = FALSE THEN
+					this.M3.forward := TRUE;
+				END_IF
 				
+				IF this.btn4.pressed THEN
+					this.M3.forward		:= FALSE;
+					this.startPSCase 	:= 30;
+				END_IF
 			30:
 				IF this.M1.goTo = FALSE THEN
 					this.M3.goTo := TRUE;
@@ -310,4 +326,3 @@ PROGRAM _EXIT
 	(* Insert code here *)
 	 
 END_PROGRAM
-
