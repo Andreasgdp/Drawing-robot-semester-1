@@ -14,12 +14,12 @@ public class App {
     public static void main(String[] args) {
         // The path of the image has to start w. "../images/" as it is the relative path from the file app/edgedetect/Picture.java.
         String imgPath = "../images/";
-        String fileName = "download_nobar.jpg";
+        String fileName = "gradient.png";
         String imagePath = imgPath + fileName;
 
         EdgeDetector eDetect = new EdgeDetector(imagePath);
-        RobotClient client = new RobotClient("192.168.0.20", 12345);
-        // RobotClient client = new RobotClient("127.0.0.1", 12345);
+        RobotClient client = new RobotClient("192.168.0.20", 2050);
+        // RobotClient client = new RobotClient("127.0.0.1", 2050);
 
         try {
             client.connect();
@@ -401,7 +401,7 @@ public class App {
                     String waitVariable = "test";
                     long startTime = System.currentTimeMillis();
 
-                    while (waitVariable.compareTo("done") != 0) {
+                    while (waitVariable.compareTo("done") != 0 && client.isConnected()) {
                         waitVariable = client.read();
                         if (waitVariable == null) {
                             waitVariable = "test";
@@ -451,7 +451,7 @@ public class App {
                 String waitVariable = "test";
                 long startTime = System.currentTimeMillis();
 
-                while (waitVariable.compareTo("done") != 0) {
+                while (waitVariable.compareTo("done") != 0 && client.isConnected()) {
                     waitVariable = client.read();
                     if (waitVariable == null) {
                         waitVariable = "test";
