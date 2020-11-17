@@ -1,4 +1,6 @@
 VAR
+	test : BOOL;
+	i : INT;
 	elPreben : BOOL; (*The most overpowered bollean expression on Funen*)
 	F_It_TON : TON;
 	coord_counter : USINT;
