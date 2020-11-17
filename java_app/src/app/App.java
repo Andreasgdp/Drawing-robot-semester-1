@@ -6,9 +6,10 @@ import app.edgedetect.Point;
 import app.robclient.RobotClient;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 
 public class App {
     public static void main(String[] args) {
@@ -19,7 +20,6 @@ public class App {
 
         EdgeDetector eDetect = new EdgeDetector(imagePath);
         RobotClient client = new RobotClient("192.168.0.20", 12345);
-        // RobotClient client = new RobotClient("127.0.0.1", 12345);
 
         try {
             client.connect();
@@ -29,6 +29,8 @@ public class App {
 
         Scanner scanner = new Scanner(System.in);
         Scanner CMDscanner = new Scanner(System.in);
+
+//        Commandhandler
         while (true) {
             try {
                 System.out.print("Write command: ");
@@ -37,17 +39,22 @@ public class App {
                 if (msg.equals("q") || msg.equals("quit")) {
                     break;
                 } else if (msg.startsWith("test")) {
-                    Color[][] testColor = eDetect.getColorArray();
-                    boolean coordsLoadedTest = eDetect.loadCoordinates(testColor);
+                    Logging logger = new Logging("MyLogFile.txt");
+                    Timer timer = new Timer(1000, logger);
 
-                    if (coordsLoadedTest) {
-                        ArrayList<ArrayList<ArrayList<Integer>>> coordinates = eDetect.getCoordinates();
-                        System.out.println(coordinates);
-
-                        for (ArrayList<ArrayList<Integer>> coordinate : coordinates) {
-                            System.out.println(coordinate);
+                    timer.start();
+                    long testCounter = 0;
+                    while (testCounter < 999999999) {
+                        long testCounter2 = 0;
+                        while (testCounter2 < 20) {
+                            testCounter2 ++;
                         }
+                        testCounter++;
                     }
+                    logger.setFinishTime();
+                    timer.stop();
+                    logger.logTime();
+
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("show")) {
@@ -74,72 +81,6 @@ public class App {
                     // TODO: add function to recognize ESC-btn
                     client.reconnect();
                     client.write("stop");
-                }
-                // !---------------------------------------------------------------------------------------------------------------------
-                else if (msg.equals("i") || msg.equals("image") || msg.equals("loadImage")) {
-                    System.out.print("Write new img path: ");
-                    String iName = CMDscanner.nextLine();
-
-                    if (iName.isEmpty()) {
-                        System.out.println("no image name detected");
-                    } else {
-                        imagePath = "../images/" + iName;
-                        eDetect.loadNewImage(imagePath);
-                    }
-                }
-                // !---------------------------------------------------------------------------------------------------------------------
-                else if (msg.equals("send")) {
-                    String draw;
-                    String x;
-                    String y;
-                    boolean writeSuccess;
-                    ArrayList<ArrayList<ArrayList<Integer>>> coords = eDetect.getCoordinates();
-
-                    outer:
-                    for (int i = 0; i < coords.size(); i++) {
-                        for (int j = 0; j < 2; j++) {
-                            int drawValue = (j == 0 && i != 0) ? 0 : 1;
-                            y = String.format("%04d", coords.get(i).get(j).get(0));
-                            x = String.format("%04d", coords.get(i).get(j).get(1));
-                            draw = String.format("%04d", drawValue);
-
-                            System.out.println(x + "," + y + "," + draw);
-
-                            // Send x
-                            writeSuccess = client.write(x);
-                            client.reconnect();
-
-                            // Send y
-                            if (writeSuccess) {
-                                writeSuccess = client.write(y);
-                                client.reconnect();
-                            }
-
-                            // Send draw
-                            if (writeSuccess) {
-                                writeSuccess = client.write(draw);
-                                client.reconnect();
-                            }
-
-                            if (writeSuccess) {
-                                String waitVariable = "test";
-                                long startTime = System.currentTimeMillis();
-
-                                while (waitVariable.compareTo("done") != 0) {
-                                    waitVariable = client.read();
-                                    if (waitVariable == null) {
-                                        waitVariable = "test";
-                                    }
-                                }
-
-                                client.reconnect();
-                            } else {
-                                System.out.println("A problem occurred when trying to send coordinates to the PLC");
-                                break outer;
-                            }
-
-                        }
-                    }
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("message") || msg.equals("command") || msg.equals("cmd")) {
@@ -424,6 +365,11 @@ public class App {
         String y;
         boolean writeSuccess;
 
+        Logging logger = new Logging("MyLogFile.txt");
+        Timer timer = new Timer(1000, logger);
+
+        timer.start();
+
         for (Point cord : cords) {
             y = String.format("%04d", cord.y);
             x = String.format("%04d", cord.x);
@@ -465,5 +411,8 @@ public class App {
             }
 
         }
+        logger.setFinishTime();
+        timer.stop();
+        logger.logTime();
     }
 }
