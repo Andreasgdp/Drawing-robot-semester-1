@@ -386,7 +386,7 @@ public class EdgeDetector {
      *
      * @param imgPath String of the image path.
      */
-    public void loadNewImage(String imgPath) {
+    public void loadNewImagePath(String imgPath) {
         Scanner CMDscanner = new Scanner(System.in);
         File aFile = new File(imgPath);
 
@@ -411,6 +411,11 @@ public class EdgeDetector {
                 }
             }
         }
+    }
+
+    public void loadNewImage(String imgName) {
+        String imgPath = "../images/";
+        this.imagePath = imgPath + imgName;
     }
 
     public ArrayList<ArrayList<ArrayList<Integer>>> getEdgeCords() {
