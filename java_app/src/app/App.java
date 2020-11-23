@@ -15,7 +15,7 @@ public class App {
     public static void main(String[] args) {
         // The path of the image has to start w. "../images/" as it is the relative path from the file app/edgedetect/Picture.java.
         String imgPath = "../images/";
-        String fileName = "gradient.png";
+        String fileName = "bigpp.jpg";
         String imagePath = imgPath + fileName;
 
         EdgeDetector eDetect = new EdgeDetector(imagePath);
@@ -57,21 +57,6 @@ public class App {
 
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
-                else if (msg.equals("show")) {
-                    ArrayList<ArrayList<ArrayList<Integer>>> coords = eDetect.getCoordinates();
-                    showImage(eDetect, coords);
-                }
-                // !---------------------------------------------------------------------------------------------------------------------
-                else if (msg.equals("showgreyline") || msg.equals("sgl")) {
-                    ArrayList<ArrayList<Point>> coords = eDetect.getGreyLineCoordinates();
-                    showGereyLineImage(eDetect, coords);
-                }
-                // !---------------------------------------------------------------------------------------------------------------------
-                else if (msg.equals("animategreyline") || msg.equals("agl")) {
-                    ArrayList<ArrayList<Point>> coords = eDetect.getGreyLineCoordinates();
-                    animateImageAnimated(eDetect, coords);
-                }
-                // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("reset") || msg.equals("re")) {
                     client.reconnect();
                     client.write("rset");
@@ -83,38 +68,6 @@ public class App {
                     client.write("stop");
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
-                else if (msg.equals("message") || msg.equals("command") || msg.equals("cmd")) {
-                    System.out.print("Write the message for the plc: ");
-                    String message = CMDscanner.nextLine();
-                    client.write(message);
-
-                    String waitVariable = client.read();
-                    if (waitVariable == null) {
-                        waitVariable = "null";
-                    }
-
-                    while (waitVariable.compareTo(message) != 0) {
-                        waitVariable = client.read();
-                        if (waitVariable == null) {
-                            waitVariable = "null";
-                        }
-                    }
-
-                    System.out.println(waitVariable);
-                    client.reconnect();
-                    waitVariable = "test";
-
-                    while (waitVariable.compareTo("done") != 0) {
-                        waitVariable = client.read();
-                        if (waitVariable == null) {
-                            waitVariable = "test";
-                        }
-                    }
-
-                    System.out.println(waitVariable);
-                    client.reconnect();
-                }
-                // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("run")) {
                     ArrayList<ArrayList<ArrayList<Integer>>> cords = eDetect.getCoordinates();
                     runTest(client, cords);
@@ -123,21 +76,6 @@ public class App {
                 else if (msg.equals("runGreyLine")) {
                     ArrayList<ArrayList<Point>> cords = eDetect.getGreyLineCoordinates();
                     runGreyLineTest(client, cords);
-                }
-                // !---------------------------------------------------------------------------------------------------------------------
-                else if (msg.equals("h") || msg.equals("help")) {
-                    // TODO: Update help command w. all commands
-                    System.out.println(" ___________________________________________________________________________");
-                    System.out.println("| HELP:                                                                     |");
-                    System.out.println("| cc / change con      - Changes hostname and port                          |");
-                    System.out.println("| i  / load image      - Loads image based on selected image name or path   |");
-                    System.out.println("| L  / load coordinats - Loads coordinats of the chosen image               |");
-                    System.out.println("| re / reset           - Resets the PLC coordinats                          |");
-                    System.out.println("| run                  - Loads image and coordinats, then sends them to PLC |");
-                    System.out.println("| sd / send            - Sends coordinats to the PLC                        |");
-                    System.out.println("| st / stop            - Stops the PLC                                      |");
-                    System.out.println("| q  / quit            - Quits the program                                  |");
-                    System.out.println("|___________________________________________________________________________|");
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("cc") || msg.equals("change con")) {
@@ -163,15 +101,30 @@ public class App {
                     runTest(client, cords);
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
-                else if (msg.equals("showedge")) {
-                    ArrayList<ArrayList<ArrayList<Integer>>> cords = eDetect.getEdgeCords();
-                    showImage(eDetect, cords);
-                }
-                // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("sort")) {
                     // https://stackoverflow.com/questions/25287834/how-to-sort-a-collection-of-points-so-that-they-set-up-one-after-another
                     ArrayList<Point> cords = eDetect.getSortedCords();
                     runSortTest(client, cords);
+                }
+                // !---------------------------------------------------------------------------------------------------------------------
+                else if (msg.equals("show")) {
+                    ArrayList<ArrayList<ArrayList<Integer>>> coords = eDetect.getCoordinates();
+                    showImage(eDetect, coords);
+                }
+                // !---------------------------------------------------------------------------------------------------------------------
+                else if (msg.equals("showgreyline") || msg.equals("sgl")) {
+                    ArrayList<ArrayList<Point>> coords = eDetect.getGreyLineCoordinates();
+                    showGereyLineImage(eDetect, coords);
+                }
+                // !---------------------------------------------------------------------------------------------------------------------
+                else if (msg.equals("animategreyline") || msg.equals("agl")) {
+                    ArrayList<ArrayList<Point>> coords = eDetect.getGreyLineCoordinates();
+                    animateImageAnimated(eDetect, coords);
+                }
+                // !---------------------------------------------------------------------------------------------------------------------
+                else if (msg.equals("showedge")) {
+                    ArrayList<ArrayList<ArrayList<Integer>>> cords = eDetect.getEdgeCords();
+                    showImage(eDetect, cords);
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("showsort") || msg.equals("ss")) {
@@ -197,6 +150,104 @@ public class App {
                     showImageAnimated(eDetect, cords4, true);
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
+                else if (msg.equals("benchmark") || msg.equals("bm")) {
+                    Logging logger = new Logging("MyLogFile.txt");
+                    Timer timer = new Timer(1000, logger);
+
+                    eDetect.loadNewImage("very_small_yoda.jpg");
+
+                    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    logger.changeFile("first_run_log.txt");
+                    timer.start();
+
+//                  Run normal black
+                    ArrayList<ArrayList<ArrayList<Integer>>> cords1 = eDetect.getCoordinates();
+                    runTest(client, cords1);
+
+                    logger.setFinishTime();
+                    timer.stop();
+                    logger.logTime();
+
+                    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    logger.changeFile("edge_line_log.txt");
+                    timer.start();
+
+//                  Run grey line cords
+                    ArrayList<ArrayList<Point>> cords2 = eDetect.getGreyLineCoordinates();
+                    runGreyLineTest(client, cords2);
+
+                    logger.setFinishTime();
+                    timer.stop();
+                    logger.logTime();
+
+                    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    logger.changeFile("edgedetect_log.txt");
+                    timer.start();
+
+//                  Run edge detection cords
+                    ArrayList<ArrayList<ArrayList<Integer>>> cords = eDetect.getEdgeCords();
+                    runTest(client, cords);
+
+                    logger.setFinishTime();
+                    timer.stop();
+                    logger.logTime();
+
+                    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    logger.changeFile("sort2_log.txt");
+                    timer.start();
+
+//                  Run sorted cords (complexity 2)
+                    ArrayList<Point> cords3 = eDetect.getSortedCords();
+                    runSortTest(client, cords3);
+
+                    logger.setFinishTime();
+                    timer.stop();
+                    logger.logTime();
+
+                    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    eDetect.loadNewImage("download_nobar.jpg");
+                    logger.changeFile("sort1_log.txt");
+                    timer.start();
+
+//                  Run sorted cords (complexity 1)
+                    cords3 = eDetect.getSortedCords();
+                    runSortTest(client, cords3);
+
+                    logger.setFinishTime();
+                    timer.stop();
+                    logger.logTime();
+
+                    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    eDetect.loadNewImage("bigpp.jpg");
+                    logger.changeFile("sort3_log.txt");
+                    timer.start();
+
+//                  Run sorted cords (complexity 3)
+                    cords3 = eDetect.getSortedCords();
+                    runSortTest(client, cords3);
+
+                    logger.setFinishTime();
+                    timer.stop();
+                    logger.logTime();
+                    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+                }
+                // !---------------------------------------------------------------------------------------------------------------------
+                else if (msg.equals("h") || msg.equals("help")) {
+                    // TODO: Update help command w. all commands
+                    System.out.println(" ___________________________________________________________________________");
+                    System.out.println("| HELP:                                                                     |");
+                    System.out.println("| cc / change con      - Changes hostname and port                          |");
+                    System.out.println("| i  / load image      - Loads image based on selected image name or path   |");
+                    System.out.println("| L  / load coordinats - Loads coordinats of the chosen image               |");
+                    System.out.println("| re / reset           - Resets the PLC coordinats                          |");
+                    System.out.println("| run                  - Loads image and coordinats, then sends them to PLC |");
+                    System.out.println("| sd / send            - Sends coordinats to the PLC                        |");
+                    System.out.println("| st / stop            - Stops the PLC                                      |");
+                    System.out.println("| q  / quit            - Quits the program                                  |");
+                    System.out.println("|___________________________________________________________________________|");
+                }
+                // !---------------------------------------------------------------------------------------------------------------------
                 else {
                     System.out.print("\nCommand '" + msg + "' is not a valid command!\n");
                 }
@@ -214,8 +265,6 @@ public class App {
     private static void showGereyLineImage(EdgeDetector eDetect, ArrayList<ArrayList<Point>> cords) {
         int height = eDetect.getBufferedImage().getHeight();
         int width = eDetect.getBufferedImage().getWidth();
-
-        System.out.println(height + " : " + width);
 
         JFrame f = new JFrame("Title");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -245,8 +294,6 @@ public class App {
         int height = eDetect.getBufferedImage().getHeight();
         int width = eDetect.getBufferedImage().getWidth();
 
-        System.out.println(height + " : " + width);
-
         JFrame f = new JFrame("Title");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         drawings d = new drawings(cords);
@@ -268,7 +315,7 @@ public class App {
                 x = String.format("%04d", cord.get(j).get(1));
                 draw = String.format("%04d", j);
 
-                System.out.println(x + "," + y + "," + draw);
+//                System.out.println(x + "," + y + "," + draw);
 
                 // Send x
                 writeSuccess = client.write(x);
@@ -320,7 +367,7 @@ public class App {
                 x = String.format("%04d", cord.get(j).x);
                 draw = String.format("%04d", cord.get(j).drawVal);
 
-                System.out.println(x + "," + y + "," + draw);
+//                System.out.println(x + "," + y + "," + draw);
 
                 // Send x
                 writeSuccess = client.write(x);
@@ -365,17 +412,12 @@ public class App {
         String y;
         boolean writeSuccess;
 
-        Logging logger = new Logging("MyLogFile.txt");
-        Timer timer = new Timer(1000, logger);
-
-        timer.start();
-
         for (Point cord : cords) {
             y = String.format("%04d", cord.y);
             x = String.format("%04d", cord.x);
             draw = String.format("%04d", cord.drawVal);
 
-            System.out.println(x + "," + y + "," + draw);
+//            System.out.println(x + "," + y + "," + draw);
 
             // Send x
             writeSuccess = client.write(x);
@@ -411,8 +453,5 @@ public class App {
             }
 
         }
-        logger.setFinishTime();
-        timer.stop();
-        logger.logTime();
     }
 }
