@@ -4,6 +4,7 @@ import app.edgedetect.EdgeDetector;
 import app.edgedetect.Point;
 import app.robclient.RobotClient;
 
+import javax.swing.ImageIcon;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,16 +15,14 @@ public class GUIApp extends JFrame {
     // The path of the image has to start w. "../images/" as it is the relative path from the file app/edgedetect/Picture.java.
     private final String imgPath = "../images/";
     private final String fileNameStr = "black.jpg";
-    private final String imagePath = imgPath + fileNameStr;
+    private String imagePath = imgPath + fileNameStr;
     private JButton simulateButton;
-    private JTextField fileName;
-    private JButton updateButton;
     private JPanel panelMain;
     private JComboBox runBox;
     private JComboBox simBox;
     private JButton runButton;
     private JComboBox imageBox;
-    private EdgeDetector eDetect = new EdgeDetector(imagePath);
+    private EdgeDetector eDetect;
     private final RobotClient client;
 
     GUIApp() {
@@ -34,6 +33,7 @@ public class GUIApp extends JFrame {
 
         eDetect = new EdgeDetector(imagePath);
         client = new RobotClient("192.168.0.20", 12345);
+
 
         // try {
         //     client.connect();
@@ -106,7 +106,9 @@ public class GUIApp extends JFrame {
         imageBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                eDetect.loadNewImage((String) imageBox.getSelectedItem());
+                String fileName = (String) imageBox.getSelectedItem();
+                imagePath = imgPath + fileName;
+                eDetect.loadNewImage(imagePath);
             }
         });
     }
@@ -114,7 +116,7 @@ public class GUIApp extends JFrame {
     public static void main(String[] args) {
         GUIApp GUI = new GUIApp();
         GUI.setVisible(true);
-        GUI.setSize(500, 400);
+        GUI.setSize(700, 400);
         GUI.setLocationRelativeTo(null);
 
     }

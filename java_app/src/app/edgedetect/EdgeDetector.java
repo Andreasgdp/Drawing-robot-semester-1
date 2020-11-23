@@ -27,6 +27,10 @@ public class EdgeDetector {
         this.greyLineCoordinates = null;
     }
 
+    public String getImagePath() {
+        return imagePath;
+    }
+
     private int truncate(int a) {
         if (a < 127) {
             return 0;
