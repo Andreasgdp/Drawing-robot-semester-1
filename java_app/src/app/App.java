@@ -15,7 +15,7 @@ public class App {
     public static void main(String[] args) {
         // The path of the image has to start w. "../images/" as it is the relative path from the file app/edgedetect/Picture.java.
         String imgPath = "../images/";
-        String fileName = "gradient.png";
+        String fileName = "bigpp.jpg";
         String imagePath = imgPath + fileName;
 
         EdgeDetector eDetect = new EdgeDetector(imagePath);
@@ -218,7 +218,7 @@ public class App {
                     logger.logTime();
 
                     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    eDetect.loadNewImage("download_nobar.jpg");
+                    eDetect.loadNewImage("bigpp.jpg");
                     logger.changeFile("sort3_log.txt");
                     timer.start();
 
