@@ -412,11 +412,6 @@ public class App {
         String y;
         boolean writeSuccess;
 
-        Logging logger = new Logging("MyLogFile.txt");
-        Timer timer = new Timer(1000, logger);
-
-        timer.start();
-
         for (Point cord : cords) {
             y = String.format("%04d", cord.y);
             x = String.format("%04d", cord.x);
@@ -458,8 +453,5 @@ public class App {
             }
 
         }
-        logger.setFinishTime();
-        timer.stop();
-        logger.logTime();
     }
 }
