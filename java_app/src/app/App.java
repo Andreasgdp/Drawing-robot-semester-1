@@ -6,12 +6,15 @@ import app.edgedetect.Point;
 import app.robclient.RobotClient;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 
 public class App {
+    public App() {
+
+    }
+
     public static void main(String[] args) {
         // The path of the image has to start w. "../images/" as it is the relative path from the file app/edgedetect/Picture.java.
         String imgPath = "../images/";
@@ -47,7 +50,7 @@ public class App {
                     while (testCounter < 999999999) {
                         long testCounter2 = 0;
                         while (testCounter2 < 20) {
-                            testCounter2 ++;
+                            testCounter2++;
                         }
                         testCounter++;
                     }
@@ -262,7 +265,7 @@ public class App {
         client.disconnect();
     }
 
-    private static void showGereyLineImage(EdgeDetector eDetect, ArrayList<ArrayList<Point>> cords) {
+    public static void showGereyLineImage(EdgeDetector eDetect, ArrayList<ArrayList<Point>> cords) {
         int height = eDetect.getBufferedImage().getHeight();
         int width = eDetect.getBufferedImage().getWidth();
 
@@ -274,13 +277,13 @@ public class App {
         f.setVisible(true);
     }
 
-    private static void animateImageAnimated(EdgeDetector eDetect, ArrayList<ArrayList<Point>> cords) {
+    public static void animateImageAnimated(EdgeDetector eDetect, ArrayList<ArrayList<Point>> cords) {
         int height = eDetect.getBufferedImage().getHeight();
         int width = eDetect.getBufferedImage().getWidth();
         new AnimatedDrawGreyline(cords, width, height);
     }
 
-    private static void showImageAnimated(EdgeDetector eDetect, ArrayList<Point> cords, boolean test) {
+    public static void showImageAnimated(EdgeDetector eDetect, ArrayList<Point> cords, boolean test) {
         int height = eDetect.getBufferedImage().getHeight();
         int width = eDetect.getBufferedImage().getWidth();
         if (test) {
@@ -290,7 +293,7 @@ public class App {
         }
     }
 
-    private static void showImage(EdgeDetector eDetect, ArrayList<ArrayList<ArrayList<Integer>>> cords) {
+    public static void showImage(EdgeDetector eDetect, ArrayList<ArrayList<ArrayList<Integer>>> cords) {
         int height = eDetect.getBufferedImage().getHeight();
         int width = eDetect.getBufferedImage().getWidth();
 
@@ -302,7 +305,7 @@ public class App {
         f.setVisible(true);
     }
 
-    private static void runTest(RobotClient client, ArrayList<ArrayList<ArrayList<Integer>>> cords) {
+    public static void runTest(RobotClient client, ArrayList<ArrayList<ArrayList<Integer>>> cords) {
         String draw;
         String x;
         String y;
@@ -354,7 +357,7 @@ public class App {
         }
     }
 
-    private static void runGreyLineTest(RobotClient client, ArrayList<ArrayList<Point>> cords) {
+    public static void runGreyLineTest(RobotClient client, ArrayList<ArrayList<Point>> cords) {
         String draw;
         String x;
         String y;
@@ -406,7 +409,7 @@ public class App {
         }
     }
 
-    private static void runSortTest(RobotClient client, ArrayList<Point> cords) {
+    public static void runSortTest(RobotClient client, ArrayList<Point> cords) {
         String draw;
         String x;
         String y;
