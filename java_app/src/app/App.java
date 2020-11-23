@@ -19,7 +19,7 @@ public class App {
         String imagePath = imgPath + fileName;
 
         EdgeDetector eDetect = new EdgeDetector(imagePath);
-        RobotClient client = new RobotClient("192.168.0.20", 12345);
+        RobotClient client = new RobotClient("192.168.0.20", 2050);
 
         try {
             client.connect();

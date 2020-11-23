@@ -13,7 +13,7 @@ PROGRAM _INIT
 	this.startPSCase := 0;
 	goTo := '';
 	this.topSpeed 		:= T#0ms; 	// This parameter will slow the topspeed of all axis.
-	this.acceleration	:= 10;		// This parameter will set the acceleration of all axis.
+	this.acceleration	:= 1;		// This parameter will set the acceleration of all axis.
 END_PROGRAM
 
 PROGRAM _CYCLIC
@@ -44,7 +44,7 @@ PROGRAM _CYCLIC
 					this.startCase := 15;
 				END_IF;
 			15:// going to origo (0,0)
-				IF this.M1.counter < 5000 THEN
+				IF this.M1.counter < 4000 THEN
 					this.M1.forward := TRUE;
 				ELSE
 					//this.M1.backward := FALSE;
@@ -58,7 +58,7 @@ PROGRAM _CYCLIC
 					this.M2.forward := FALSE;
 				END_IF;
 				
-				IF this.M1.counter >= 5000 AND this.M2.counter >= 150 THEN
+				IF this.M1.counter >= 4000 AND this.M2.counter >= 150 THEN
 					this.startCase := 20;
 				END_IF;
 			20:
@@ -105,24 +105,24 @@ PROGRAM _CYCLIC
 				
 			5: // which height should we goto?
 				IF this.coord.z = 0 THEN
-					this.M3.goToCounter := 400;
+					this.M3.goToCounter := 100;
 					this.M3.goTo 		:= TRUE;
 				ELSIF this.coord.z = 1 THEN
-					this.M3.goToCounter := 1;
+					this.M3.goToCounter := 0;
 					this.M3.goTo 		:= TRUE;
 				ELSIF this.coord.z = 2 THEN
-					this.M3.goToCounter := -60;
+					this.M3.goToCounter := -59;
 					this.M3.goTo 		:= TRUE;
 				ELSIF this.coord.z = 3 THEN
-					this.M3.goToCounter := -66;
+					this.M3.goToCounter := -70;
 					this.M3.goTo 		:= TRUE;
 				ELSIF this.coord.z = 4 THEN
-					this.M3.goToCounter := -72;
+					this.M3.goToCounter := -100;
 					this.M3.goTo 		:= TRUE;
 				
 				
 				ELSIF this.coord.z = 5 THEN
-					this.M3.goToCounter := -140;
+					this.M3.goToCounter := -120;
 					this.M3.goTo 		:= TRUE;
 				END_IF
 				
@@ -131,8 +131,8 @@ PROGRAM _CYCLIC
 				END_IF
 					
 			10: // Goto all the coordinates, and then go back to state 0 to calculate next coordinate
-				this.M1.goToCounter := this.coord.x * 45;
-				this.M2.goToCounter := this.coord.y * 45;
+				this.M1.goToCounter := this.coord.x * 40;
+				this.M2.goToCounter := this.coord.y * 40;
 				this.M1.goTo := TRUE;
 				this.M2.goTo := TRUE;
 				IF this.M3.counter <> this.M3.goToCounter THEN
@@ -195,7 +195,7 @@ PROGRAM _CYCLIC
 		this.M3.goTo := FALSE;
 	END_IF
 	
-	IF draw > 0 AND draw < 5 THEN
+	IF draw > 0 AND draw < 5 AND NOT(pSharp) THEN
 		dull_counter := dull_counter + 1;
 	END_IF;
 	
@@ -226,25 +226,23 @@ PROGRAM _CYCLIC
 				END_IF
 			15:
 				this.pencilSharp := TRUE;
-				this.M3.forward := TRUE;
+				
+				this.M3.goToCounter := 75;
+				this.M3.goTo := TRUE;
+				
 				IF this.btn4.pressed THEN
-					IF sharp_counter < 1 THEN
-						this.M3.forward := FALSE;
-					END_IF;
-					sharp_counter := sharp_counter + 1;
-					sharp_counter2 := sharp_counter2 + 1;
-					
-					IF sharp_counter = 600 THEN
-						this.M3.forward := FALSE;
-						this.M3.backward := TRUE;
-						sharp_counter := 0;
-						this.startPSCase := 20;
-					ELSIF sharp_counter2 = 200 THEN
-						this.M3.forward := NOT this.M3.forward;
-						sharp_counter2 := 0;
-					END_IF;
+					sharp_counter := sharp_counter +1;
 				END_IF
+				
+				IF sharp_counter > 2000 THEN
+					sharp_counter := 0;
+					this.M3.backward := TRUE;
+					this.startPSCase := 20;
+				END_IF;
+				
 			20:
+				this.M3.backward := TRUE;
+				
 				IF this.M3.counter = -3200 THEN
 					this.M3.backward := FALSE;
 					this.startPSCase := 25;
@@ -259,6 +257,7 @@ PROGRAM _CYCLIC
 				END_IF
 				
 				IF this.btn4.pressed THEN
+					this.M3.counter 	:= 0;
 					this.M3.forward		:= FALSE;
 					this.startPSCase 	:= 30;
 				END_IF
@@ -300,19 +299,20 @@ PROGRAM _CYCLIC
 		END_IF
 	END_IF;
 	
-	CASE this.M3.overRideCase OF
-		0:
-			IF this.M3.goTo AND this.M3.goToCounter > 0 AND this.btn4.pressed THEN
-				this.M3.counter	:= 0; // Christoffer was here
-				this.M3.overRideCase := 5;
-			END_IF
+	IF NOT(pSharp) THEN
+		CASE this.M3.overRideCase OF
+			0:
+				IF this.M3.goTo AND this.M3.goToCounter > 0 AND this.btn4.pressed THEN
+					this.M3.counter	:= 0; // Christoffer was here
+					this.M3.overRideCase := 5;
+				END_IF
 					
-		5:
-			IF this.M3.goToCounter = this.M3.counter AND NOT(this.M3.goTo) AND this.M3.counter < 0 THEN
-				this.M3.overRideCase := 0;
-			END_IF
-		
-	END_CASE
+			5:
+				IF this.M3.goToCounter = this.M3.counter AND NOT(this.M3.goTo) AND this.M3.counter < 0 THEN
+					this.M3.overRideCase := 0;
+				END_IF	
+		END_CASE
+	END_IF
 				
 	
 	IF this.btn3.pressed THEN
