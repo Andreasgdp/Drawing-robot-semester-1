@@ -150,6 +150,89 @@ public class App {
                     showImageAnimated(eDetect, cords4, true);
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
+                else if (msg.equals("benchmark") || msg.equals("bm")) {
+                    Logging logger = new Logging("MyLogFile.txt");
+                    Timer timer = new Timer(1000, logger);
+
+                    eDetect.loadNewImage("very_small_yoda.jpg");
+
+                    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    logger.changeFile("first_run_log.txt");
+                    timer.start();
+
+//                  Run normal black
+                    ArrayList<ArrayList<ArrayList<Integer>>> cords1 = eDetect.getCoordinates();
+                    runTest(client, cords1);
+
+                    logger.setFinishTime();
+                    timer.stop();
+                    logger.logTime();
+
+                    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    logger.changeFile("edge_line_log.txt");
+                    timer.start();
+
+//                  Run grey line cords
+                    ArrayList<ArrayList<Point>> cords2 = eDetect.getGreyLineCoordinates();
+                    runGreyLineTest(client, cords2);
+
+                    logger.setFinishTime();
+                    timer.stop();
+                    logger.logTime();
+
+                    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    logger.changeFile("edgedetect_log.txt");
+                    timer.start();
+
+//                  Run edge detection cords
+                    ArrayList<ArrayList<ArrayList<Integer>>> cords = eDetect.getEdgeCords();
+                    runTest(client, cords);
+
+                    logger.setFinishTime();
+                    timer.stop();
+                    logger.logTime();
+
+                    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    logger.changeFile("sort2_log.txt");
+                    timer.start();
+
+//                  Run sorted cords (complexity 2)
+                    ArrayList<Point> cords3 = eDetect.getSortedCords();
+                    runSortTest(client, cords3);
+
+                    logger.setFinishTime();
+                    timer.stop();
+                    logger.logTime();
+
+                    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    eDetect.loadNewImage("download_nobar.jpg");
+                    logger.changeFile("sort1_log.txt");
+                    timer.start();
+
+//                  Run sorted cords (complexity 1)
+                    cords3 = eDetect.getSortedCords();
+                    runSortTest(client, cords3);
+
+                    logger.setFinishTime();
+                    timer.stop();
+                    logger.logTime();
+
+                    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    eDetect.loadNewImage("download_nobar.jpg");
+                    logger.changeFile("sort3_log.txt");
+                    timer.start();
+
+//                  Run sorted cords (complexity 3)
+                    cords3 = eDetect.getSortedCords();
+                    runSortTest(client, cords3);
+
+                    logger.setFinishTime();
+                    timer.stop();
+                    logger.logTime();
+                    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+                }
+                // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("h") || msg.equals("help")) {
                     // TODO: Update help command w. all commands
                     System.out.println(" ___________________________________________________________________________");

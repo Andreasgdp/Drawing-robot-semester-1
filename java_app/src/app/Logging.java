@@ -22,6 +22,10 @@ public class Logging implements ActionListener {
         this.activated = false;
     }
 
+    public void changeFile(String file) {
+        this.filePath = file;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         this.currTime = e.getWhen();
@@ -43,6 +47,10 @@ public class Logging implements ActionListener {
         System.out.println("Start time: " + this.startTime + " and finish time: " + this.finishTime);
         this.createFile();
         this.writeFile(Long.toString(java.lang.Math.abs(this.startTime - this.finishTime)/1000));
+        this.startTime = 0;
+        this.finishTime = 0;
+        this.currTime = 0;
+        this.activated = false;
     }
 
     private void createFile() {
