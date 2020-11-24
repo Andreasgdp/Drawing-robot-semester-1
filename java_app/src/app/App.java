@@ -18,7 +18,7 @@ public class App {
     public static void main(String[] args) {
         // The path of the image has to start w. "../images/" as it is the relative path from the file app/edgedetect/Picture.java.
         String imgPath = "../images/";
-        String fileName = "very_small_yoda.jpg";
+        String fileName = "download_nobar.jpg";
         String imagePath = imgPath + fileName;
 
         EdgeDetector eDetect = new EdgeDetector(imagePath);
@@ -184,6 +184,7 @@ public class App {
                     logger.logTime();
 
                     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    client.reconnect();
                     logger.changeFile("edge_line_log.txt");
                     timer.start();
 
@@ -196,6 +197,7 @@ public class App {
                     logger.logTime();
 
                     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    client.reconnect();
                     logger.changeFile("edgedetect_log.txt");
                     timer.start();
 
@@ -208,6 +210,7 @@ public class App {
                     logger.logTime();
 
                     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    client.reconnect();
                     logger.changeFile("sort2_log.txt");
                     timer.start();
 
@@ -220,6 +223,7 @@ public class App {
                     logger.logTime();
 
                     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    client.reconnect();
                     eDetect.loadNewImage("download_nobar.jpg");
                     logger.changeFile("sort1_log.txt");
                     timer.start();
@@ -233,6 +237,7 @@ public class App {
                     logger.logTime();
 
                     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    client.reconnect();
                     eDetect.loadNewImage("bigpp.jpg");
                     logger.changeFile("sort3_log.txt");
                     timer.start();
@@ -426,6 +431,7 @@ public class App {
         String x;
         String y;
         boolean writeSuccess;
+        cords.get(0).setDrawVal(5);
 
         for (Point cord : cords) {
             y = String.format("%04d", cord.y);
