@@ -333,7 +333,8 @@ public class App {
             for (int j = 0; j < 2; j++) {
                 y = String.format("%04d", cord.get(j).get(0));
                 x = String.format("%04d", cord.get(j).get(1));
-                draw = String.format("%04d", j);
+                int drawVal = (j == 0) ? 5 : 3;
+                draw = String.format("%04d", drawVal);
 
 //                System.out.println(x + "," + y + "," + draw);
 
