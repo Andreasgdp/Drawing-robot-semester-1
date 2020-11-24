@@ -28,6 +28,7 @@ TYPE
 		start : BOOL;
 		startPSCase : USINT;
 		startPS : BOOL;
+		m3TempPS : DINT;
 		pencilSharp : BOOL;
 		greyScale : USINT;
 		print : BOOL; (*If print is equal to 1 then it should be printing*)

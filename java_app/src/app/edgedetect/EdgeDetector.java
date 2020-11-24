@@ -538,7 +538,7 @@ public class EdgeDetector {
             IndexDist nearestIndexDist = findNearestIndex(orderedList.get(orderedList.size() - 1), myList);
 
             if (nearestIndexDist.dist > 5) {
-                myList.get(nearestIndexDist.index).setDrawVal(0);
+                myList.get(nearestIndexDist.index).setDrawVal(5);
                 liftCounter++;
             }
             //Remove from the unorderedList and add to the ordered one

@@ -15,7 +15,7 @@ public class App {
     public static void main(String[] args) {
         // The path of the image has to start w. "../images/" as it is the relative path from the file app/edgedetect/Picture.java.
         String imgPath = "../images/";
-        String fileName = "gradient.png";
+        String fileName = "download_nobar.jpg";
         String imagePath = imgPath + fileName;
 
         EdgeDetector eDetect = new EdgeDetector(imagePath);
@@ -369,6 +369,8 @@ public class App {
         Timer timer = new Timer(1000, logger);
 
         timer.start();
+
+        cords.get(0).setDrawVal(5);
 
         for (Point cord : cords) {
             y = String.format("%04d", cord.y);
