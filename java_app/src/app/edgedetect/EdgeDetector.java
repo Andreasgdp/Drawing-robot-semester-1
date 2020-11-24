@@ -417,6 +417,7 @@ public class EdgeDetector {
      * is valid the image path is set to be the default image path for the class.
      *
      * @param imgPath String of the image path.
+     * @param alPath Alternative image path, used if first imagePath is invalid
      */
     public void loadNewImage(String imgPath) {
         Scanner CMDscanner = new Scanner(System.in);
