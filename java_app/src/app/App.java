@@ -18,7 +18,7 @@ public class App {
     public static void main(String[] args) {
         // The path of the image has to start w. "../images/" as it is the relative path from the file app/edgedetect/Picture.java.
         String imgPath = "../images/";
-        String fileName = "bigpp.jpg";
+        String fileName = "very_small_yoda.jpg";
         String imagePath = imgPath + fileName;
 
         EdgeDetector eDetect = new EdgeDetector(imagePath);
@@ -103,6 +103,12 @@ public class App {
                     // send coordinates
                     runTest(client, cords);
                 }
+                else if (msg.equals("sortedge")) {
+                    // get coordinates
+                    ArrayList<Point> cords = eDetect.getSortedEdgeCords();
+                    // send coordinates
+                    runSortTest(client, cords);
+                }
                 // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("sort")) {
                     // https://stackoverflow.com/questions/25287834/how-to-sort-a-collection-of-points-so-that-they-set-up-one-after-another
@@ -132,6 +138,12 @@ public class App {
                 // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("showsort") || msg.equals("ss")) {
                     ArrayList<Point> cords = eDetect.getSortedCords();
+                    showImageAnimated(eDetect, cords, false);
+                }
+                // !---------------------------------------------------------------------------------------------------------------------
+                else if (msg.equals("showsortedge") || msg.equals("sse")) {
+                    ArrayList<Point> cords = eDetect.getSortedEdgeCords();
+                    System.out.println("Shit works here");
                     showImageAnimated(eDetect, cords, false);
                 }
                 // !---------------------------------------------------------------------------------------------------------------------

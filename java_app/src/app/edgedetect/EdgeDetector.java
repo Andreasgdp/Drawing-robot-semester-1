@@ -432,6 +432,30 @@ public class EdgeDetector {
         }
     }
 
+    public ArrayList<Point> getSortedEdgeCords() {
+        Color[][] array = this.getGreyscaleArray();
+        ArrayList<Point> pointArray = this.convertCordsToPoints(array);
+
+        ArrayList<Point> orderedList = new ArrayList<>();
+
+        orderedList.add(pointArray.remove(0)); //Arbitrary starting point
+        int liftCounter = 0;
+        while (pointArray.size() > 0) {
+            //Find the index of the closest point (using another method)
+            IndexDist nearestIndexDist = findNearestIndex(orderedList.get(orderedList.size() - 1), pointArray);
+
+            if (nearestIndexDist.dist > 5) {
+                pointArray.get(nearestIndexDist.index).setDrawVal(0);
+                liftCounter++;
+            }
+            //Remove from the unorderedList and add to the ordered one
+            orderedList.add(pointArray.remove(nearestIndexDist.index));
+        }
+        System.out.println("Lifts needed to draw this image: " + liftCounter);
+
+        return orderedList;
+    }
+
     public ArrayList<Point> getSortedCords() {
         Color[][] array = this.getRealColorArray();
         this.loadSortedCoordinates(array);
