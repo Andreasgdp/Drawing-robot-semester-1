@@ -27,6 +27,10 @@ public class EdgeDetector {
         this.greyLineCoordinates = null;
     }
 
+    public String getImagePath() {
+        return imagePath;
+    }
+
     private int truncate(int a) {
         if (a < 127) {
             return 0;
@@ -203,9 +207,9 @@ public class EdgeDetector {
 
                         if ((array[y][x].getRed() == 255) || ((x + 1) >= array[y].length)) {
                             coords.add(y);
-                            if ((x + 1) >= array[y].length){
+                            if ((x + 1) >= array[y].length) {
                                 coords.add(x);
-                            }else {
+                            } else {
                                 coords.add(x - 1);
                             }
                             plist.add(coords);
@@ -231,9 +235,9 @@ public class EdgeDetector {
 
                         if ((array[y][x].getRed() == 255) || (x == 0)) {
                             coords.add(y);
-                            if (x == 0){
+                            if (x == 0) {
                                 coords.add(x);
-                            }else {
+                            } else {
                                 coords.add(x + 1);
                             }
                             plist.add(coords);
@@ -260,12 +264,12 @@ public class EdgeDetector {
             if (direction) {
                 for (int x = 0; x < array[y].length; x++) {
                     Point pixel = this.convertPixelToPoint(x, y, array[y][x]);
-                    if (pixel.drawVal != 5){
+                    if (pixel.drawVal != 5) {
                         if (plist.isEmpty()) {
                             plist.add(pixel);
                         } else { // Not empty
                             if ((plist.get(0).drawVal != pixel.drawVal)) {
-                                if (x == 0){
+                                if (x == 0) {
                                     plist.add(this.convertPixelToPoint(x, y - 1, array[y - 1][x]));
                                 } else {
                                     plist.add(this.convertPixelToPoint(x - 1, y, array[y][x - 1]));
@@ -286,7 +290,7 @@ public class EdgeDetector {
                                 }
                             }
                         }
-                    }else {
+                    } else {
                         if (!(plist.isEmpty())) {
                             if (plist.get(0).y == y) {
                                 plist.add(this.convertPixelToPoint(x - 1, y, array[y][x - 1]));
@@ -357,7 +361,7 @@ public class EdgeDetector {
                     for (int k = i; k > (j + 1); k--) {
                         greyPairs.set(k, greyPairs.get(k - 1));
                     }
-                        greyPairs.set((j + 1), tempPoint);
+                    greyPairs.set((j + 1), tempPoint);
                 }
             }
         }
@@ -428,6 +432,30 @@ public class EdgeDetector {
         }
     }
 
+    public ArrayList<Point> getSortedEdgeCords() {
+        Color[][] array = this.getGreyscaleArray();
+        ArrayList<Point> pointArray = this.convertCordsToPoints(array);
+
+        ArrayList<Point> orderedList = new ArrayList<>();
+
+        orderedList.add(pointArray.remove(0)); //Arbitrary starting point
+        int liftCounter = 0;
+        while (pointArray.size() > 0) {
+            //Find the index of the closest point (using another method)
+            IndexDist nearestIndexDist = findNearestIndex(orderedList.get(orderedList.size() - 1), pointArray);
+
+            if (nearestIndexDist.dist > 5) {
+                pointArray.get(nearestIndexDist.index).setDrawVal(5);
+                liftCounter++;
+            }
+            //Remove from the unorderedList and add to the ordered one
+            orderedList.add(pointArray.remove(nearestIndexDist.index));
+        }
+        System.out.println("Lifts needed to draw this image: " + liftCounter);
+
+        return orderedList;
+    }
+
     public ArrayList<Point> getSortedCords() {
         Color[][] array = this.getRealColorArray();
         this.loadSortedCoordinates(array);
@@ -441,12 +469,12 @@ public class EdgeDetector {
     public ArrayList<Point> convertCordsToPoints(Color[][] array) {
         ArrayList<Point> pointList = new ArrayList<>();
         int scales = 6;
-        int devider = 256/scales;
+        int devider = 256 / scales;
         int[] counter = new int[scales + 1];
 
         for (int y = 0; y < array.length; y++) {
             for (int x = 0; x < array[y].length; x++) {
-                int ggb = (((array[y][x].getRed() + array[y][x].getBlue() + array[y][x].getGreen() + 3)/3) + devider) / devider - 1;
+                int ggb = (((array[y][x].getRed() + array[y][x].getBlue() + array[y][x].getGreen() + 3) / 3) + devider) / devider - 1;
 
                 counter[ggb]++;
 
@@ -468,8 +496,8 @@ public class EdgeDetector {
     public Point convertPixelToPoint(int x, int y, Color pixel) {
         Point point = null;
         int scales = 6;
-        int devider = 256/scales;
-        int ggb = (((pixel.getRed() + pixel.getBlue() + pixel.getGreen() + 3)/3) + devider) / devider - 1;
+        int devider = 256 / scales;
+        int ggb = (((pixel.getRed() + pixel.getBlue() + pixel.getGreen() + 3) / 3) + devider) / devider - 1;
         // Tager ikke ggb == 5 med fordi det er hvide koordinater, som ikke skal tegnes.
         if (ggb < scales - 1) {
             point = new Point(x, y);
@@ -492,7 +520,7 @@ public class EdgeDetector {
             IndexDist nearestIndexDist = findNearestIndex(orderedList.get(orderedList.size() - 1), myList);
 
             if (nearestIndexDist.dist > 5) {
-                myList.get(nearestIndexDist.index).setDrawVal(0);
+                myList.get(nearestIndexDist.index).setDrawVal(5);
                 liftCounter++;
             }
             //Remove from the unorderedList and add to the ordered one

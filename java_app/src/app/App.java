@@ -6,16 +6,19 @@ import app.edgedetect.Point;
 import app.robclient.RobotClient;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 
 public class App {
+    public App() {
+
+    }
+
     public static void main(String[] args) {
         // The path of the image has to start w. "../images/" as it is the relative path from the file app/edgedetect/Picture.java.
         String imgPath = "../images/";
-        String fileName = "bigpp.jpg";
+        String fileName = "download_nobar.jpg";
         String imagePath = imgPath + fileName;
 
         EdgeDetector eDetect = new EdgeDetector(imagePath);
@@ -47,7 +50,7 @@ public class App {
                     while (testCounter < 999999999) {
                         long testCounter2 = 0;
                         while (testCounter2 < 20) {
-                            testCounter2 ++;
+                            testCounter2++;
                         }
                         testCounter++;
                     }
@@ -100,6 +103,12 @@ public class App {
                     // send coordinates
                     runTest(client, cords);
                 }
+                else if (msg.equals("sortedge")) {
+                    // get coordinates
+                    ArrayList<Point> cords = eDetect.getSortedEdgeCords();
+                    // send coordinates
+                    runSortTest(client, cords);
+                }
                 // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("sort")) {
                     // https://stackoverflow.com/questions/25287834/how-to-sort-a-collection-of-points-so-that-they-set-up-one-after-another
@@ -129,6 +138,12 @@ public class App {
                 // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("showsort") || msg.equals("ss")) {
                     ArrayList<Point> cords = eDetect.getSortedCords();
+                    showImageAnimated(eDetect, cords, false);
+                }
+                // !---------------------------------------------------------------------------------------------------------------------
+                else if (msg.equals("showsortedge") || msg.equals("sse")) {
+                    ArrayList<Point> cords = eDetect.getSortedEdgeCords();
+                    System.out.println("Shit works here");
                     showImageAnimated(eDetect, cords, false);
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
@@ -169,6 +184,7 @@ public class App {
                     logger.logTime();
 
                     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    client.reconnect();
                     logger.changeFile("edge_line_log.txt");
                     timer.start();
 
@@ -181,6 +197,7 @@ public class App {
                     logger.logTime();
 
                     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    client.reconnect();
                     logger.changeFile("edgedetect_log.txt");
                     timer.start();
 
@@ -193,6 +210,7 @@ public class App {
                     logger.logTime();
 
                     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    client.reconnect();
                     logger.changeFile("sort2_log.txt");
                     timer.start();
 
@@ -205,6 +223,7 @@ public class App {
                     logger.logTime();
 
                     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    client.reconnect();
                     eDetect.loadNewImage("download_nobar.jpg");
                     logger.changeFile("sort1_log.txt");
                     timer.start();
@@ -218,6 +237,7 @@ public class App {
                     logger.logTime();
 
                     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    client.reconnect();
                     eDetect.loadNewImage("bigpp.jpg");
                     logger.changeFile("sort3_log.txt");
                     timer.start();
@@ -262,7 +282,7 @@ public class App {
         client.disconnect();
     }
 
-    private static void showGereyLineImage(EdgeDetector eDetect, ArrayList<ArrayList<Point>> cords) {
+    public static void showGereyLineImage(EdgeDetector eDetect, ArrayList<ArrayList<Point>> cords) {
         int height = eDetect.getBufferedImage().getHeight();
         int width = eDetect.getBufferedImage().getWidth();
 
@@ -274,13 +294,13 @@ public class App {
         f.setVisible(true);
     }
 
-    private static void animateImageAnimated(EdgeDetector eDetect, ArrayList<ArrayList<Point>> cords) {
+    public static void animateImageAnimated(EdgeDetector eDetect, ArrayList<ArrayList<Point>> cords) {
         int height = eDetect.getBufferedImage().getHeight();
         int width = eDetect.getBufferedImage().getWidth();
         new AnimatedDrawGreyline(cords, width, height);
     }
 
-    private static void showImageAnimated(EdgeDetector eDetect, ArrayList<Point> cords, boolean test) {
+    public static void showImageAnimated(EdgeDetector eDetect, ArrayList<Point> cords, boolean test) {
         int height = eDetect.getBufferedImage().getHeight();
         int width = eDetect.getBufferedImage().getWidth();
         if (test) {
@@ -290,7 +310,7 @@ public class App {
         }
     }
 
-    private static void showImage(EdgeDetector eDetect, ArrayList<ArrayList<ArrayList<Integer>>> cords) {
+    public static void showImage(EdgeDetector eDetect, ArrayList<ArrayList<ArrayList<Integer>>> cords) {
         int height = eDetect.getBufferedImage().getHeight();
         int width = eDetect.getBufferedImage().getWidth();
 
@@ -302,7 +322,7 @@ public class App {
         f.setVisible(true);
     }
 
-    private static void runTest(RobotClient client, ArrayList<ArrayList<ArrayList<Integer>>> cords) {
+    public static void runTest(RobotClient client, ArrayList<ArrayList<ArrayList<Integer>>> cords) {
         String draw;
         String x;
         String y;
@@ -313,7 +333,8 @@ public class App {
             for (int j = 0; j < 2; j++) {
                 y = String.format("%04d", cord.get(j).get(0));
                 x = String.format("%04d", cord.get(j).get(1));
-                draw = String.format("%04d", j);
+                int drawVal = (j == 0) ? 5 : 3;
+                draw = String.format("%04d", drawVal);
 
 //                System.out.println(x + "," + y + "," + draw);
 
@@ -354,7 +375,7 @@ public class App {
         }
     }
 
-    private static void runGreyLineTest(RobotClient client, ArrayList<ArrayList<Point>> cords) {
+    public static void runGreyLineTest(RobotClient client, ArrayList<ArrayList<Point>> cords) {
         String draw;
         String x;
         String y;
@@ -406,11 +427,12 @@ public class App {
         }
     }
 
-    private static void runSortTest(RobotClient client, ArrayList<Point> cords) {
+    public static void runSortTest(RobotClient client, ArrayList<Point> cords) {
         String draw;
         String x;
         String y;
         boolean writeSuccess;
+        cords.get(0).setDrawVal(5);
 
         for (Point cord : cords) {
             y = String.format("%04d", cord.y);
