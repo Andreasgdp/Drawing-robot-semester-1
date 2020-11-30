@@ -1,23 +1,16 @@
 
 PROGRAM _INIT
-	(* Insert code here *)
+	draw := 5;
 	this.start := TRUE;
-	this.startCase := 0;
-	this.isReady := FALSE;
-	this.M1.counter := 0;
-	this.M1.goToCounter := -1;
-	this.M2.counter := 0;
-	this.M2.goToCounter := -1;
-	this.M3.counter := 0;
-	this.startPS := FALSE;
-	this.startPSCase := 0;
-	goTo := '';
 	this.topSpeed 		:= T#0ms; 	// This parameter will slow the topspeed of all axis.
 	this.acceleration	:= 1;		// This parameter will smoothen the acceleration of all axis.
+	
 END_PROGRAM
 
 PROGRAM _CYCLIC
-	(* Insert code here *)
+	(**********************************************************************************************)
+	(************************************** Startup sequence **************************************)
+	(**********************************************************************************************)
 	IF this.start AND gNettime <> 0 THEN
 		CASE this.startCase OF
 			0: // First find M3 and M2 home switch
@@ -70,7 +63,6 @@ PROGRAM _CYCLIC
 				this.M1.counter := 0;
 				this.M2.counter := 0;
 				this.M3.counter := 0;
-				this.isReady := TRUE;
 				this.startCase := 30;
 				
 			30: // Lift the pencil from the paper again
@@ -84,10 +76,14 @@ PROGRAM _CYCLIC
 			35: // Ready to start drawing
 				this.start 		:= FALSE;
 				this.startCase 	:= FALSE;
+				this.isReady 	:= TRUE;
 						
 		END_CASE;
 	END_IF
 	
+	(**********************************************************************************************)
+	(*********************************** Coordinate translation ***********************************)
+	(**********************************************************************************************)
 	// Read and translate the coordinates from java server
 	IF NOT pSharp THEN
 		CASE case_draw OF
@@ -142,69 +138,47 @@ PROGRAM _CYCLIC
 				END_IF
 			
 		END_CASE;
-
 	END_IF;
 	
-	//ny kode
-	IF this.M1.goTo AND (this.M1.goToCounter <> this.M1.counter) THEN
-		IF this.M1.counter < this.M1.goToCounter THEN
-			this.M1.forward := TRUE;
-			this.M1.backward := FALSE;
-		ELSIF this.M1.counter > this.M1.goToCounter THEN
-			this.M1.backward := TRUE;
-			this.M1.forward := FALSE;
-		END_IF
-	ELSIF this.M1.goTo AND (this.M1.goToCounter = this.M1.counter) THEN
-		this.M1.backward := FALSE;
-		this.M1.forward := FALSE;
-		this.M1.goTo := FALSE;
-		
-	END_IF
-
-	
-	IF this.M2.goTo AND (this.M2.goToCounter <> this.M2.counter) THEN
-		IF this.M2.counter < this.M2.goToCounter THEN
-			this.M2.forward := TRUE;
-			this.M2.backward := FALSE;
-		ELSIF this.M2.counter > this.M2.goToCounter THEN
-			this.M2.backward := TRUE;
-			this.M2.forward := FALSE;
-		END_IF
-	ELSIF this.M2.goTo AND (this.M2.goToCounter = this.M2.counter) THEN
-		this.M2.backward := FALSE;
-		this.M2.forward := FALSE;
-		this.M2.goTo := FALSE;	
-		
-	END_IF
-
-	
-	IF this.M3.goTo AND (this.M3.goToCounter <> this.M3.counter) THEN
-		IF this.M3.counter < this.M3.goToCounter THEN
-			this.M3.forward := TRUE;
-			this.M3.backward := FALSE;
-		ELSIF this.M3.counter > this.M3.goToCounter THEN
-			this.M3.backward := TRUE;
-			this.M3.forward := FALSE;
-	
-		END_IF
-	ELSIF this.M3.goTo AND (this.M3.goToCounter = this.M3.counter) THEN
-		this.M3.backward := FALSE;
-		this.M3.forward := FALSE;
-		this.M3.goTo := FALSE;
+	(**********************************************************************************************)
+	(*********************************** Pencil sharpener logic ***********************************)
+	(**********************************************************************************************)
+	// Controls the acceleration when pencil sharpening
+	IF EDGEPOS(pSharp) AND this.acceleration < 2 THEN
+		this.acceleration 			:= this.acceleration + 2;
+		this.accelerationChangePS 	:= TRUE;
+	ELSIF EDGENEG(pSharp) AND this.accelerationChangePS THEN
+		this.acceleration			:= this.acceleration - 2;
+		this.accelerationChangePS	:= FALSE;
 	END_IF
 	
-	IF draw < 5 AND NOT(pSharp) THEN
+	// Calculate when to sharp the pencil
+	// No wear on the pencil when draw value is 5
+	// Approx. 175000 ms if the pencil draw value is 4
+	// Approx. 164000 ms if the pencil draw value is 3 
+	// Approx. 150000 ms if the pencil draw value is 2 
+	// Approx. 130000 ms if the pencil draw value is 1
+	// Approx. 100000 ms if the pencil draw value is 0
+	
+	IF draw = 4 THEN
 		dull_counter := dull_counter + 1;
-	END_IF;
+	ELSIF draw = 3 THEN
+		dull_counter := dull_counter + 1.06;
+	ELSIF draw = 2 THEN
+		dull_counter := dull_counter + 1.16;
+	ELSIF draw = 1 THEN
+		dull_counter := dull_counter + 1.35;
+	ELSIF draw = 0 THEN
+		dull_counter := dull_counter + 1.75;
+	END_IF
 	
-	IF (dull_counter > 150000) THEN
+	IF (dull_counter > 175000) THEN
 		pSharp := TRUE;
 		dull_counter := 0;
 		this.startPS := TRUE;
-		
 	END_IF;
 	
-	IF this.startPS THEN // When the dull counter runs out, the 
+	IF this.startPS THEN // When the dull counter runs out, pencil sharpener case starts
 		CASE this.startPSCase OF
 			0: // Store goTo values
 				this.M1.goToCounter := this.M1.counter;
@@ -314,54 +288,12 @@ PROGRAM _CYCLIC
 				
 		END_CASE
 	END_IF
-				
-			
-				
-				
-	//slut ny kode			
-
-	//speedCase
+	
+	(**********************************************************************************************)
+	(****************************************** Subcasses *****************************************)
+	(**********************************************************************************************)
 	M1_speedCase;
 	M2_speedCase;
 	M3_speedCase;
-	IF this.btn1.pressed THEN
-		this.M1.backward := FALSE;
-	END_IF;
 	
-	IF this.btn2.pressed THEN
-		this.M2.backward := FALSE;
-	END_IF;
-	
-	IF EDGEPOS(this.btn4.pressed) THEN
-		IF NOT(this.M3.goTo) THEN
-			this.M3.counter	:= 0; // Emil was here
-			this.M3.forward := FALSE;
-		END_IF
-	END_IF;
-	
-	
-	CASE this.M3.overRideCase OF
-		0:
-			IF this.M3.goTo AND this.M3.goToCounter > 0 AND this.btn4.pressed THEN
-				this.M3.counter	:= 0; // Christoffer was here
-				this.M3.overRideCase := 5;
-			END_IF
-					
-		5:
-			IF this.M3.goToCounter = this.M3.counter AND NOT(this.M3.goTo) AND this.M3.counter < 0 THEN
-				this.M3.overRideCase := 0;
-			END_IF	
-	END_CASE
-				
-	
-	IF this.btn3.pressed THEN
-		this.M3.backward := FALSE;
-	END_IF;
-		
-
-END_PROGRAM
-
-PROGRAM _EXIT
-	(* Insert code here *)
-	 
 END_PROGRAM
