@@ -45,15 +45,15 @@ public class App {
                     Logging logger = new Logging("MyLogFile.txt");
                     Timer timer = new Timer(1000, logger);
 
+                    eDetect.loadNewImage("bigpp.jpg");
+
+                    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    logger.changeFile("bigpp.txt");
                     timer.start();
-                    long testCounter = 0;
-                    while (testCounter < 999999999) {
-                        long testCounter2 = 0;
-                        while (testCounter2 < 20) {
-                            testCounter2++;
-                        }
-                        testCounter++;
-                    }
+
+                    ArrayList<Point> cords = eDetect.getSortedCords();
+                    runSortTest(client, cords);
+
                     logger.setFinishTime();
                     timer.stop();
                     logger.logTime();
@@ -432,8 +432,6 @@ public class App {
         String x;
         String y;
         boolean writeSuccess;
-        cords.get(0).setDrawVal(5);
-
         cords.get(0).setDrawVal(5);
 
         for (Point cord : cords) {

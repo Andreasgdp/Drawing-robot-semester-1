@@ -37,7 +37,7 @@ ACTION M1_speedCase:
 		
 	END_CASE
 	
-	IF (this.M1.forward OR this.M1.backward) AND NOT(pSharp) THEN // Set the frequence
+	IF this.M1.forward OR this.M1.backward THEN // Set the frequence
 		IF this.M1.speedCaseTON.Q THEN
 			this.M1.speedCaseTON.IN := FALSE;
 				
@@ -48,13 +48,6 @@ ACTION M1_speedCase:
 			END_IF	
 		ELSE
 			this.M1.speedCaseTON.IN := TRUE;	
-		END_IF
-		
-	ELSIF this.M1.forward OR this.M1.backward THEN // Go faster when sharping pencil
-		IF this.M1.freq THEN
-			this.M1.freq 		:= FALSE;
-		ELSE
-			this.M1.freq		:= TRUE;
 		END_IF
 	END_IF
 	

@@ -42,13 +42,13 @@ PROGRAM _CYCLIC
 					this.M1.forward := FALSE;
 				END_IF;
 				
-				IF this.M2.counter < 150 THEN
+				IF this.M2.counter < 275 THEN
 					this.M2.forward := TRUE;
 				ELSE
 					this.M2.forward := FALSE;
 				END_IF;
 				
-				IF this.M1.counter >= 4000 AND this.M2.counter >= 150 THEN
+				IF this.M1.counter >= 4000 AND this.M2.counter >= 275 THEN
 					this.startCase := 20;
 				END_IF;
 				
@@ -113,10 +113,10 @@ PROGRAM _CYCLIC
 					this.M3.goToCounter := -65;
 					this.M3.goTo 		:= TRUE;
 				ELSIF this.coord.z = 4 THEN
-					this.M3.goToCounter := -71;
+					this.M3.goToCounter := -75;
 					this.M3.goTo 		:= TRUE;
 				ELSIF this.coord.z = 5 THEN // White
-					this.M3.goToCounter := -110;
+					this.M3.goToCounter := -200;
 					this.M3.goTo 		:= TRUE;
 				END_IF
 				
@@ -159,17 +159,18 @@ PROGRAM _CYCLIC
 	// Approx. 150000 ms if the pencil draw value is 2 
 	// Approx. 130000 ms if the pencil draw value is 1
 	// Approx. 100000 ms if the pencil draw value is 0
-	
-	IF draw = 4 THEN
-		dull_counter := dull_counter + 1;
-	ELSIF draw = 3 THEN
-		dull_counter := dull_counter + 1.06;
-	ELSIF draw = 2 THEN
-		dull_counter := dull_counter + 1.16;
-	ELSIF draw = 1 THEN
-		dull_counter := dull_counter + 1.35;
-	ELSIF draw = 0 THEN
-		dull_counter := dull_counter + 1.75;
+	IF this.coord.x > 0 AND this.coord.y > 0 AND this.coord.z > 0 THEN
+		IF draw = 4 THEN
+			dull_counter := dull_counter + 1;
+		ELSIF draw = 3 THEN
+			dull_counter := dull_counter + 1.06;
+		ELSIF draw = 2 THEN
+			dull_counter := dull_counter + 1.16;
+		ELSIF draw = 1 THEN
+			dull_counter := dull_counter + 1.35;
+		ELSIF draw = 0 THEN
+			dull_counter := dull_counter + 1.75;
+		END_IF
 	END_IF
 	
 	IF (dull_counter > 175000) THEN
@@ -258,7 +259,7 @@ PROGRAM _CYCLIC
 				this.M1.goTo := TRUE;
 				
 				IF this.M1.counter > - 2800 THEN
-					this.M3.goToCounter := 900;
+					this.M3.goToCounter := 800;
 					this.M3.goTo 		:= TRUE;
 					this.startPSCase 	:= 27;
 				END_IF
