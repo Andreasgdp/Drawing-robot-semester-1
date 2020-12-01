@@ -51,7 +51,7 @@ public class App {
                     logger.changeFile("bigpp.txt");
                     timer.start();
 
-                    ArrayList<Point> cords = eDetect.getSortedCords();
+                    ArrayList<Point> cords = eDetect.getSortedCordsBH();
                     runSortTest(client, cords);
 
                     logger.setFinishTime();

@@ -466,6 +466,16 @@ public class EdgeDetector {
         }
     }
 
+    public ArrayList<Point> getSortedCordsBH() {
+        Color[][] array = this.getColorArray();
+        this.loadSortedCoordinates(array);
+        if (!(this.sortedCoordinates == null)) {
+            return this.sortedCoordinates;
+        } else {
+            return null;
+        }
+    }
+
     public ArrayList<Point> convertCordsToPoints(Color[][] array) {
         ArrayList<Point> pointList = new ArrayList<>();
         int scales = 6;
