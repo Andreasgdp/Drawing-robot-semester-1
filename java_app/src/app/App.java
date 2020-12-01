@@ -45,10 +45,10 @@ public class App {
                     Logging logger = new Logging("MyLogFile.txt");
                     Timer timer = new Timer(1000, logger);
 
-                    eDetect.loadNewImage("bigpp.jpg");
+                    eDetect.loadNewImage("very_small_yoda.jpg");
 
                     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    logger.changeFile("bigpp.txt");
+                    logger.changeFile("yoda_black.txt");
                     timer.start();
 
                     ArrayList<Point> cords = eDetect.getSortedCordsBH();

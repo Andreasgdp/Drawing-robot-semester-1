@@ -469,6 +469,11 @@ public class EdgeDetector {
     public ArrayList<Point> getSortedCordsBH() {
         Color[][] array = this.getColorArray();
         this.loadSortedCoordinates(array);
+        for (Point sortedCoordinate : this.sortedCoordinates) {
+            if (sortedCoordinate.drawVal == 0) {
+                sortedCoordinate.setDrawVal(3);
+            }
+        }
         if (!(this.sortedCoordinates == null)) {
             return this.sortedCoordinates;
         } else {
