@@ -501,9 +501,12 @@ public class EdgeDetector {
                 }
             }
         }
-        for (int i = 0; i < counter.length; i++) {
+        int pixelCounter = 0;
+        for (int i = 0; i < counter.length - 2; i++) {
             System.out.println(i + ": " + counter[i]);
+            pixelCounter += counter[i];
         }
+        System.out.println(pixelCounter);
 
         return pointList;
     }
