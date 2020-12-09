@@ -18,7 +18,7 @@ public class App {
     public static void main(String[] args) {
         // The path of the image has to start w. "../images/" as it is the relative path from the file app/edgedetect/Picture.java.
         String imgPath = "../images/";
-        String fileName = "small_man_dog.jpg";
+        String fileName = "small_eye.png";
         String imagePath = imgPath + fileName;
 
         EdgeDetector eDetect = new EdgeDetector(imagePath);
@@ -45,14 +45,14 @@ public class App {
                     Logging logger = new Logging("MyLogFile.txt");
                     Timer timer = new Timer(1000, logger);
 
-                    eDetect.loadNewImage("small_man_dog.jpg");
+                    eDetect.loadNewImage("small_eye.png");
 
                     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    logger.changeFile("man_dog_sort.txt");
+                    logger.changeFile("eye_greyline.txt");
                     timer.start();
 
-                    ArrayList<Point> cords = eDetect.getSortedCords();
-                    runSortTest(client, cords);
+                    ArrayList<ArrayList<Point>> cords = eDetect.getGreyLineCoordinates();
+                    runGreyLineTest(client, cords);
 
                     logger.setFinishTime();
                     timer.stop();
