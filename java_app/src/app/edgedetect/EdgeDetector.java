@@ -476,7 +476,7 @@ public class EdgeDetector {
 
                 counter[ggb]++;
 
-                // Tager ikke ggb == 5 med fordi det er hvide koordinater, som ikke skal tegnes.
+                // Tager 0 til 4 da disse er ikke-hvide koordinater. Hvide koordinater skal ikke tegnes.
                 if (ggb < scales - 1) {
                     Point point = new Point(x, y);
                     point.setDrawVal(ggb);
