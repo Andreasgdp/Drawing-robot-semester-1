@@ -1,6 +1,6 @@
 VAR
-	elPreben : BOOL; (*The most overpowered bollean expression on Funen*)
-	F_It_TON : TON;
+	test : BOOL;
+	i : INT;
 	coord_counter : USINT;
 	TcpClose2 : TcpClose;
 	TcpClose1 : TcpClose;

@@ -27,6 +27,10 @@ public class EdgeDetector {
         this.greyLineCoordinates = null;
     }
 
+    public String getImagePath() {
+        return imagePath;
+    }
+
     private int truncate(int a) {
         if (a < 127) {
             return 0;
@@ -77,52 +81,6 @@ public class EdgeDetector {
         }
 
         return picture1.getImage();
-    }
-
-    /**
-     * This method performs edge-detection of the image on the path provided to the
-     * constructor, and returns a two-dimensional int-array representation of the
-     * result.
-     *
-     * @return A two dimensional array showing the magnitude (intensity) in each
-     * pixel of the picture provided.
-     */
-    public int[][] getMagnitudeArray() {
-        int[][] filter1 = {{-1, 0, 1}, {-2, 0, 2}, {-1, 0, 1}};
-
-        int[][] filter2 = {{1, 2, 1}, {0, 0, 0}, {-1, -2, -1}};
-
-        Picture picture0 = new Picture(imagePath);
-        int width = picture0.width() - 2;
-        int height = picture0.height() - 2;
-        int[][] arrayRepresentation = new int[width][height];
-
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-
-                // get 3-by-3 array of colors in neighborhood
-                int[][] gray = new int[3][3];
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 3; j++) {
-                        gray[i][j] = (int) Luminance.intensity(picture0.get(x + i, y + j));
-                    }
-                }
-
-                // apply filter
-                int gray1 = 0, gray2 = 0;
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 3; j++) {
-                        gray1 += gray[i][j] * filter1[i][j];
-                        gray2 += gray[i][j] * filter2[i][j];
-                    }
-                }
-                // int magnitude = 255 - truncate(Math.abs(gray1) + Math.abs(gray2));
-                int magnitude = 255 - truncate((int) Math.sqrt(gray1 * gray1 + gray2 * gray2));
-                arrayRepresentation[x][y] = magnitude;
-            }
-        }
-
-        return arrayRepresentation;
     }
 
     /**
@@ -224,7 +182,7 @@ public class EdgeDetector {
      * @param array Type: Color[][] - A two-dimensional array with Color objects,
      *              representing a the image.
      */
-    public boolean loadCoordinates(Color[][] array) {
+    public void loadCoordinates(Color[][] array) {
         ArrayList<ArrayList<ArrayList<Integer>>> colorPairs = new ArrayList<>();
         ArrayList<ArrayList<Integer>> plist = new ArrayList<>();
         ArrayList<Integer> coords = new ArrayList<>();
@@ -232,53 +190,60 @@ public class EdgeDetector {
 
         for (int y = 0; y < array.length; y++) {
 
-            boolean direction = (y % 2 == 0) ? true : false;
+            boolean direction = y % 2 == 0;
             if (direction) {
                 for (int x = 0; x < array[y].length; x++) {
                     // System.out.println(array[y][x]);
                     if (drawBlackColor) {
-                        if (array[y][x].getRed() == 0 && array[y][x].getBlue() == 0 && array[y][x].getGreen() == 0) {
+                        if (array[y][x].getRed() == 0) {
                             coords.add(y);
                             coords.add(x);
                             plist.add(coords);
-                            coords = new ArrayList<Integer>();
+                            coords = new ArrayList<>();
                             drawBlackColor = false;
                         }
 
                     } else {
 
-                        if ((array[y][x].getRed() == 255 && array[y][x].getBlue() == 255 && array[y][x].getGreen() == 255) || (x + 1 >= array[y].length)) {
+                        if ((array[y][x].getRed() == 255) || ((x + 1) >= array[y].length)) {
                             coords.add(y);
-                            coords.add(x - 1);
+                            if ((x + 1) >= array[y].length) {
+                                coords.add(x);
+                            } else {
+                                coords.add(x - 1);
+                            }
                             plist.add(coords);
-                            coords = new ArrayList<Integer>();
+                            coords = new ArrayList<>();
                             colorPairs.add(plist);
-                            plist = new ArrayList<ArrayList<Integer>>();
+                            plist = new ArrayList<>();
                             drawBlackColor = true;
                         }
                     }
                 }
             } else {
-                for (int x = array[y].length-1; x > 0; x--) {
-                    // System.out.println(array[y][x]);
+                for (int x = array[y].length - 1; x > -1; x--) {
                     if (drawBlackColor) {
-                        if (array[y][x].getRed() == 0 && array[y][x].getBlue() == 0 && array[y][x].getGreen() == 0) {
+                        if (array[y][x].getRed() == 0) {
                             coords.add(y);
                             coords.add(x);
                             plist.add(coords);
-                            coords = new ArrayList<Integer>();
+                            coords = new ArrayList<>();
                             drawBlackColor = false;
                         }
 
                     } else {
 
-                        if ((array[y][x].getRed() == 255 && array[y][x].getBlue() == 255 && array[y][x].getGreen() == 255) || (x - 1 <= 0)) {
+                        if ((array[y][x].getRed() == 255) || (x == 0)) {
                             coords.add(y);
-                            coords.add(x + 1);
+                            if (x == 0) {
+                                coords.add(x);
+                            } else {
+                                coords.add(x + 1);
+                            }
                             plist.add(coords);
-                            coords = new ArrayList<Integer>();
+                            coords = new ArrayList<>();
                             colorPairs.add(plist);
-                            plist = new ArrayList<ArrayList<Integer>>();
+                            plist = new ArrayList<>();
                             drawBlackColor = true;
                         }
                     }
@@ -287,30 +252,33 @@ public class EdgeDetector {
         }
         // TODO: Add method to check if coords are loaded.
         this.coordinates = colorPairs;
-        return true;
     }
 
 
-    public boolean loadGreyCoordinates(Color[][] array) {
+    public void loadGreyCoordinates(Color[][] array) {
         ArrayList<ArrayList<Point>> greyPairs = new ArrayList<>();
         ArrayList<Point> plist = new ArrayList<>();
 
         for (int y = 0; y < array.length; y++) {
             boolean direction = y % 2 == 0;
             if (direction) {
-                for (int x = 1; x < array[y].length - 1; x++) {
+                for (int x = 0; x < array[y].length; x++) {
                     Point pixel = this.convertPixelToPoint(x, y, array[y][x]);
-                    if (pixel.drawVal != 5){
+                    if (pixel.drawVal != 5) {
                         if (plist.isEmpty()) {
                             plist.add(pixel);
                         } else { // Not empty
                             if ((plist.get(0).drawVal != pixel.drawVal)) {
-                                plist.add(this.convertPixelToPoint(x - 1, y, array[y][x - 1]));
+                                if (x == 0) {
+                                    plist.add(this.convertPixelToPoint(x, y - 1, array[y - 1][x]));
+                                } else {
+                                    plist.add(this.convertPixelToPoint(x - 1, y, array[y][x - 1]));
+                                }
                                 greyPairs.add(plist);
                                 plist = new ArrayList<>();
                                 plist.add(pixel);
                             } else {
-                                if (x == array[y].length - 2) {
+                                if (x == array[y].length - 1) {
                                     plist.add(pixel);
                                     greyPairs.add(plist);
                                     plist = new ArrayList<>();
@@ -322,7 +290,7 @@ public class EdgeDetector {
                                 }
                             }
                         }
-                    }else {
+                    } else {
                         if (!(plist.isEmpty())) {
                             if (plist.get(0).y == y) {
                                 plist.add(this.convertPixelToPoint(x - 1, y, array[y][x - 1]));
@@ -335,19 +303,24 @@ public class EdgeDetector {
                     }
                 }
             } else {
-                for (int x = array[y].length - 2; x > 0; x--) {
+                for (int x = array[y].length - 1; x > -1; x--) {
                     Point pixel = this.convertPixelToPoint(x, y, array[y][x]);
-                    if (pixel.drawVal != 5){
+
+                    if (pixel.drawVal != 5) {
                         if (plist.isEmpty()) {
                             plist.add(pixel);
                         } else { // Not empty
                             if ((plist.get(0).drawVal != pixel.drawVal)) {
-                                plist.add(this.convertPixelToPoint(x + 1, y, array[y][x + 1]));
+                                if (x == array[y].length - 1) {
+                                    plist.add(this.convertPixelToPoint(x - 1, y, array[y - 1][x]));
+                                } else {
+                                    plist.add(this.convertPixelToPoint(x + 1, y, array[y][x + 1]));
+                                }
                                 greyPairs.add(plist);
                                 plist = new ArrayList<>();
                                 plist.add(pixel);
                             } else {
-                                if (x == 1) {
+                                if (x == 0) {
                                     plist.add(pixel);
                                     greyPairs.add(plist);
                                     plist = new ArrayList<>();
@@ -359,11 +332,11 @@ public class EdgeDetector {
                                 }
                             }
                         }
-                    }else {
+                    } else {
                         if (!(plist.isEmpty())) {
                             if (plist.get(0).y == y) {
                                 plist.add(this.convertPixelToPoint(x + 1, y, array[y][x + 1]));
-                            }else{
+                            } else {
                                 plist.add(plist.get(0));
                             }
                             greyPairs.add(plist);
@@ -374,26 +347,8 @@ public class EdgeDetector {
             }
         }
 
-        ArrayList<Point> tempPoint = new ArrayList();
-        for (int i = 0; i < greyPairs.size(); i++) {
-            for (int j = i - 1; j > 0; j--) {
-                int middelPointI = (greyPairs.get(i).get(0).x + greyPairs.get(i).get(1).x) / 2;
-                int middelPointJ = (greyPairs.get(j).get(0).x + greyPairs.get(j).get(1).x) / 2;
-                if ((greyPairs.get(j).get(0).y == (greyPairs.get(i).get(0).y - 1)) &&
-                        /*(greyPairs.get(j).get(0).drawVal == greyPairs.get(i).get(0).drawVal) &&*/
-                        (((middelPointJ >= greyPairs.get(i).get(0).x) && (middelPointJ <= greyPairs.get(i).get(1).x)) ||
-                                ((middelPointI >= greyPairs.get(j).get(0).x) && (middelPointI <= greyPairs.get(j).get(1).x)))) {
 
-                    tempPoint = greyPairs.get(i);
-                    for (int k = i; k > (j + 1); k--) {
-                        greyPairs.set(k, greyPairs.get(k - 1));
-                    }
-                        greyPairs.set((j + 1), tempPoint);
-                }
-            }
-        }
         this.greyLineCoordinates = greyPairs;
-        return true;
     }
 
     /**
@@ -419,7 +374,7 @@ public class EdgeDetector {
      * @param imgPath String of the image path.
      * @param alPath Alternative image path, used if first imagePath is invalid
      */
-    public void loadNewImage(String imgPath) {
+    public void loadNewImagePath(String imgPath) {
         Scanner CMDscanner = new Scanner(System.in);
         File aFile = new File(imgPath);
 
@@ -446,6 +401,11 @@ public class EdgeDetector {
         }
     }
 
+    public void loadNewImage(String imgName) {
+        String imgPath = "../images/";
+        this.imagePath = imgPath + imgName;
+    }
+
     public ArrayList<ArrayList<ArrayList<Integer>>> getEdgeCords() {
         Color[][] array = this.getGreyscaleArray();
         this.loadCoordinates(array);
@@ -454,6 +414,30 @@ public class EdgeDetector {
         } else {
             return null;
         }
+    }
+
+    public ArrayList<Point> getSortedEdgeCords() {
+        Color[][] array = this.getGreyscaleArray();
+        ArrayList<Point> pointArray = this.convertCordsToPoints(array);
+
+        ArrayList<Point> orderedList = new ArrayList<>();
+
+        orderedList.add(pointArray.remove(0)); //Arbitrary starting point
+        int liftCounter = 0;
+        while (pointArray.size() > 0) {
+            //Find the index of the closest point (using another method)
+            IndexDist nearestIndexDist = findNearestIndex(orderedList.get(orderedList.size() - 1), pointArray);
+
+            if (nearestIndexDist.dist > 5) {
+                pointArray.get(nearestIndexDist.index).setDrawVal(5);
+                liftCounter++;
+            }
+            //Remove from the unorderedList and add to the ordered one
+            orderedList.add(pointArray.remove(nearestIndexDist.index));
+        }
+        System.out.println("Lifts needed to draw this image: " + liftCounter);
+
+        return orderedList;
     }
 
     public ArrayList<Point> getSortedCords() {
@@ -466,38 +450,69 @@ public class EdgeDetector {
         }
     }
 
+    public ArrayList<Point> getSortedCordsBH() {
+        Color[][] array = this.getColorArray();
+        this.loadSortedCoordinates(array);
+        for (Point sortedCoordinate : this.sortedCoordinates) {
+            if (sortedCoordinate.drawVal == 0) {
+                sortedCoordinate.setDrawVal(3);
+            }
+        }
+        if (!(this.sortedCoordinates == null)) {
+            return this.sortedCoordinates;
+        } else {
+            return null;
+        }
+    }
+
     public ArrayList<Point> convertCordsToPoints(Color[][] array) {
         ArrayList<Point> pointList = new ArrayList<>();
+        int scales = 6;
+        int devider = 256 / scales;
+        int[] counter = new int[scales + 1];
+
         for (int y = 0; y < array.length; y++) {
             for (int x = 0; x < array[y].length; x++) {
-                int ggb = (((array[y][x].getRed() + array[y][x].getBlue() + array[y][x].getGreen() + 3)/3-1) + 51) / 51 - 1;
-                // Tager ikke ggb == 5 med fordi det er hvide koordinater, som ikke skal tegnes.
-                if (ggb == 0 || ggb == 1 || ggb == 2 || ggb == 3 || ggb == 4) {
+                int ggb = (((array[y][x].getRed() + array[y][x].getBlue() + array[y][x].getGreen() + 3) / 3) + devider) / devider - 1;
+
+                counter[ggb]++;
+
+                // Tager 0 til 4 da disse er ikke-hvide koordinater. Hvide koordinater skal ikke tegnes.
+                if (ggb < scales - 1) {
                     Point point = new Point(x, y);
                     point.setDrawVal(ggb);
                     pointList.add(point);
                 }
             }
         }
+        int pixelCounter = 0;
+        for (int i = 0; i < counter.length - 2; i++) {
+            System.out.println(i + ": " + counter[i]);
+            pixelCounter += counter[i];
+        }
+        System.out.println(pixelCounter);
+
         return pointList;
     }
 
     public Point convertPixelToPoint(int x, int y, Color pixel) {
         Point point = null;
-        int ggb = (((pixel.getRed() + pixel.getBlue() + pixel.getGreen() + 3)/3-1) + 51) / 51 - 1;
+        int scales = 6;
+        int devider = 256 / scales;
+        int ggb = (((pixel.getRed() + pixel.getBlue() + pixel.getGreen() + 3) / 3) + devider) / devider - 1;
         // Tager ikke ggb == 5 med fordi det er hvide koordinater, som ikke skal tegnes.
-        if (ggb == 0 || ggb == 1 || ggb == 2 || ggb == 3 || ggb == 4 || ggb == 5) {
+        if (ggb < scales - 1) {
             point = new Point(x, y);
             point.setDrawVal(ggb);
+        } else {
+            point = new Point(x, y);
+            point.setDrawVal(5);
         }
         return point;
     }
 
     private void loadSortedCoordinates(Color[][] array) {
         ArrayList<Point> myList = this.convertCordsToPoints(array);
-        for (Point point : myList) {
-            // System.out.println("(" + point.x + "; " + point.y + ") w. colorval: " + point.drawVal);
-        }
         ArrayList<Point> orderedList = new ArrayList<>();
 
         orderedList.add(myList.remove(0)); //Arbitrary starting point
@@ -507,7 +522,7 @@ public class EdgeDetector {
             IndexDist nearestIndexDist = findNearestIndex(orderedList.get(orderedList.size() - 1), myList);
 
             if (nearestIndexDist.dist > 5) {
-                myList.get(nearestIndexDist.index).setDrawVal(0);
+                myList.get(nearestIndexDist.index).setDrawVal(5);
                 liftCounter++;
             }
             //Remove from the unorderedList and add to the ordered one
