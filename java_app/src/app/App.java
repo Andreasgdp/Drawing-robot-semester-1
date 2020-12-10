@@ -18,11 +18,11 @@ public class App {
     public static void main(String[] args) {
         // The path of the image has to start w. "../images/" as it is the relative path from the file app/edgedetect/Picture.java.
         String imgPath = "../images/";
-        String fileName = "download_nobar.jpg";
+        String fileName = "small_eye.png";
         String imagePath = imgPath + fileName;
 
         EdgeDetector eDetect = new EdgeDetector(imagePath);
-        RobotClient client = new RobotClient("192.168.0.20", 12345);
+        RobotClient client = new RobotClient("192.168.0.20", 2050);
 
         try {
             client.connect();
@@ -45,15 +45,15 @@ public class App {
                     Logging logger = new Logging("MyLogFile.txt");
                     Timer timer = new Timer(1000, logger);
 
+                    eDetect.loadNewImage("small_eye.png");
+
+                    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    logger.changeFile("eye_greyline.txt");
                     timer.start();
-                    long testCounter = 0;
-                    while (testCounter < 999999999) {
-                        long testCounter2 = 0;
-                        while (testCounter2 < 20) {
-                            testCounter2++;
-                        }
-                        testCounter++;
-                    }
+
+                    ArrayList<ArrayList<Point>> cords = eDetect.getGreyLineCoordinates();
+                    runGreyLineTest(client, cords);
+
                     logger.setFinishTime();
                     timer.stop();
                     logger.logTime();

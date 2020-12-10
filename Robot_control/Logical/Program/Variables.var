@@ -1,6 +1,5 @@
 VAR
-	dull_counter : DINT;
-	sharp_counter2 : DINT;
+	dull_counter : REAL;
 	sharp_counter : DINT;
 	case_draw : USINT;
 	this : this_typ;

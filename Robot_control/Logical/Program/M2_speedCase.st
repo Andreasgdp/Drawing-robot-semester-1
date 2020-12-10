@@ -53,7 +53,7 @@ ACTION M2_speedCase:
 		END_IF
 	END_IF
 	
-	IF this.M2.forward THEN
+	IF this.M2.forward THEN // Logic for acceleration
 		this.M2.direction := TRUE;
 	
 		IF EDGEPOS(this.M2.freq) THEN
@@ -86,5 +86,26 @@ ACTION M2_speedCase:
 		
 	END_IF
 
+	// Logic for goto
+	IF this.M2.goTo AND (this.M2.goToCounter <> this.M2.counter) THEN
+		IF this.M2.counter < this.M2.goToCounter THEN
+			this.M2.forward := TRUE;
+			this.M2.backward := FALSE;
+		ELSIF this.M2.counter > this.M2.goToCounter THEN
+			this.M2.backward := TRUE;
+			this.M2.forward := FALSE;
+		END_IF
+	ELSIF this.M2.goTo AND (this.M2.goToCounter = this.M2.counter) THEN
+		this.M2.backward := FALSE;
+		this.M2.forward := FALSE;
+		this.M2.goTo := FALSE;	
+	END_IF
+	
+	// Safety feature
+	IF this.btn2.pressed THEN
+		this.M2.backward := FALSE;
+	END_IF;	
+	
 	this.M2.speedCaseTON ();
+	
 END_ACTION

@@ -347,24 +347,7 @@ public class EdgeDetector {
             }
         }
 
-        ArrayList<Point> tempPoint = new ArrayList<>();
-        for (int i = 0; i < greyPairs.size(); i++) {
-            for (int j = i - 1; j > 0; j--) {
-                int middelPointI = (greyPairs.get(i).get(0).x + greyPairs.get(i).get(1).x) / 2;
-                int middelPointJ = (greyPairs.get(j).get(0).x + greyPairs.get(j).get(1).x) / 2;
-                if ((greyPairs.get(j).get(0).y == (greyPairs.get(i).get(0).y - 1)) &&
-                        (greyPairs.get(j).get(0).drawVal == greyPairs.get(i).get(0).drawVal) &&
-                        (((middelPointJ >= greyPairs.get(i).get(0).x) && (middelPointJ <= greyPairs.get(i).get(1).x)) ||
-                                ((middelPointI >= greyPairs.get(j).get(0).x) && (middelPointI <= greyPairs.get(j).get(1).x)))) {
 
-                    tempPoint = greyPairs.get(i);
-                    for (int k = i; k > (j + 1); k--) {
-                        greyPairs.set(k, greyPairs.get(k - 1));
-                    }
-                    greyPairs.set((j + 1), tempPoint);
-                }
-            }
-        }
         this.greyLineCoordinates = greyPairs;
     }
 
@@ -459,6 +442,21 @@ public class EdgeDetector {
     public ArrayList<Point> getSortedCords() {
         Color[][] array = this.getRealColorArray();
         this.loadSortedCoordinates(array);
+        if (!(this.sortedCoordinates == null)) {
+            return this.sortedCoordinates;
+        } else {
+            return null;
+        }
+    }
+
+    public ArrayList<Point> getSortedCordsBH() {
+        Color[][] array = this.getColorArray();
+        this.loadSortedCoordinates(array);
+        for (Point sortedCoordinate : this.sortedCoordinates) {
+            if (sortedCoordinate.drawVal == 0) {
+                sortedCoordinate.setDrawVal(3);
+            }
+        }
         if (!(this.sortedCoordinates == null)) {
             return this.sortedCoordinates;
         } else {
