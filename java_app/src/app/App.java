@@ -24,6 +24,7 @@ public class App {
         EdgeDetector eDetect = new EdgeDetector(imagePath);
         RobotClient client = new RobotClient("192.168.0.20", 2050);
 
+        //this function tries to connect to the PLC
         try {
             client.connect();
         } catch (Exception e) {
@@ -33,14 +34,18 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         Scanner CMDscanner = new Scanner(System.in);
 
-//        Commandhandler
+//      Continually scanning for user inputs. And uses these inputs to determine what other functions to call
+//      @param msg - the message used to determine what function to call
+
         while (true) {
             try {
                 System.out.print("Write command: ");
                 String msg = scanner.next();
                 // !---------------------------------------------------------------------------------------------------------------------
+                // Checks for input Quit, breaks if found
                 if (msg.equals("q") || msg.equals("quit")) {
                     break;
+                // Checks for input Test, gets image coordinats
                 } else if (msg.startsWith("test")) {
                     Logging logger = new Logging("MyLogFile.txt");
                     Timer timer = new Timer(1000, logger);
@@ -60,11 +65,13 @@ public class App {
 
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
+                // Checks for input Reset, resets the PLC
                 else if (msg.equals("reset") || msg.equals("re")) {
                     client.reconnect();
                     client.write("rset");
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
+                // Checks for input Stop, stops the PLC
                 else if (msg.equals("st") || msg.equals("stop")) {
                     // TODO: add function to recognize ESC-btn
                     client.reconnect();
@@ -79,6 +86,29 @@ public class App {
                 else if (msg.equals("runGreyLine")) {
                     ArrayList<ArrayList<Point>> cords = eDetect.getGreyLineCoordinates();
                     runGreyLineTest(client, cords);
+                }
+                // !---------------------------------------------------------------------------------------------------------------------
+                else if (msg.equals("h") || msg.equals("help")) {
+                    // TODO: Update help command w. all commands
+                    System.out.println(" ____________________________________________________________________________________");
+                    System.out.println("| HELP:                                                                              |");
+                    System.out.println("| cc / change con           - Changes hostname and port                              |");
+                    System.out.println("| command / message / cmd   - Sends message to PLC                                   |");
+                    System.out.println("| edge                      - Runs edge detection and sends to PLC                   |");
+                    System.out.println("| i / load image            - Loads image based on selected image name or path       |");
+                    System.out.println("| q / quit                  - Quits the Program                                      |");
+                    System.out.println("| re / reset                - Resets the PLC coordinates                             |");
+                    System.out.println("| run                       - Starts drawing black/white                             |");
+                    System.out.println("| runGreyLine               - Starts drawing greyLine                                |");
+                    System.out.println("| sd / send                 - Sends coordinates to the PLC                           |");
+                    System.out.println("| show                      - Shows first drawing simulation - FINAL                 |");
+                    System.out.println("| showedge                  - Shows edge drawing simulation  - FINAL                 |");
+                    System.out.println("| showgreyline              - Shows greyLine simulation      - FINAL                 |");
+                    System.out.println("| showsort                  - Shows sort simulation          - ANIMATION             |");
+                    System.out.println("| sort                      - Shows the amount of pencil lifts needed to draw image  |");
+                    System.out.println("| st / stop                 - Stops the PLC                                          |");
+                    System.out.println("|____________________________________________________________________________________|");
+//                    System.out.println("| L  / load coordinats - Loads coordinats of the chosen image               |");
                 }
                 // !---------------------------------------------------------------------------------------------------------------------
                 else if (msg.equals("cc") || msg.equals("change con")) {
