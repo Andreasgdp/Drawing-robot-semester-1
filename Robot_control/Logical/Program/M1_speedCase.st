@@ -37,7 +37,7 @@ ACTION M1_speedCase:
 		
 	END_CASE
 	
-	IF this.M1.forward OR this.M1.backward THEN
+	IF this.M1.forward OR this.M1.backward THEN // Set the frequence
 		IF this.M1.speedCaseTON.Q THEN
 			this.M1.speedCaseTON.IN := FALSE;
 				
@@ -45,15 +45,13 @@ ACTION M1_speedCase:
 				this.M1.freq 		:= FALSE;
 			ELSE
 				this.M1.freq		:= TRUE;
-			END_IF
-				
+			END_IF	
 		ELSE
-			this.M1.speedCaseTON.IN := TRUE;
-				
+			this.M1.speedCaseTON.IN := TRUE;	
 		END_IF
 	END_IF
 	
-	IF this.M1.forward THEN
+	IF this.M1.forward THEN // Logic for acceleration
 		this.M1.direction := TRUE;
 	
 		IF EDGEPOS(this.M1.freq) THEN
@@ -86,5 +84,26 @@ ACTION M1_speedCase:
 		
 	END_IF
 
+	// Goto Logic
+	IF this.M1.goTo AND (this.M1.goToCounter <> this.M1.counter) THEN
+		IF this.M1.counter < this.M1.goToCounter THEN
+			this.M1.forward := TRUE;
+			this.M1.backward := FALSE;
+		ELSIF this.M1.counter > this.M1.goToCounter THEN
+			this.M1.backward := TRUE;
+			this.M1.forward := FALSE;
+		END_IF
+	ELSIF this.M1.goTo AND (this.M1.goToCounter = this.M1.counter) THEN
+		this.M1.backward := FALSE;
+		this.M1.forward := FALSE;
+		this.M1.goTo := FALSE;
+	END_IF
+	
+	// safety feature
+	IF this.btn1.pressed THEN
+		this.M1.backward := FALSE;
+	END_IF;
+	
 	this.M1.speedCaseTON ();
+	
 END_ACTION

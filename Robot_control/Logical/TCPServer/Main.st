@@ -2,12 +2,6 @@
 PROGRAM _INIT
 	tcpst := TCPSTATE_SOCKET_OPEN;
 	coord_counter := 1;
-	x_coord := 0;
-	y_coord := 0;
-	draw := 0;
-	sendData := '';
-	receiveData := '';
-	goTo := '';
 	
 	FOR i:= 0 TO LENGT_OF_COORD DO 	// We do not have coordinates with values lower than 0,
 		coord[i].x := -1;  			// that is why we set the init values to -1, to recognize
@@ -51,7 +45,6 @@ PROGRAM _CYCLIC
 					coord[0].z := draw;
 					coord_counter := 1;
 					goTo := 'done';
-					elPreben := TRUE;
 				END_IF
 			END_IF;
 			
