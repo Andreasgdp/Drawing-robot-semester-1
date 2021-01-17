@@ -183,9 +183,9 @@ public class EdgeDetector {
      *              representing a the image.
      */
     public void loadCoordinates(Color[][] array) {
-        ArrayList<ArrayList<ArrayList<Integer>>> colorPairs = new ArrayList<>();
-        ArrayList<ArrayList<Integer>> plist = new ArrayList<>();
-        ArrayList<Integer> coords = new ArrayList<>();
+        ArrayList<ArrayList<ArrayList<Integer>>> colorPairs = new ArrayList<>(); // [[[y1, x1], [y2, x2]], [[y1, x1], [y2, x2]],...]
+        ArrayList<ArrayList<Integer>> plist = new ArrayList<>(); // [[y1, x1], [y2, x2]]
+        ArrayList<Integer> coords = new ArrayList<>(); // [y1, x1]
         boolean drawBlackColor = true;
 
         for (int y = 0; y < array.length; y++) {
@@ -196,26 +196,26 @@ public class EdgeDetector {
                     // System.out.println(array[y][x]);
                     if (drawBlackColor) {
                         if (array[y][x].getRed() == 0) {
-                            coords.add(y);
-                            coords.add(x);
-                            plist.add(coords);
-                            coords = new ArrayList<>();
+                            coords.add(y); // [y]
+                            coords.add(x); // [y, x]
+                            plist.add(coords); // [[y, x]]
+                            coords = new ArrayList<>(); // []
                             drawBlackColor = false;
                         }
 
                     } else {
 
                         if ((array[y][x].getRed() == 255) || ((x + 1) >= array[y].length)) {
-                            coords.add(y);
+                            coords.add(y); // [y]
                             if ((x + 1) >= array[y].length) {
-                                coords.add(x);
+                                coords.add(x); // [y, x]
                             } else {
-                                coords.add(x - 1);
+                                coords.add(x - 1); // [y, x - 1]
                             }
-                            plist.add(coords);
-                            coords = new ArrayList<>();
-                            colorPairs.add(plist);
-                            plist = new ArrayList<>();
+                            plist.add(coords); // [[y, x], [y, x]]
+                            coords = new ArrayList<>(); // []
+                            colorPairs.add(plist); // [[[y, x], [y, x]]]
+                            plist = new ArrayList<>(); // []
                             drawBlackColor = true;
                         }
                     }
@@ -372,7 +372,6 @@ public class EdgeDetector {
      * is valid the image path is set to be the default image path for the class.
      *
      * @param imgPath String of the image path.
-     * @param alPath Alternative image path, used if first imagePath is invalid
      */
     public void loadNewImagePath(String imgPath) {
         Scanner CMDscanner = new Scanner(System.in);
