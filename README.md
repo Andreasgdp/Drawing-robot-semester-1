@@ -30,56 +30,31 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 
-<!-- PROJECT LOGO -->
-<br />
-<p align="center">
-  <a href="https://github.com/Andreasgdp/Drawing-robot-semester-1">
-    <img src="images_readme/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
-  <h3 align="center">Drawing robot 2000</h3>
-
-  <p align="center">
-    A robot that converts images into physical drawings.
-    <br />
-    <a href="https://github.com/Andreasgdp/Drawing-robot-semester-1"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/Andreasgdp/Drawing-robot-semester-1">View Demo</a>
-    ·
-    <a href="https://github.com/Andreasgdp/Drawing-robot-semester-1/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/Andreasgdp/Drawing-robot-semester-1/issues">Request Feature</a>
-  </p>
-</p>
-
-
-
-<!-- TABLE OF CONTENTS -->
-## Table of Contents
-
-- [Table of Contents](#table-of-contents)
-- [About The Project](#about-the-project)
-  - [Built With](#built-with)
-- [Getting Started](#getting-started)
-  - [Prerequisites - Guide](#prerequisites---guide)
-  - [Installation](#installation)
-- [Programming workflow](#programming-workflow)
-- [Usage](#usage)
-    - [`Information coming soon...`](#information-coming-soon)
-- [Roadmap](#roadmap)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
-- [Acknowledgements](#acknowledgements)
 
 
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
+<p align="center"> 
+<img src="https://user-images.githubusercontent.com/39928082/200000349-7032717f-b081-4ab3-b343-85bd94cfe196.gif" alt="SDU" title="SDU" width="80%" height="80%"/> 
+</p>
 
-[![Product Name Screen Shot][product-screenshot]]()
+### Abstract
+In this project, we worked with processing and drawing images. We have for the treatment
+of images used Java to obtain coordinates that our drawing robot has received. We
+has then set up a number of requirements that our drawing robot has had to comply with. To confirm that
+these have been complied with, we have carried out a series of tests and benchmarks. Based on these have
+we made statistics and have come to the conclusion that it is generally fastest to draw with lines, if it
+is a black and white image, but if it's greyscale, it's faster to draw it sorted by
+our own sorting algorithm. We also found that complexity increases the print time for our sorted
+coordinates. We have achieved to draw pictures in 4 ways, draw greyscale with 6 shades, automatically
+pencil sharpening and simulating the drawings in Java. The processed images are sent through
+a TCP server to a PLC that controls the robot and can be controlled through a GUI. Our goal with
+the project was to draw a nice drawing as quickly as possible and this has been achieved.
 
+<p align="center"> 
+<img src="https://user-images.githubusercontent.com/39928082/199998276-67d2aa06-8f68-43ae-b4f2-bddfe8cf1543.png" alt="SDU" title="SDU" width="80%" height="80%"/> 
+</p>
 
 ### Built With
 
@@ -132,83 +107,6 @@ This is an example of how to list things you need to use the software and how to
         1.  Press the little circle of arrows in the bottom left corner of VS Code.
             1.  This will download possible changes in the cloud as well as pushing your changes to the cloud.
 	11. You should be good to go from here.
-
-### Installation
-
-6. Clone the repo
-```sh
-git clone https://github.com/andreasgdp/Drawing-robot-semester-1.git
-```
-1. Install
-```sh
-Information comming soon...
-```
-
-
-<!-- USAGE EXAMPLES -->
-## Programming workflow
-This section will tell you how what the process of adding new features to the repo is like.
-
-1. You will have to create an issue with the feature/bug that you want to work on. <a href="https://github.com/Andreasgdp/Drawing-robot-semester-1/issues" target="_blank">Create issue here</a>
-2. You will assign yourself to that issue and move the issue into the `In Progress` column in <a href="https://github.com/Andreasgdp/Drawing-robot-semester-1/projects/2" target="_blank">Project Planning</a>
-   1. A branch will be created with the issue number and name of the issue.
-3. You are to work on your feature on that specific branch and **NOT on the `master branch`**
-4. When done with your feature, you will have to create a Pull Request (PR). You can do that <a href="https://github.com/Andreasgdp/Drawing-robot-semester-1/compare" target="_blank">here</a>
-   1. After creating a pull request you can assign another person to review your code and then accept it.
-5. When your code has been accepted you will be able to merge your feature into the `master branch`.****
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-#### `Information coming soon...`
-
-
-
-<!-- ROADMAP -->
-## Roadmap
-
-See the [open issues](https://github.com/andreasgdp/Drawing-robot-semester-1/issues) for a list of proposed features (and known issues).
-
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-
-
-<!-- CONTACT -->
-## Contact
-
-Your Name - [@AndreasGuldberg](https://twitter.com/AndreasGuldberg) - andreasgdp@gmail.com
-
-Project Link: [https://github.com/andreasgdp/Drawing-robot-semester-1](https://github.com/andreasgdp/Drawing-robot-semester-1)
-
-
-
-<!-- ACKNOWLEDGEMENTS -->
-## Acknowledgements
-
-* []()
-* []()
-* []()
-
-
-
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
